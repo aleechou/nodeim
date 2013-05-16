@@ -74,7 +74,9 @@ socket.command(
 </script>
 ```
 
-## 注册用户，命令：signup
+---
+
+## 注册用户：signup
 
 data 中的必须参数：
 
@@ -93,7 +95,7 @@ data 中的必须参数：
 ```
 
 
-## 注册用户，命令：signin
+## 注册用户：signin
 
 data 中的必须参数：
 
@@ -113,14 +115,14 @@ data 中的必须参数：
 }
 ```
 
-## 注册用户，命令：signout
+## 退出：signout
 
 不需要参数
 
 返回json中，code属性 200 表示成功
 
 
-## 发送消息，命令：message
+## 发送消息：message
 
 data 中的必须参数：
 
