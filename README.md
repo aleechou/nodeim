@@ -91,7 +91,7 @@ data 中的必须参数：
 以及其他任何属性都会被服务器保存
 
 返回格式:
-```
+```javascript
 {
 	code: 200
 	, message: 'oooxxx'
@@ -108,7 +108,7 @@ data 中的必须参数：
 * password
 
 返回格式:
-```
+```javascript
 {
 	code: 200
 	, message: 'oooxxx'
