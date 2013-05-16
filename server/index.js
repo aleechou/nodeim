@@ -114,7 +114,7 @@ Steps(
 
 
 
-server.message = function(fromDoc,to,message)
+server.message = function(fromDoc,to,message,system)
 {
 	if( !this.onlines[to] )
 	{
