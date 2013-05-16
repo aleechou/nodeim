@@ -1,34 +1,13 @@
 <script src="socket.io.js"></script>
 <script>
 var socket = io.connect('http://localhost') ;
-
 socket.on('message', function (data) {
 	console.log("收到消息：",data);
 });
-
-socket.on('rspn',function(data){
-
-	if( data.pkgid===undefined || !_pkgcallbacks[data.pkgid] )
-	{
-		console.log(data) ;
-		return ;
-	}
-
-	_pkgcallbacks[data.pkgid] (data) ;
-	delete _pkgcallbacks[data.pkgid] ;
-}) ;
-
-var _pkgid = 0 ;
-var _pkgcallbacks = {} ;
-
-function send(cmd,data,callback){
-	var pkg = {
-		id: _pkgid ++
-		, data: data
-	} ;
-	socket.emit(cmd,pkg) ;
-	_pkgcallbacks[pkg.pkgid] = callback ;
-}
 </script>
 
-这是一个API测试工具，按 F12 打开chrome的控制器，在控制台里调用api
+
+<h3>这是一个API测试工具，按 F12 打开chrome的控制器，在控制台里调用api</h3>
+
+<a href="https://github.com/aleechou/nodeim/blob/master/README.md#-api" target="_blank">客户端API文档</a>
+<iframe id="document" src="https://github.com/aleechou/nodeim/blob/master/README.md#-api" frameborder="0" height="500px" width="100%"></iframe>

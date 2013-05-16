@@ -100,8 +100,38 @@ var io = ('undefined' === typeof module ? {} : module.exports);
 
     socket = socket || io.sockets[uuri];
 
+
+
+
     // if path is different from '' or /
-    return socket.of(uri.path.length > 1 ? uri.path : '');
+    var socket = socket.of(uri.path.length > 1 ? uri.path : '');
+
+
+
+    // by alee --------------------
+    socket._pkgid = 0 ;
+    socket._pkgcallbacks = {} ;
+    socket.on('rspn',function(pkg){
+      if( pkg.pkgid===undefined || !this._pkgcallbacks[pkg.pkgid] )
+      {
+        console.log(pkg.data) ;
+        return ;
+      }
+      this._pkgcallbacks[pkg.pkgid] (pkg.data) ;
+      delete this._pkgcallbacks[pkg.pkgid] ;
+    }) ;
+    socket.command = function(cmd,data,callback){
+      var pkg = {
+        id: this._pkgid ++
+        , data: data
+      } ;
+      this.emit(cmd,pkg) ;
+      this._pkgcallbacks[pkg.pkgid] = callback ;
+    } ;
+    // by alee --------------------
+
+
+    return socket ;
   };
 
 })('object' === typeof module ? module.exports : (this.io = {}), this);
@@ -1550,7 +1580,9 @@ var io = ('undefined' === typeof module ? {} : module.exports);
     if (this.options['auto connect']) {
       this.connect();
     }
-};
+  };
+
+
 
   /**
    * Apply EventEmitter mixin.
@@ -2059,6 +2091,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
     this.on('connect', maybeReconnect);
   };
 
+
 })(
     'undefined' != typeof io ? io : module.exports
   , 'undefined' != typeof io ? io : module.parent.exports
@@ -2093,6 +2126,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
     this.ackPackets = 0;
     this.acks = {};
   };
+
 
   /**
    * Apply EventEmitter mixin.

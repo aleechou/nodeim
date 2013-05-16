@@ -16,12 +16,19 @@ module.exports = function(data,server,client,rspn)
 			return ;
 		}
 
-		delete doc.password ;
-		delete doc._id ;
+		if(!doc)
+		{
+			rspn({code:404,message:"用户名或密码错误"}) ;
+		}
+		else
+		{
+			delete doc.password ;
+			delete doc._id ;
 
-		client.session.user = doc ;
-		server.onlines[doc.id] = client ;
+			client.session.user = doc ;
+			server.onlines[doc.id] = client ;
 
-		rspn({code:200,message:"welcome back, "+doc.username,doc:doc}) ;
+			rspn({code:200,message:"welcome back, "+doc.username,doc:doc}) ;
+		}
 	}) ;
 }
