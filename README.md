@@ -52,14 +52,19 @@ socket.command(name,data[,callback]) ;
 ```html
 <script>
 socket.command(
+	
+	// 命名名称
 	'message'
+
+	// 发送参数	
 	, {
 		// 好友 id
 		id: 1234
 		// 消息内容，支持 html
 		, message: 'hello'
 	}
-	// 回调函数，可以省略
+
+	// 服务器返回后的回调函数，可以省略
 	, function(data){				
 		if(data.code=='200')
 		{
