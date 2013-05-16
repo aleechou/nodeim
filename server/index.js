@@ -41,6 +41,8 @@ Steps(
 		// 建立索引
 		client.ensureIndex('users',{username:-1},  {background: true,unique:true}, function(){}) ;
 		client.ensureIndex('users',{id:-1},  {background: true,unique:true}, function(){}) ;
+
+		client.ensureIndex('messages',{readed:-1,to:-1},  {background: true}, function(){}) ;
 	}
 
 
@@ -114,20 +116,57 @@ Steps(
 
 
 
-server.message = function(fromDoc,to,message,system)
+server.message = function(fromDoc,to,message,system,callback)
 {
-	if( !this.onlines[to] )
-	{
-		return {code:404,message:'用户不在线'}
-	}
+	to = parseInt(to) ;
+	var server = this ;
+	this.db.colle("users").findOne({id:to},function(err,toDoc){
 
-	this.onlines[to].emit('message',{
-		from: fromDoc
-		, message: message
+		if(err)
+		{
+			callback && callback({code:500,message:err}) ;
+			return ;
+		}
+
+		if( !toDoc )
+		{
+			callback && callback({code:404,message:"找不到用户"}) ;
+			return ;
+		}
+
+		var doc = {
+			from: fromDoc
+			, to: to
+			, message: message
+			, time: (new Date()).getTime()
+			, system: !!system
+			, readed: 0
+		}
+
+		// 发送在线消息
+		if( server.onlines[to] )
+		{
+			server.onlines[to].emit('message',doc) ;
+
+			doc.from = doc.from.id ;
+			doc.readed = 1 ;
+		}
+
+		console.log('message:',doc) ;
+
+		// 记录到数据库
+		server.db.colle('messages').insert(doc,function(err){
+			console.log("save to messages:",doc,arguments) ;
+			if(err)
+			{
+				console.log(err) ;
+			}
+		}) ;
+
+
+		callback && callback({code:200}) ;
 	}) ;
 
-	return {code:200} ;
+
 }
-
-
 

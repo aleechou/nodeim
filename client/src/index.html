@@ -1,13 +1,117 @@
+<h3>这是一个API测试工具，按 F12 打开chrome的控制器，在控制台里调用api</h3>
+
+<a href="https://github.com/aleechou/nodeim/blob/master/README.md#-api" target="_blank">客户端API文档</a>
+
+<hr />
+
+<h1>DEMO</h1>
+<script src="jquery-1.9.1.min.js"></script>
 <script src="socket.io.js"></script>
 <script>
 var socket = io.connect('http://localhost') ;
 socket.on('message', function (data) {
 	console.log("收到消息：",data);
+	$("#messageoutput").append("<p>"+data.from.username+"(id:"+data.from.id+")："+data.message+"</p>") ;
 });
 </script>
 
+<div>
+	用户名：<input name="username" value="alee" >
+	密码：<input name="password" type="password" value="111111" >
+	<button id="btnSignUp">注册</button>
+	<button id="btnSignIn">登陆</button>
+	<button id="btnSignOut">退出</button>
+</div>
 
-<h3>这是一个API测试工具，按 F12 打开chrome的控制器，在控制台里调用api</h3>
+<hr />
 
-<a href="https://github.com/aleechou/nodeim/blob/master/README.md#-api" target="_blank">客户端API文档</a>
-<iframe id="document" src="https://github.com/aleechou/nodeim/blob/master/README.md#-api" frameborder="0" height="500px" width="100%"></iframe>
+<div>
+	好友ID: <input name="to" ><br />
+	<textarea name="message" style="width:400px;height:80px"></textarea><br />
+	<button id="btnMessage">发送消息</button>
+</div>
+
+<div id="messageoutput"></div>
+
+
+
+<script>
+
+// 用户注册
+$("#btnSignUp").click(function(){
+
+	var data = {
+		username: $("[name=username]").val()
+		, password: $("[name=password]").val()
+	}
+	socket.command('signup',data,function(rspn){
+		if(rspn.code=='200')
+		{
+			alert("注册成功，ID:"+rspn.id) ;
+		}
+		else if(rspn.code=='405')
+		{
+			alert("用户名已经存在") ;
+		}
+		else
+		{
+			alert("注册错误："+rspn.message) ;
+		}
+	}) ;
+}) ;
+
+
+// 用户登陆
+$("#btnSignIn").click(function(){
+
+	var data = {
+		username: $("[name=username]").val()
+		, password: $("[name=password]").val()
+	}
+	socket.command('signin',data,function(rspn){
+		if(rspn.code=='200')
+		{
+			alert("登陆成功，ID:"+rspn.doc.id+" \n"+rspn.message) ;
+		}
+		else
+		{
+			alert(rspn.message) ;
+		}
+	}) ;
+}) ;
+
+
+// 用户退出
+$("#btnSignOut").click(function(){
+
+	socket.command('signout',{},function(rspn){
+		if(rspn.code=='200')
+		{
+			alert("用户已退出") ;
+		}
+		else
+		{
+			alert(rspn.message) ;
+		}
+	}) ;
+}) ;
+
+// 发送消息
+$("#btnMessage").click(function(){
+
+	var data = {
+		to: $("[name=to]").val()
+		, message: $("[name=message]").val()
+	}
+	socket.command('message',data,function(rspn){
+		if(rspn.code=='200')
+		{
+			alert("消息已经发送") ;
+		}
+		else
+		{
+			alert("服务器返回："+rspn.message) ;
+		}
+	}) ;
+}) ;
+</script>

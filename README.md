@@ -59,7 +59,7 @@ socket.command(
 	// 发送参数	
 	, {
 		// 好友 id
-		id: 1234
+		to: 1234
 		// 消息内容，支持 html
 		, message: 'hello'
 	}
@@ -72,7 +72,7 @@ socket.command(
 		}
 		else
 		{
-			console.log("消息没有送出",data) ;
+			console.log("消息没有送出：",data) ;
 		}
 	}
 )
@@ -99,6 +99,11 @@ data 中的必须参数：
 }
 ```
 
+错误 code ：
+
+* 405 用户名已经存在
+* 500 服务器内部错误
+
 
 ## 注册用户：signin
 
@@ -120,6 +125,14 @@ data 中的必须参数：
 }
 ```
 
+错误 code :
+
+* 402 已经处于登陆状态
+* 403 缺少用户名/id 或 密码
+* 404 用户名不存在或密码错误
+
+
+
 ## 退出：signout
 
 不需要参数
@@ -127,11 +140,22 @@ data 中的必须参数：
 返回json中，code属性 200 表示成功
 
 
+
+
+## 查找用户：find
+
+data 中的可选参数：
+* username
+* id
+* ... ... (其他任务注册用户时保存的字段)
+
+返回json 为一个数组
+
 ## 发送消息：message
 
 data 中的必须参数：
 
-* id  用户 id
+* to  用户 id
 * message 消息内容，支持 html
 
 返回json中，code属性 200 表示成功

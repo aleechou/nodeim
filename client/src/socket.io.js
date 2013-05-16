@@ -112,13 +112,13 @@ var io = ('undefined' === typeof module ? {} : module.exports);
     socket._pkgid = 0 ;
     socket._pkgcallbacks = {} ;
     socket.on('rspn',function(pkg){
-      if( pkg.pkgid===undefined || !this._pkgcallbacks[pkg.pkgid] )
+      if( pkg.id===undefined || !this._pkgcallbacks[pkg.id] )
       {
         console.log(pkg.data) ;
         return ;
       }
-      this._pkgcallbacks[pkg.pkgid] (pkg.data) ;
-      delete this._pkgcallbacks[pkg.pkgid] ;
+      this._pkgcallbacks[pkg.id] (pkg.data) ;
+      delete this._pkgcallbacks[pkg.id] ;
     }) ;
     socket.command = function(cmd,data,callback){
       var pkg = {
@@ -126,7 +126,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
         , data: data
       } ;
       this.emit(cmd,pkg) ;
-      this._pkgcallbacks[pkg.pkgid] = callback ;
+      this._pkgcallbacks[pkg.id] = callback ;
     } ;
     // by alee --------------------
 
