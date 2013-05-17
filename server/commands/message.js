@@ -8,7 +8,7 @@ module.exports = function(data,server,client,rspn)
 		return ;
 	}
 
-	var data = server.message(client.session.user,data.to,data.message,false,function(rspndata){
+	var data = server.message(client.session.user,data.to,data.message,undefined,function(rspndata){
 		rspn( rspndata ) ;
 	}) ;
 }

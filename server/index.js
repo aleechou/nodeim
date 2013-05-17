@@ -1,4 +1,4 @@
-var io = require('socket.io').listen(80)
+var io = require('socket.io').listen(8765)
 , fs = require('fs')
 , Steps = require('ocsteps')
 , mongodb = require('mongodb')
@@ -13,6 +13,7 @@ var usercommands = [
 	'message' ,
 	'find' ,
 	'presence' ,
+	'subscribe' ,
 ] ;
 
 var server = {
@@ -43,6 +44,9 @@ Steps(
 		client.ensureIndex('users',{id:-1},  {background: true,unique:true}, function(){}) ;
 
 		client.ensureIndex('messages',{readed:-1,to:-1},  {background: true}, function(){}) ;
+
+		client.ensureIndex('subscriptions',{from:1,to:1,agree:1},  {background: true}, function(){}) ;
+		client.ensureIndex('subscriptions',{to:1,from:1,agree:1},  {background: true}, function(){}) ;
 	}
 
 
@@ -116,7 +120,7 @@ Steps(
 
 
 
-server.message = function(fromDoc,to,message,system,callback)
+server.message = function(fromDoc,to,message,type,callback)
 {
 	to = parseInt(to) ;
 	var server = this ;
@@ -139,7 +143,7 @@ server.message = function(fromDoc,to,message,system,callback)
 			, to: to
 			, message: message
 			, time: (new Date()).getTime()
-			, system: !!system
+			, type: type
 			, readed: 0
 		}
 

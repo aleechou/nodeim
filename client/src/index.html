@@ -8,7 +8,7 @@
 <script src="jquery-1.9.1.min.js"></script>
 <script src="socket.io.js"></script>
 <script>
-var socket = io.connect('http://localhost') ;
+var socket = io.connect('http://localhost:8765') ;
 socket.on('message', function (data) {
 	console.log("收到消息：",data);
 	$("#messageoutput").append("<p>"+data.from.username+"(id:"+data.from.id+")："+data.message+"</p>") ;
