@@ -7,13 +7,12 @@
 <h1>DEMO</h1>
 <script src="jquery-1.9.1.min.js"></script>
 <script src="socket.io.js"></script>
-<script>
-var socket = io.connect('http://localhost:8765') ;
-socket.on('message', function (data) {
-	console.log("收到消息：",data);
-	$("#messageoutput").append("<p>"+data.from.username+"(id:"+data.from.id+")："+data.message+"</p>") ;
-});
-</script>
+<div>
+	服务器：<input name="server" value="http://localhost:8765" style="width:250px" /> 
+	<button id="btnConnect">连接</button>
+</div>
+
+<br />
 
 <div>
 	用户名：<input name="username" value="alee" >
@@ -37,8 +36,27 @@ socket.on('message', function (data) {
 
 <script>
 
+var socket = null ;
+
+$("#btnConnect").click(function(){
+	socket = io.connect($("[name=server]").val()) ;
+	socket.on('message', function (data) {
+		console.log("收到消息：",data);
+		$("#messageoutput").append("<p>"+data.from.username+"(id:"+data.from.id+")："+data.message+"</p>") ;
+	});
+	socket.on('connect',function(){
+		alert("已经连接到服务器") ;
+	}) ;
+}) ;
+
+
 // 用户注册
 $("#btnSignUp").click(function(){
+	if(!socket)
+	{
+		alert("尚未连接服务器") ;
+		return ;
+	}
 
 	var data = {
 		username: $("[name=username]").val()
@@ -63,6 +81,11 @@ $("#btnSignUp").click(function(){
 
 // 用户登陆
 $("#btnSignIn").click(function(){
+	if(!socket)
+	{
+		alert("尚未连接服务器") ;
+		return ;
+	}
 
 	var data = {
 		username: $("[name=username]").val()
@@ -83,6 +106,11 @@ $("#btnSignIn").click(function(){
 
 // 用户退出
 $("#btnSignOut").click(function(){
+	if(!socket)
+	{
+		alert("尚未连接服务器") ;
+		return ;
+	}
 
 	socket.command('signout',{},function(rspn){
 		if(rspn.code=='200')
@@ -98,6 +126,11 @@ $("#btnSignOut").click(function(){
 
 // 发送消息
 $("#btnMessage").click(function(){
+	if(!socket)
+	{
+		alert("尚未连接服务器") ;
+		return ;
+	}
 
 	var data = {
 		to: $("[name=to]").val()
