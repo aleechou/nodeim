@@ -14,6 +14,7 @@ var usercommands = [
 	'find' ,
 	'presence' ,
 	'subscribe' ,
+	'reply' ,
 ] ;
 
 var server = {
@@ -45,8 +46,8 @@ Steps(
 
 		client.ensureIndex('messages',{readed:-1,to:-1},  {background: true}, function(){}) ;
 
-		client.ensureIndex('subscriptions',{from:1,to:1,agree:1},  {background: true}, function(){}) ;
-		client.ensureIndex('subscriptions',{to:1,from:1,agree:1},  {background: true}, function(){}) ;
+		client.ensureIndex('subscriptions',{from:1,to:1},  {background:true, unique:true}, function(){}) ;
+		client.ensureIndex('subscriptions',{to:1,from:1},  {background:true}, function(){}) ;
 	}
 
 
@@ -61,6 +62,7 @@ Steps(
 			socket.on('disconnect', function () {
 				if( socket.session.user )
 				{
+					server.presence(socket.session.user.id,'离线') ;
 					delete server.onlines[socket.session.user.id] ;
 				}
 				console.log('disconnect',arguments) ;
@@ -170,7 +172,38 @@ server.message = function(fromDoc,to,message,type,callback)
 
 		callback && callback({code:200}) ;
 	}) ;
+}
 
+server.presence = function(id,presence)
+{
+	console.log('condision',{
+			to: id
+			, agree: 1
+		}) ;
+	// 通知
+	this.db.colle('subscriptions').find(
+		{
+			to: id
+			, agree: 1
+		}
+	).each(function(err,doc){
+		if(err)
+		{
+			console.log(err) ;
+		}
+		// console.log(doc) ;
 
+		if(!doc)
+		{
+			return ;
+		}
+		else
+		{
+			if( server.onlines[doc.from] )
+			{
+				server.onlines[doc.from].emit('presence',{id:id,presence:presence}) ;
+			}
+		}
+	}) ;
 }
 

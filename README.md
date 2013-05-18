@@ -176,6 +176,59 @@ data 中的参数
 * 404 参数 to 指定的用户无效
 * 306 重复请求
 
+该命令会触发对方好友的 message 事件，type = 'request-subscription'
+
+
+## 同意/拒绝加好友：reply
+
+data 中的参数
+
+* to 指定的用户id (必须)
+* message 留言 (可选)
+* refuse 1,0 (可选) 
+
+
+该命令会触发对方好友的 message 事件，type = 'agree'/'refuse' 
+
+
+
+
+---
+
+# 客户端事件
+
+## message
+
+data 中的参数
+
+* to
+* from
+	* id
+	* username
+	* ... ... 其他注册的字段
+* message 消息文本
+* type 
+* time
+
+
+type :
+	* undefined 				普通用户消息
+	* 'system' 					系统通知
+	* 'request-subscription'	请求添加好友
+	* 'refuse'					加好友请求被拒绝
+	* 'agree'					加好友请求被接受
+
+
+
+## presence
+
+当好友上线、离线、隐身等状态发生变化时，触发此事件
+
+data 中的参数
+
+* id			好有id
+* presence		状态
+
 
 
 

@@ -42,10 +42,28 @@ $("#btnConnect").click(function(){
 	socket = io.connect($("[name=server]").val()) ;
 	socket.on('message', function (data) {
 		console.log("收到消息：",data);
-		$("#messageoutput").append("<p>"+data.from.username+"(id:"+data.from.id+")："+data.message+"</p>") ;
+		switch(data.type)
+		{
+			case 'request-subscription' :
+				$("#messageoutput").append("<p>"+data.from.username+"(id:"+data.from.id+") 请求加你为好友："+data.message+"</p>") ;
+				break ;
+			case 'refuse' :
+				$("#messageoutput").append("<p>"+data.from.username+"(id:"+data.from.id+") 拒绝了你的好友请求："+data.message+"</p>") ;
+				break ;
+			case 'agree' :
+				$("#messageoutput").append("<p>"+data.from.username+"(id:"+data.from.id+") 同意了你的好友请求："+data.message+"</p>") ;
+				break ;
+
+			default :
+				$("#messageoutput").append("<p>"+data.from.username+"(id:"+data.from.id+") 发来消息："+data.message+"</p>") ;
+				break ;
+		}
 	});
 	socket.on('connect',function(){
 		alert("已经连接到服务器") ;
+	}) ;
+	socket.on('presence',function(doc){
+		console.log('presence：',doc) ;
 	}) ;
 }) ;
 

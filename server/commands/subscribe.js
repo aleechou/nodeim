@@ -1,6 +1,6 @@
 module.exports = function(data,server,client,rspn)
 {
-	if( !data.to )
+	if( data.to===undefined )
 	{
 		rspn({code:'403',message:'缺少参数 to'}) ;
 		return ;
@@ -43,7 +43,7 @@ module.exports = function(data,server,client,rspn)
 					}
 				}
 
-				server.message(client.session.user,to,data.message,"request-subscription") ;
+				server.message(client.session.user,data.to,data.message,"request-subscription") ;
 
 				rspn({code:200}) ;
 			}

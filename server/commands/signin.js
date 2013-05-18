@@ -32,10 +32,13 @@ module.exports = function(data,server,client,rspn)
 			delete doc._id ;
 
 			client.session.user = doc ;
+			client.session.user.presence = '在线' ;
 			server.onlines[doc.id] = client ;
 
 			rspn({code:200,message:"welcome back, "+doc.username,doc:doc}) ;
 
+			// 通知上线
+			server.presence(client.session.user.id,client.session.user.presence) ;
 
 			// 处理离线消息
 			var collmsg = server.db.colle('messages') ;
