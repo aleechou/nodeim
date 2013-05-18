@@ -48,6 +48,7 @@ module.exports = function(data,server,client,rspn)
 						{
 							delete userDoc._id ;
 							delete userDoc.password ;
+							userDoc.group = doc.group ;
 
 							userDoc.presence = server.onlines[userDoc.id]? server.onlines[userDoc.id].session.user.presence: '离线' ;
 

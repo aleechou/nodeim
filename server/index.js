@@ -14,8 +14,10 @@ var usercommands = [
 	'find' ,
 	'presence' ,
 	'subscribe' ,
+	'unsubscribe' ,
 	'reply' ,
 	'friends' ,
+	'group' ,
 ] ;
 
 var server = {
