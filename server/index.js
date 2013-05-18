@@ -15,6 +15,7 @@ var usercommands = [
 	'presence' ,
 	'subscribe' ,
 	'reply' ,
+	'friends' ,
 ] ;
 
 var server = {
@@ -73,7 +74,7 @@ Steps(
 				(function(name){
 					var func = require(__dirname+"/commands/"+name+".js") ;
 					socket.on(name, function (pkg) {
-						func(pkg.data,server,socket,function(rspndata){
+						func(pkg.data||{},server,socket,function(rspndata){
 							socket.emit('rspn',{
 								id: pkg.id
 								, cmd: name
@@ -104,7 +105,7 @@ Steps(
 							return ;
 						}
 
-						func(pkg.data,server,socket,rspn) ;
+						func(pkg.data||{},server,socket,rspn) ;
 					}) ;
 				}) (usercommands[i]) ;
 			}
@@ -158,8 +159,6 @@ server.message = function(fromDoc,to,message,type,callback)
 			doc.readed = 1 ;
 		}
 
-		console.log('message:',doc) ;
-
 		// 记录到数据库
 		server.db.colle('messages').insert(doc,function(err){
 			console.log("save to messages:",doc,arguments) ;
@@ -176,10 +175,6 @@ server.message = function(fromDoc,to,message,type,callback)
 
 server.presence = function(id,presence)
 {
-	console.log('condision',{
-			to: id
-			, agree: 1
-		}) ;
 	// 通知
 	this.db.colle('subscriptions').find(
 		{
