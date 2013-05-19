@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+
+<title>真知保护</title>
+
+<script src="jquery-1.9.1.min.js"></script>
+<script src="socket.io.js"></script>
+<script src="nodeim.js"></script>
+<link rel="stylesheet" type="text/css"  href="styles/webim.css"/>
+<link rel="stylesheet" type="text/css"  href="styles/webimpage.css"/>
+</head>
+<body >
+
+    <div  class="wOther" style="position: absolute; left: 350px; top: 20px; width: 210px; height: 450px; z-index: 9702;">
+      <div class="wRound_lt"></div>
+      <div class="wRound_rt"></div>
+      <div class="wRound_lb"></div>
+      <div class="wRound_rb"></div>
+      <div class="wContent">
+        <div  class="wOtherTitle" style="color: rgb(0, 0, 0);">
+          <div  class="wIcon"><img src="http://webos.knowledge.com.cn/webim/images/im/icon.png"></div>
+          <div  class="wText" style="cursor: move;">WebIM 1.0</div>
+          <div  class="wControl">
+            <div class="wControlMin" onmouseover="this.scrollTop='13'" onmouseout="this.scrollTop='0'"><img src="http://webos.knowledge.com.cn/webim/images/im/othercontrolmin.png" title="最小化"></div>
+            <div class="wControlClose" onmouseover="this.scrollTop='15'" onmouseout="this.scrollTop='0'"><img src="http://webos.knowledge.com.cn/webim/images/im/othercontrolclose.png" title="关闭"></div>
+          </div>
+        </div>
+        <div  class="wWindowContent" style="background-color: transparent; height: 425px;">
+          <div class="wOtherMain"  style="padding: 0px 20px; height: 425px;">
+            <div class="im_topad"></div>
+            <div style="padding-top:15px; padding-left:4px;">
+              <div style="height:100px">
+                <div style="/* height:18px */">用户名(U):</div>
+                <div>
+                  <input  type="text" class="loginTextBoxU">
+                </div>
+                <div style="height:18px;padding-top:8px">密码(W):</div>
+                <div>
+                  <input  type="password" class="loginTextBoxP">
+                </div>
+              </div>
+              <div style="height:135px">
+                <div >
+                  <div style="width:100%;float:left;height:18px">
+                    <div style="float:left;line-height:18px">登录状态(G):</div>
+                    <div  us="0" class="loginStatusSelect" onmouseover="this.className='loginStatusSelect loginStatusSelectHover'" onmouseout="this.className='loginStatusSelect'"> 联机 </div>
+                  </div>
+                  <div style="height:18px;padding-top:8px;width:100%;float:left;">
+                    <input  type="checkbox" checked="checked" style="display: none;">
+                    <div class="cCheckBox" style="cursor: pointer;"></div>
+                    <span style="padding-left: 5px; cursor: pointer; font-size: 12px;">保存我的信息(B)</span></div>
+                  <div style="height:18px;padding-top:3px;width:100%;float:left;text-indent:18px;display:none"> <a href="#"  class="loginLink">(删除我的信息)(M)</a> </div>
+                  <div style="height:18px;padding-top:8px;width:100%;float:left;">
+                    <input  type="checkbox" style="display: none;">
+                    <div class="cCheckBox" style="cursor: pointer;"></div>
+                    <span style="padding-left: 5px; cursor: pointer; font-size: 12px;">记住我的密码(R)</span></div>
+                  <div style="height:18px;padding-top:8px;width:100%;float:left;">
+                    <input  type="checkbox" style="display: none;">
+                    <div class="cCheckBox" style="cursor: pointer;"></div>
+                    <span style="padding-left: 5px; cursor: pointer; font-size: 12px;">自动为我登录(N)</span></div>
+                </div>
+                <div  style="display:none;padding-top:35px;text-align:center"> 登录中... </div>
+              </div>
+              <div style="height:35px">
+                <div style="width:100%;float:left">
+                  <div  class="loginConfirm" onmouseup="this.scrollTop='26'" onmousedown="this.scrollTop='52'" onmouseover="this.scrollTop='26'" onmouseout="this.scrollTop='0'"> <img src="images/im/buttonlogin.gif" id="btnLogin"> </div>
+                </div>
+              </div>
+              <div>
+                <div style="width:100%;float:left"> <a href="#" class="loginLink">忘记密码了?</a> </div>
+                <div style="width:100%;float:left;padding-top:3px;"> <a href="#" onclick="_webIM.CMD.showRegWindow()" class="loginLink">注册新帐号</a> </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div  class="wLoading" style="display: none;">加载中...</div>
+    </div>
+    <script >
+    $("#btnLogin").click(function(){
+    	nodeim.login( $(".loginTextBoxU").val(), $(".loginTextBoxP").val());
+    }) ;
+    
+    
+    </script>
+</body>
+</html>
