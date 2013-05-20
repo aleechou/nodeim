@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>真知保护</title>
+
+<link rel="stylesheet" type="text/css"  href="styles/webim.css"/>
+<link rel="stylesheet" type="text/css"  href="styles/webimpage.css"/>
+</head>
+<body >
+    <div  class="wMain" style="position: absolute; left: 350px; top: 20px; width: 260px; height: 550px; z-index: 9713;">
+      <div class="wRound_lt"></div>
+      <div class="wRound_rt"></div>
+      <div class="wRound_lb"></div>
+      <div class="wRound_rb"></div>
+      <div class="wResize"></div>
+      <div class="wContent">
+        <div  class="wMainTitle" style="color: rgb(153, 153, 153);">
+          <div  class="wIcon"><img src="http://webos.knowledge.com.cn/webim/images/im/icon.png"></div>
+          <div  class="wText" style="cursor: move;"><span style="color:#fff">WebIM 1.0</span></div>
+          <div  class="wControl">
+            <div class="wControlMin" onmouseover="this.scrollTop='13'" onmouseout="this.scrollTop='0'"><img src="http://webos.knowledge.com.cn/webim/images/im/maincontrolmin.png" title="最小化"></div>
+            <div class="wControlClose" onmouseover="this.scrollTop='15'" onmouseout="this.scrollTop='0'"><img src="http://webos.knowledge.com.cn/webim/images/im/maincontrolclose.png" title="关闭"></div>
+          </div>
+        </div>
+        <div  class="wWindowContent" style="background-color: transparent; height: 525px;">
+          <div class="wMainTool" >
+            <div  class="wMainUserInfo">
+              <div class="wMainUserFaceBG"> <img  src="http://webos.knowledge.com.cn/webim/userface/default.gif" style="width:51px;height:51px;cursor:pointer" title="查看您的联系人卡片"> </div>
+              <div  class="wMainUserInfoRight" style="width: 178px;">
+                <div style="width:100%;float:left">
+                  <div class="wMainUserName"> <span >qq <span style="font-size:12px;color:#fff">[联机]</span></span> <img src="webim/images/im/arrowdown.png" style="padding-left:3px"> </div>
+                </div>
+                <div style="width:100%;float:left">
+                  <div  class="wMainUserSign" title="点击修改"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="wMainSearchUserPannel">
+            <div style="float: left; padding: 3px 8px 0px 6px; width: 180px;" >
+              <input title="通过输入姓名或邮箱来查找联系人"  style="padding-right: 15px; width: 165px;" class="wMainSearchUserBG" type="text">
+            </div>
+            <div style="padding-top:4px">
+              <div  class="wMainContentButton" onmouseover="this.className='wMainContentButton wMainContentButtonHover'" onmouseout="this.className='wMainContentButton'"> <img src="webim/images/im/tooladdfriend.png" style="height:16px;width:16px" title="添加联系人"> </div>
+              <div  class="wMainContentButton" onmouseover="this.className='wMainContentButton wMainContentButtonHover'" onmouseout="this.className='wMainContentButton'"> <img src="webim/images/im/toollisttype.png" style="height:16px;width:16px" title="对联系人进行排序"> </div>
+            </div>
+          </div>
+          <div class="wMainMain"  onselectstart="return false" style="height: 374px;">
+            <div  class="wMainUserHeaderEx" g>联机</div>
+            <div  class="wMainUserContainer" style="height: 26px;">
+              <div class="wMainUserItemText" style="padding-left:25px;width:100%;color:#aca899">此组中没有联系人</div>
+            </div>
+            <div  class="wMainUserHeaderEx" g>脱机 ( 2 ) </div>
+            <div  class="wMainUserContainer" style="height: 52px;">
+              <div  class="wMainUserItem" u onmousedown="_webIM.Common.changeSelItem(this,event)" onmouseup="_webIM.Common.showContextMenu(this,event)" oncontextmenu="function(){return !!0}" ondblclick="var uid = this.getAttribute('uid');if(uid)_webIM.CMD.openChatWindow(uid,true);" style="background-color: rgb(255, 239, 176);">
+                <div class="wMainListButton" onmouseover="this.className='wMainListButton wMainListButtonHover'" onmouseout="this.className='wMainListButton'"><img src="http://webos.knowledge.com.cn/webim/images/im/m3.png" title="查看此人的联系人卡片" style="height:19px;width:19px" onclick="_webIM.CMD.showCard(10000,this.parentNode)"></div>
+                <div class="wMainUserItemText">aarongao&nbsp;&nbsp;<span style="color:#777"></span></div>
+              </div>
+              <div  class="wMainUserItem" u onmousedown="_webIM.Common.changeSelItem(this,event)" onmouseup="_webIM.Common.showContextMenu(this,event)" oncontextmenu="function(){return !!0}" ondblclick="var uid = this.getAttribute('uid');if(uid)_webIM.CMD.openChatWindow(uid,true);" style="">
+                <div class="wMainListButton" onmouseover="this.className='wMainListButton wMainListButtonHover'" onmouseout="this.className='wMainListButton'"><img src="http://webos.knowledge.com.cn/webim/images/im/m3.png" title="查看此人的联系人卡片" style="height:19px;width:19px" onclick="_webIM.CMD.showCard(10098,this.parentNode)"></div>
+                <div class="wMainUserItemText">ww&nbsp;&nbsp;<span style="color:#777"></span></div>
+              </div>
+            </div>
+          </div>
+          <div class="wMainSearchWebPannel">
+            <div  class="wMainToolBar">
+              <div  class="wMainToolButton" onmouseover="this.className='wMainToolButton wMainToolButtonHover'" onmouseout="this.className='wMainToolButton'"> <img src="webim/images/im/toolshowfocus.png" style="height:25px;width:25px" title="打开今日焦点"> </div>
+              <div  class="wMainToolButton" onmouseover="this.className='wMainToolButton wMainToolButtonHover'" onmouseout="this.className='wMainToolButton'"> <img src="webim/images/im/toolmsghistory.png" style="height:27px;width:22px" title="打开聊天记录"> </div>
+              <div  class="wMainToolButton" onmouseover="this.className='wMainToolButton wMainToolButtonHover'" onmouseout="this.className='wMainToolButton'"> <img src="webim/images/im/toolprofile.png" style="height:27px;width:23px" title="编辑个人资料"> </div>
+              <div  class="wMainToolButton" onmouseover="this.className='wMainToolButton wMainToolButtonHover'" onmouseout="this.className='wMainToolButton'"> <img src="webim/images/im/tooloption.png" style="height:24px;width:25px" title="选项"> </div>
+              <div  class="wMainToolButton" onmouseover="this.className='wMainToolButton wMainToolButtonHover'" onmouseout="this.className='wMainToolButton'" style="display:none"> <img src="webim/images/toolmanage.gif" style="height:16px;width:17px" title="管理"> </div>
+            </div>
+          </div>
+          <input type="text"  style="position: absolute; top: 58px; left: 75px; height: 14px; width: 175px; border: 1px solid rgb(127, 157, 185); display: none;">
+          <img  style="display:none;position:absolute;top:139px;right:63px;height:8px;width:8px;cursor:pointer" title="点击此处清除文本" src="webim/images/close.gif" onmouseover="this.src='webim/images/closehover.gif'" onmouseout="this.src='webim/images/close.gif'"> </div>
+      </div>
+      <div  class="wLoading" style="display: none;">加载中...</div>
+    </div>
+</body>
+</html>
