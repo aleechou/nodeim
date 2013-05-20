@@ -3,6 +3,7 @@ var io = require('socket.io').listen(8765)
 , Steps = require('ocsteps')
 , mongodb = require('mongodb')
 , DBHelper = require('./DBHelper')
+, Rooms = require("./Rooms.js") ;
 
 var commands = [
 	'signup' ,
@@ -18,18 +19,20 @@ var usercommands = [
 	'reply' ,
 	'friends' ,
 	'group' ,
+	'room.create' ,
+	'room.join' ,
+	'room.leave' ,
 ] ;
 
 var server = {
 	db: null 
 	, onlines: {}
-
+	, rooms: null
 	, message: undefined 
 } ;
 
 
 Steps(
-
 	// 连接数据库
 	function(){
 		var server = new mongodb.Server('127.0.0.1',27017) ;
@@ -51,8 +54,24 @@ Steps(
 
 		client.ensureIndex('subscriptions',{from:1,to:1},  {background:true, unique:true}, function(){}) ;
 		client.ensureIndex('subscriptions',{to:1,from:1},  {background:true}, function(){}) ;
+
+		client.ensureIndex('rooms',{id:1},  {background:true,unique:true}, function(){}) ;
+		client.ensureIndex('rooms-users',{room:1,user:1},  {background:true,unique:true}, function(){}) ;
 	}
 
+	// 加载聊天室
+	, function(){
+
+		server.rooms = new Rooms(server) ;
+		server.rooms.init(this.hold()) ;
+
+		this.step(function(err){
+			if(err)
+			{
+				console.log(err) ;
+			}
+		}) ;
+	}
 
 
 	// 启动 im 服务器
