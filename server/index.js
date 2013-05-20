@@ -22,6 +22,8 @@ var usercommands = [
 	'room.create' ,
 	'room.join' ,
 	'room.leave' ,
+	'room.list' ,
+	'room.message' ,
 ] ;
 
 var server = {
@@ -144,7 +146,7 @@ Steps(
 
 
 
-server.message = function(fromDoc,to,message,type,callback)
+server.message = function(fromDoc,to,message,type,time,room,callback)
 {
 	to = parseInt(to) ;
 	var server = this ;
@@ -152,13 +154,13 @@ server.message = function(fromDoc,to,message,type,callback)
 
 		if(err)
 		{
-			callback && callback({code:500,message:err}) ;
+			callback && callback(new Error(err.message)) ;
 			return ;
 		}
 
 		if( !toDoc )
 		{
-			callback && callback({code:404,message:"找不到用户"}) ;
+			callback && callback(new Error("找不到用户")) ;
 			return ;
 		}
 
@@ -166,14 +168,17 @@ server.message = function(fromDoc,to,message,type,callback)
 			from: fromDoc
 			, to: to
 			, message: message
-			, time: (new Date()).getTime()
+			, time: time || (new Date()).getTime()
 			, type: type
+			, room: room
 			, readed: 0
 		}
 
 		// 发送在线消息
 		if( server.onlines[to] )
 		{
+			console.log("send message to online user: ",to,doc) ;
+
 			server.onlines[to].emit('message',doc) ;
 
 			doc.from = doc.from.id ;
@@ -182,7 +187,7 @@ server.message = function(fromDoc,to,message,type,callback)
 
 		// 记录到数据库
 		server.db.colle('messages').insert(doc,function(err){
-			console.log("save to messages:",doc,arguments) ;
+			//console.log("save to messages:",doc,arguments) ;
 			if(err)
 			{
 				console.log(err) ;
@@ -190,7 +195,7 @@ server.message = function(fromDoc,to,message,type,callback)
 		}) ;
 
 
-		callback && callback({code:200}) ;
+		callback && callback() ;
 	}) ;
 }
 

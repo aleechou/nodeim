@@ -7,8 +7,14 @@ module.exports = function(server)
 
 	this.create = function(name,intro,creatorDoc,callback)
 	{
+		var roomdoc = {
+			name: name
+			, intro: intro
+			, creator: creatorDoc.id
+		}
+
 		server.db.colle("rooms").insert(
-			this.roomdoc
+			roomdoc
 			, function(err,docs){
 
 				if(err)
@@ -25,14 +31,14 @@ module.exports = function(server)
 						return ;
 					}
 
-					// room.id = id ;
-					var room = new Room(docs[0],server) ;
-					rooms._rooms[ room.id ] = room ;
+					roomdoc.id = id ;
+					var room = new Room(roomdoc,server) ;
+					self._rooms[ room.id ] = room ;
 
 					// 用户加入房间
 					room.join(creatorDoc) ;
 
-					callback && callback(room) ;
+					callback && callback(null,room) ;
 				}) ;
 			}
 		) ;
@@ -92,6 +98,7 @@ function Room(doc,server)
 	this.users = {} ;
 	this.id = doc.id ;
 	this._roomdoc = doc ;
+	delete this._roomdoc._id ;
 	var self = this ;
 
 	this.init = function(callback)
@@ -152,7 +159,7 @@ function Room(doc,server)
 					, user: userDoc.id
 				}
 				,function(err){
-					if(err)
+					if(err && err.code!=11000)
 					{
 						console.log(err) ;
 					}
@@ -168,8 +175,8 @@ function Room(doc,server)
 			this.eachOnline(function(client,usrdoc){
 				// 加入聊天室事件
 				client.emit("room.join",{
-					room:this._roomdoc
-					, user:usrdoc
+					room:self._roomdoc
+					, user:userDoc
 				}) ;
 			}) ;
 		}
@@ -177,11 +184,13 @@ function Room(doc,server)
 
 	this.leave = function(userid)
 	{
-		if( !this.users[userid] );
+		if( !this.users[userid] )
 		{
+			console.log("用户id "+userid+"未加入聊天室"+this.id) ;
 			return ;
 		}
 
+		var usrDoc = this.users[userid] ;
 		delete this.users[userid] ;
 
 		// 从数据库移除
@@ -195,15 +204,29 @@ function Room(doc,server)
 			}
 		) ;
 
-		// 通知
-		if( server.onlines[userDoc.id] )
+		// 通知其他人
+		this.eachOnline(function(client){
+			// 加入聊天室事件
+			client.emit("room.leave",{
+				room:this._roomdoc
+				, user:usrDoc
+			}) ;
+		}) ;
+	}
+
+	this.message = function(userid,message,time)
+	{
+		var fromDoc = this.users[userid] ;
+		if(!fromDoc)
 		{
-			this.eachOnline(function(client,usrdoc){
-				// 加入聊天室事件
-				client.emit("room.leave",{
-					room:this._roomdoc
-					, user:usrdoc
-				}) ;
+			return new Error("用户未加入指定聊天室") ;
+		}
+
+		for(var userId in this.users)
+		{
+			console.log(">>",userId) ;
+			server.message(fromDoc,userId,message,undefined,time,this.id,function(err){
+
 			}) ;
 		}
 	}

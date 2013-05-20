@@ -13,7 +13,8 @@ module.exports = function(data,server,client,rspn)
 		, function(err,room){
 			if(err)
 			{
-				rspn({code:500,message:"系统遇到错误:"+err}) ;
+				console.log(err) ;
+				rspn({code:500,message:"系统遇到错误:"}) ;
 			}
 			else
 			{

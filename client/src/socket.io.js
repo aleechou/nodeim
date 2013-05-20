@@ -112,6 +112,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
     socket._pkgid = 0 ;
     socket._pkgcallbacks = {} ;
     socket.on('rspn',function(pkg){
+      //console.log('receive pkg:',pkg) ;
       if( pkg.id===undefined || !this._pkgcallbacks[pkg.id] )
       {
         console.log(pkg.data) ;
@@ -127,6 +128,8 @@ var io = ('undefined' === typeof module ? {} : module.exports);
       } ;
       this.emit(cmd,pkg) ;
       this._pkgcallbacks[pkg.id] = callback ;
+
+      //console.log('send pkg:',pkg) ;
     } ;
     // by alee --------------------
 

@@ -13,7 +13,7 @@ module.exports = function(data,server,client,rspn)
 		return
 	}
 
-	room.join(client.session.user) ;
+	room.leave(client.session.user.id) ;
 
 	rspn({code:200}) ;
 }

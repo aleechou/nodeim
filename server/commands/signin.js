@@ -35,25 +35,60 @@ module.exports = function(data,server,client,rspn)
 			client.session.user.presence = '在线' ;
 			server.onlines[doc.id] = client ;
 
-			rspn({code:200,message:"welcome back, "+doc.username,doc:doc}) ;
+			// 聊天室
+			server.db.colle("rooms-users").find({user:doc.id}).toArray(function(err,docs){
 
-			// 通知上线
-			server.presence(client.session.user.id,client.session.user.presence) ;
-
-			// 处理离线消息
-			var collmsg = server.db.colle('messages') ;
-			collmsg.find({readed:0,to:doc.id}).each(function(err,msg){
-				if(err) console.log(err) ;
-
-				if(msg)
+				if(err)
 				{
-					client.emit('message',msg) ;
-
-					collmsg.update({_id:msg._id},{$set:{readed:1}},function(err){
-						if(err) console.log("发送离线消息，更新 readed 出错：",err) ;
-					}) ;
+					console.log(err) ;
+					rspn({code:500})
+					return ;
 				}
-			})
+
+				var rooms = [], room ;
+				for(var i=0;i<docs.length;i++)
+				{
+					if(room = server.rooms.room(docs[i].room))
+					{
+						console.log(room) ;
+						rooms.push(room._roomdoc) ;
+					}
+				}
+
+				var rspndata = {code:200,message:"welcome back, "+doc.username,doc:doc,rooms:rooms} ;
+				console.log("rspndata: ",rspndata) ;
+				rspn(rspndata) ;
+
+				for(var i=0;i<docs.length;i++)
+				{
+					if(room = server.rooms.room(docs[i].room))
+					{
+						// 自动加入聊天室
+						room.join(client.session.user) ;
+					}
+				}
+
+				// 通知上线
+				server.presence(client.session.user.id,client.session.user.presence) ;
+
+				// 处理离线消息
+				var collmsg = server.db.colle('messages') ;
+				collmsg.find({readed:0,to:doc.id}).each(function(err,msg){
+					if(err) console.log(err) ;
+
+					if(msg)
+					{
+						client.emit('message',msg) ;
+
+						collmsg.update({_id:msg._id},{$set:{readed:1}},function(err){
+							if(err) console.log("发送离线消息，更新 readed 出错：",err) ;
+						}) ;
+					}
+				}) ;
+
+
+			}) ;
+
 		}
 	}) ;
 }

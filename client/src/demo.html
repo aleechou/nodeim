@@ -8,6 +8,13 @@
 <h1>DEMO</h1>
 <script src="jquery-1.9.1.min.js"></script>
 <script src="socket.io.js"></script>
+
+
+
+<div id="messageoutput"></div>
+
+
+
 <div>
 	服务器：<input name="server" value="http://localhost:8765" style="width:250px" /> 
 	<button id="btnConnect">连接</button>
@@ -26,12 +33,15 @@
 <hr />
 
 <div>
-	好友ID: <input name="to" ><br />
+	<select name=type>
+		<option selected>好友</option>
+		<option>聊天室</option>
+	</select>
+	ID: <input name="to" ><br />
 	<textarea name="message" style="width:400px;height:80px"></textarea><br />
 	<button id="btnMessage">发送消息</button>
 </div>
 
-<div id="messageoutput"></div>
 
 
 
@@ -56,15 +66,28 @@ $("#btnConnect").click(function(){
 				break ;
 
 			default :
-				$("#messageoutput").append("<p>"+data.from.username+"(id:"+data.from.id+") 发来消息："+data.message+"</p>") ;
+				var out = "<p>"+data.from.username+"(id:"+data.from.id+") " ;
+				if(data.room!==undefined)
+				{
+					out+= "[聊天室id:"+data.room+"]" ;
+				}
+				out+= "发来消息："+data.message+"</p>" ;
+
+				$("#messageoutput").append(out) ;
 				break ;
 		}
 	});
 	socket.on('connect',function(){
-		alert("已经连接到服务器") ;
+		$("#messageoutput").append("<p style='color:red'>已经连接到服务器</p>") ;
 	}) ;
 	socket.on('presence',function(doc){
 		console.log('presence：',doc) ;
+	}) ;
+	socket.on('room.join',function(doc){
+		console.log('room.join:',doc) ;
+	}) ;
+	socket.on('room.leave',function(doc){
+		console.log('room.leave:',doc) ;
 	}) ;
 }) ;
 
@@ -73,7 +96,7 @@ $("#btnConnect").click(function(){
 $("#btnSignUp").click(function(){
 	if(!socket)
 	{
-		alert("尚未连接服务器") ;
+		$("#messageoutput").append("<p style='color:red'>尚未连接服务器</p>") ;
 		return ;
 	}
 
@@ -84,15 +107,15 @@ $("#btnSignUp").click(function(){
 	socket.command('signup',data,function(rspn){
 		if(rspn.code=='200')
 		{
-			alert("注册成功，ID:"+rspn.id) ;
+			$("#messageoutput").append("<p style='color:red'>注册成功，ID:</p>"+rspn.id) ;
 		}
 		else if(rspn.code=='405')
 		{
-			alert("用户名已经存在") ;
+			$("#messageoutput").append("<p style='color:red'>用户名已经存在</p>") ;
 		}
 		else
 		{
-			alert("注册错误："+rspn.message) ;
+			$("#messageoutput").append("<p style='color:red'>注册错误：</p>"+rspn.message) ;
 		}
 	}) ;
 }) ;
@@ -102,7 +125,7 @@ $("#btnSignUp").click(function(){
 $("#btnSignIn").click(function(){
 	if(!socket)
 	{
-		alert("尚未连接服务器") ;
+		$("#messageoutput").append("<p style='color:red'>尚未连接服务器</p>") ;
 		return ;
 	}
 
@@ -111,13 +134,14 @@ $("#btnSignIn").click(function(){
 		, password: $("[name=password]").val()
 	}
 	socket.command('signin',data,function(rspn){
+		console.log('signin:',rspn) ;
 		if(rspn.code=='200')
 		{
-			alert("登陆成功，ID:"+rspn.doc.id+" \n"+rspn.message) ;
+			$("#messageoutput").append("<p style='color:red'>登陆成功，ID:"+rspn.doc.id+" \n"+rspn.message+"</p>") ;
 		}
 		else
 		{
-			alert(rspn.message) ;
+			$("#messageoutput").append("<p style='color:red'>"+rspn.message+"</p>") ;
 		}
 	}) ;
 }) ;
@@ -127,18 +151,18 @@ $("#btnSignIn").click(function(){
 $("#btnSignOut").click(function(){
 	if(!socket)
 	{
-		alert("尚未连接服务器") ;
+		$("#messageoutput").append("<p style='color:red'>尚未连接服务器</p>") ;
 		return ;
 	}
 
 	socket.command('signout',{},function(rspn){
 		if(rspn.code=='200')
 		{
-			alert("用户已退出") ;
+			$("#messageoutput").append("<p style='color:red'>用户已退出</p>") ;
 		}
 		else
 		{
-			alert(rspn.message) ;
+			$("#messageoutput").append("<p style='color:red'>"+rspn.message+"</p>") ;
 		}
 	}) ;
 }) ;
@@ -147,22 +171,34 @@ $("#btnSignOut").click(function(){
 $("#btnMessage").click(function(){
 	if(!socket)
 	{
-		alert("尚未连接服务器") ;
+		$("#messageoutput").append("<p style='color:red'>尚未连接服务器</p>") ;
 		return ;
 	}
 
 	var data = {
-		to: $("[name=to]").val()
+		to: undefined
+		, room: undefined
 		, message: $("[name=message]").val()
 	}
-	socket.command('message',data,function(rspn){
+
+	if( $("[name=type]")[0].selectedIndex==0 )
+	{
+		data.to = $("[name=to]").val() ;
+		var cmd = 'message' ;
+	}
+	else
+	{
+		data.room = $("[name=to]").val() ;
+		var cmd = 'room.message' ;
+	}
+	socket.command(cmd,data,function(rspn){
 		if(rspn.code=='200')
 		{
-			alert("消息已经发送") ;
+			$("#messageoutput").append("<p style='color:red'>消息已经发送</p>") ;
 		}
 		else
 		{
-			alert("服务器返回："+rspn.message) ;
+			$("#messageoutput").append("<p style='color:red'>服务器返回："+rspn.message+"</p>") ;
 		}
 	}) ;
 }) ;
