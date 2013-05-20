@@ -216,6 +216,63 @@ data 中的参数
 * group 分组名称 (必须)
 
 
+--
+
+## 创建聊天室：room.create
+
+data参数：
+
+* name (必须)
+* intro (可选)
+
+返回：
+
+room 聊天室信息
+
+
+```javascript
+socket.command(
+	'room.create'
+	, {name:'疯子群',intro:'说疯话的地方'}
+	, function(data){
+		if( data.room!==undefined )
+		{
+			alert("创建聊天室成功，room id："+data.room.id) ;
+		}
+	}
+) ;
+```
+
+## 加入聊天室：room.join
+
+data参数：
+
+* id  聊天室id
+
+`room.join` 会触发同名的 `room.join` 事件，该事件通知所有聊天室内的成员，新成员加入。新成员也会收到该事件。
+
+## 离开聊天室：room.leave
+
+data参数：
+
+* id  聊天室id
+
+触发和命令同名的 `room.leave` 事件，通知所有聊天室内的成员，有成员离开
+
+
+## 聊天室成员列表：room.list
+
+data参数
+
+* id  聊天室id
+
+## 向聊天室发送消息：room.message
+
+data参数
+
+* id  聊天室id
+* message 消息内容
+* time (可选)
 
 
 
@@ -228,14 +285,15 @@ data 中的参数
 
 data 中的参数
 
-* to
-* from
+* to	接受消息的用户id
+* from	发送消息的用户的详细资料
 	* id
 	* username
 	* ... ... 其他注册的字段
 * message 消息文本
 * type 
 * time
+* room 聊天室id，如果为undefined 表示一对一聊天
 
 
 type :
