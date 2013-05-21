@@ -1,102 +1,656 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>真知保护</title>
 
-<link rel="stylesheet" type="text/css"  href="styles/webim.css"/>
-<link rel="stylesheet" type="text/css"  href="styles/webimpage.css"/>
+<script src="jquery-1.9.1.min.js"></script>
+<script src="socket.io.js"></script>
+<script src="nodeim.js"></script>
+
+<link rel="stylesheet" type="text/css" href="styles/webim.css" />
+<link rel="stylesheet" type="text/css" href="styles/webimpage.css" />
 </head>
-<body >
-    <div  class="wChat" style="position: absolute; left: 627px; top: 35px; width: 690px; height: 490px; z-index: 9717;">
-      <div class="wRound_lt"></div>
-      <div class="wRound_rt"></div>
-      <div class="wRound_lb"></div>
-      <div class="wRound_rb"></div>
-      <div class="wResize"></div>
-      <div class="wContent">
-        <div  class="wChatTitle" style="color: rgb(0, 0, 0);">
-          <div  class="wIcon"><img src="http://webos.knowledge.com.cn/webim/images/im/icon.png"></div>
-          <div  class="wText" style="cursor: move;">ww</div>
-          <div  class="wControl">
-            <div class="wControlMin" onmouseover="this.scrollTop='13'" onmouseout="this.scrollTop='0'"><img src="http://webos.knowledge.com.cn/webim/images/im/chatcontrolmin.png" title="最小化"></div>
-            <div class="wControlClose" onmouseover="this.scrollTop='15'" onmouseout="this.scrollTop='0'"><img src="http://webos.knowledge.com.cn/webim/images/im/chatcontrolclose.png" title="关闭"></div>
-          </div>
-        </div>
-        <div  class="wWindowContent" style="background-color: transparent; height: 465px;">
-          <div class="wChatTool" >
-            <div class="wChatSignHolder"  style="width: 530px;">
-              <div class="wChatSign" > &lt;&gt;</div>
-            </div>
-            <div class="wChatToolBar">
-              <div  class="wChatToolBarButton" onmouseover="this.className='wChatToolBarButton wChatToolBarButtonHover'" onmouseout="this.className='wChatToolBarButton'" b="2"> <img src="http://webos.knowledge.com.cn/webim/images/im/chatbuttonblock.png" style="height:30px;width:29px" title="阻止此联系人"> </div>
-              <div  class="wChatToolBarButton" onmouseover="this.className='wChatToolBarButton wChatToolBarButtonHover'" onmouseout="this.className='wChatToolBarButton'"> <img src="images/im/chatbuttonhistory.png" style="height:30px;width:29px" title="查看聊天历史记录"> </div>
-              <div  class="wChatToolBarButton" onmouseover="this.className='wChatToolBarButton wChatToolBarButtonHover'" onmouseout="this.className='wChatToolBarButton'"> <img src="images/im/videochat.png" style="height:30px;width:26px" title="发送视频会话"> </div>
-              <!--视频按钮  -->
-              <div  class="wChatToolBarButton" onmouseover="this.className='wChatToolBarButton wChatToolBarButtonHover'" onmouseout="this.className='wChatToolBarButton'"> <img src="images/im/viocechat.png" style="height:30px;width:32spx" title="发送语音会话"> </div>
-              <div  class="wChatToolBarButton" onmouseover="this.className='wChatToolBarButton wChatToolBarButtonHover'" onmouseout="this.className='wChatToolBarButton'"> <img src="images/im/videostop-gray.png" style="height:30px;width:29px" title="挂断"> </div>
-            </div>
-          </div>
-          <div style="background:#ffc; clear:both">
-		  
-		  
-	  <div style="width:200px;float:left">
-	  
-	  
-	  <div  class="wMainUserContainer" style="height: 52px;">
-              <div  class="wMainUserItem" u onmousedown="_webIM.Common.changeSelItem(this,event)" onmouseup="_webIM.Common.showContextMenu(this,event)" oncontextmenu="function(){return !!0}" ondblclick="var uid = this.getAttribute('uid');if(uid)_webIM.CMD.openChatWindow(uid,true);" style="background-color: rgb(255, 239, 176);">
-                <div class="wMainListButton" onmouseover="this.className='wMainListButton wMainListButtonHover'" onmouseout="this.className='wMainListButton'"><img src="http://webos.knowledge.com.cn/webim/images/im/m3.png" title="查看此人的联系人卡片" style="height:19px;width:19px" onclick="_webIM.CMD.showCard(10000,this.parentNode)"></div>
-                <div class="wMainUserItemText">aarongao&nbsp;&nbsp;<span style="color:#777"></span></div>
-              </div>
-              <div  class="wMainUserItem" u onmousedown="_webIM.Common.changeSelItem(this,event)" onmouseup="_webIM.Common.showContextMenu(this,event)" oncontextmenu="function(){return !!0}" ondblclick="var uid = this.getAttribute('uid');if(uid)_webIM.CMD.openChatWindow(uid,true);" style="">
-                <div class="wMainListButton" onmouseover="this.className='wMainListButton wMainListButtonHover'" onmouseout="this.className='wMainListButton'"><img src="http://webos.knowledge.com.cn/webim/images/im/m3.png" title="查看此人的联系人卡片" style="height:19px;width:19px" onclick="_webIM.CMD.showCard(10098,this.parentNode)"></div>
-                <div class="wMainUserItemText">ww&nbsp;&nbsp;<span style="color:#777"></span></div>
-              </div>
-            </div>	
-	  
-	  </div>
-		  
-		  
-		  
-            <div class="wChatMain"  style="height: 395px; width: 338px;">
-              <div style="border:1px solid #f2b705;background-color:#fff">
-                <div  style="height: 246px; overflow-x: hidden; overflow-y: auto; word-break: break-all; text-align: left;">
-                  <div class="wChatMsgTitle">qq 说 (13：00)：</div>
-                  <div class="wChatMsgContent">ddd</div>
-                </div>
-              </div>
-              <div  class="wChatResize"></div>
-              <div style="border:1px solid #f2b705;background-color:#fff;overflow:hidden">
-                <div class="wChatFaceButtonBar">
-                  <div  class="wChatFaceButton" onmouseover="this.className='wChatFaceButton wChatFaceButtonHover'" onmouseout="this.className='wChatFaceButton'"> <img src="images/im/facebuttonface.png" style="height:23px;width:20px" title="选择图释"> </div>
-                  <div  class="wChatFaceButton" onmouseover="this.className='wChatFaceButton wChatFaceButtonHover'" onmouseout="this.className='wChatFaceButton'"> <img src="images/im/facebuttonflash.png" style="height:23px;width:16px" title="发送闪屏振动"> </div>
-                  <div  class="wChatFaceButton" onmouseover="this.className='wChatFaceButton wChatFaceButtonHover'" onmouseout="this.className='wChatFaceButton'"> <img src="images/im/facebuttonsendimg.png" style="height:23px;width:16px" title="发送图片"> </div>
-                  <div  class="wChatFaceButton" onmouseover="this.className='wChatFaceButton wChatFaceButtonHover'" onmouseout="this.className='wChatFaceButton'"> <img src="images/im/facebuttonsendfile.png" style="height:23px;width:16px" title="发送文件"> </div>
-                </div>
-                <textarea  style="height: 78px; border: 0px; width: 323px; font-size: 12px; overflow: auto; resize: none;"></textarea>
-              </div>
-              <div style="float:right;padding-top:2px">
-                <div style="width:88px">
-                  <div  style="float:left;overflow:hidden;height:21px;width:64px" onmouseup="this.scrollTop='21'" onmousedown="this.scrollTop='42'" onmouseover="this.scrollTop='21'" onmouseout="this.scrollTop='0'"> <img src="images/im/buttonsendmsg.png" title="发送您的消息"> </div>
-                  <div  style="float:left;overflow:hidden;height:21px;width:16px" onmouseup="this.scrollTop='21'" onmousedown="this.scrollTop='42'" onmouseover="this.scrollTop='21'" onmouseout="this.scrollTop='0'"> <img src="images/im/buttonsendtype.png" title="快速回复"> </div>
-                </div>
-              </div>
-            </div>
-            <div class="wChatSide"  style="height: 395px; display: block;">
-              <div  class="wChatUserFace" style="top:5px;left:5px"> <img  src="http://webos.knowledge.com.cn/webim/userface/default.gif" style="width:114px;height:114px;display:block"> </div>
-              <div  class="wChatUserFace" style="bottom:10px;left:5px"> <img  src="http://webos.knowledge.com.cn/webim/userface/default.gif" style="width:114px;height:114px"> </div>
-            </div>
-            <div class="wChatSideBar"  style="height: 395px;"> <img style="display:none" src="http://webos.knowledge.com.cn/webim/images/im/chatsidebutton.png" title="隐藏参与者的显示图片">
-              <!--隐藏头像按钮-->
-            </div>
-            <div  class="wChatResizeBar" style="width: 338px;"></div>
-            <div style="clear:both"></div>
-          </div>
-        </div>
-      </div>
-      <div  class="wLoading" style="display: none;">加载中...</div>
-    </div>
-    <div  class="wLoading" style="display: none;">加载中...</div>
-  </div>
+<body>
+	<div id="divFaceList" class="wChatFaceContainer"
+		style="display: none; top: 152px; left: 833px; width: 305px; height: 216px;">
+		<div class="wChatFaceItem">
+			<img f=":-)"
+				src="msnface/regular_smile.gif"
+				title="笑脸 :-)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f=":-D"
+				src="msnface/teeth_smile.gif"
+				title="咧嘴笑脸 :-D">
+		</div>
+		<div class="wChatFaceItem">
+			<img f=":-O"
+				src="msnface/omg_smile.gif"
+				title="惊讶的笑脸 :-O">
+		</div>
+		<div class="wChatFaceItem">
+			<img f=":-P"
+				src="msnface/tongue_smile.gif"
+				title="吐舌笑脸 :-P">
+		</div>
+		<div class="wChatFaceItem">
+			<img f=";-)"
+				src="msnface/wink_smile.gif"
+				title="眨眼笑脸 ;-)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f=":-("
+				src="msnface/sad_smile.gif"
+				title="悲伤的脸 :-(">
+		</div>
+		<div class="wChatFaceItem">
+			<img f=":-S"
+				src="msnface/confused_smile.gif"
+				title="困惑的笑脸 :-S">
+		</div>
+		<div class="wChatFaceItem">
+			<img f=":-|"
+				src="msnface/what_smile.gif"
+				title="失望的脸 :-|">
+		</div>
+		<div class="wChatFaceItem">
+			<img f=":B"
+				src="msnface/cry_smile.gif"
+				title="哭泣的脸 :B">
+		</div>
+		<div class="wChatFaceItem">
+			<img f=":-$"
+				src="msnface/red_smile.gif"
+				title="尴尬的笑脸 :-$">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(H)"
+				src="msnface/shades_smile.gif"
+				title="热烈的笑脸 (H)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f=":-@"
+				src="msnface/angry_smile.gif"
+				title="生气的脸 :-@">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(A)"
+				src="msnface/angel_smile.gif"
+				title="天使 (A)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(6)"
+				src="msnface/devil_smile.gif"
+				title="恶魔 (6)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f=":-#"
+				src="msnface/47_47.gif"
+				title="保守秘密 :-#">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="8o|"
+				src="msnface/48_48.gif"
+				title="咬牙切齿 8o|">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="8-|"
+				src="msnface/49_49.gif"
+				title="书呆子 8-|">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="^o)"
+				src="msnface/50_50.gif"
+				title="讽刺的脸 ^o)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f=":-*"
+				src="msnface/51_51.gif"
+				title="悄悄话 :-*">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="+o("
+				src="msnface/52_52.gif"
+				title="生病的脸 +o(">
+		</div>
+		<div class="wChatFaceItem">
+			<img f=":^)"
+				src="msnface/71_71.gif"
+				title="不知道 :^)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="*-)"
+				src="msnface/72_72.gif"
+				title="正在思考 *-)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f=":-M"
+				src="msnface/74_74.gif"
+				title="聚会笑脸 :-M">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="8-)"
+				src="msnface/75_75.gif"
+				title="转动眼睛 8-)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="|-)"
+				src="msnface/77_77.gif"
+				title="困了 |-)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(C)"
+				src="msnface/coffee.gif"
+				title="咖啡 (C)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(Y)"
+				src="msnface/thumbs_up.gif"
+				title="太棒了 (Y)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(N)"
+				src="msnface/thumbs_down.gif"
+				title="太差了 (N)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(B)"
+				src="msnface/beer_mug.gif"
+				title="啤酒杯 (B)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(D)"
+				src="msnface/martini.gif"
+				title="高脚杯 (D)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(X)"
+				src="msnface/girl.gif"
+				title="女孩 (X)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(Z)"
+				src="msnface/guy.gif"
+				title="男孩 (Z)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="({)"
+				src="msnface/guy_hug.gif"
+				title="左侧拥抱 ({)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(})"
+				src="msnface/girl_hug.gif"
+				title="右侧拥抱 (})">
+		</div>
+		<div class="wChatFaceItem">
+			<img f=":-["
+				src="msnface/bat.gif"
+				title="吸血蝙蝠 :-[">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(^)"
+				src="msnface/cake.gif"
+				title="生日蛋糕 (^)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(L)"
+				src="msnface/heart.gif"
+				title="红心 (L)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(U)"
+				src="msnface/broken_heart.gif"
+				title="破碎的心 (U)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(K)"
+				src="msnface/kiss.gif"
+				title="红唇 (K)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(G)"
+				src="msnface/present.gif"
+				title="礼品盒 (G)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(F)"
+				src="msnface/rose.gif"
+				title="红玫瑰 (F)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(W)"
+				src="msnface/wilted_rose.gif"
+				title="凋谢的玫瑰 (W)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(P)"
+				src="msnface/camera.gif"
+				title="照相机 (P)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(~)"
+				src="msnface/film.gif"
+				title="电影胶片 (~)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(@)"
+				src="msnface/cat.gif"
+				title="猫脸 (@)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(dog)"
+				src="msnface/dog.gif"
+				title="狗脸 (dog)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(T)"
+				src="msnface/phone.gif"
+				title="电话听筒 (T)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(I)"
+				src="msnface/lightbulb.gif"
+				title="灯泡 (I)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(8)"
+				src="msnface/note.gif"
+				title="音符 (8)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(S)"
+				src="msnface/moon.gif"
+				title="沉睡的弯月 (S)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(*)"
+				src="msnface/star.gif"
+				title="星星 (*)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(E)"
+				src="msnface/envelope.gif"
+				title="电子邮件 (E)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(O)"
+				src="msnface/clock.gif"
+				title="时钟 (O)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(M)"
+				src="msnface/messenger.gif"
+				title="MSN Messenger 图标 (M)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(sn)"
+				src="msnface/53_53.gif"
+				title="蜗牛 (sn)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(bah)"
+				src="msnface/70_70.gif"
+				title="黑羊 (bah)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(pl)"
+				src="msnface/55_55.gif"
+				title="餐盘 (pl)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(||)"
+				src="msnface/56_56.gif"
+				title="餐具 (||)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(pi)"
+				src="msnface/57_57.gif"
+				title="比萨 (pi)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(so)"
+				src="msnface/58_58.gif"
+				title="足球 (so)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(au)"
+				src="msnface/59_59.gif"
+				title="汽车 (au)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(ap)"
+				src="msnface/60_60.gif"
+				title="飞机 (ap)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(um)"
+				src="msnface/61_61.gif"
+				title="雨伞 (um)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(ip)"
+				src="msnface/62_62.gif"
+				title="有棕榈树的小岛 (ip)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(co)"
+				src="msnface/63_63.gif"
+				title="计算机 (co)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(mp)"
+				src="msnface/64_64.gif"
+				title="移动电话 (mp)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(st)"
+				src="msnface/66_66.gif"
+				title="乌云 (st)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(li)"
+				src="msnface/73_73.gif"
+				title="闪电 (li)">
+		</div>
+		<div class="wChatFaceItem">
+			<img f="(mo)"
+				src="msnface/69_69.gif"
+				title="金钱 (mo)">
+		</div>
+	</div>
+	<div class="wChat"
+		style="position: absolute;  width: 690px; height: 490px; z-index: 9717;">
+		<div class="wRound_lt"></div>
+		<div class="wRound_rt"></div>
+		<div class="wRound_lb"></div>
+		<div class="wRound_rb"></div>
+		<div class="wResize"></div>
+		<div class="wContent">
+			<div class="wChatTitle" style="color: rgb(0, 0, 0);">
+				<div class="wIcon">
+					<img src="images/im/icon.png">
+				</div>
+				<div class="wText" style="cursor: move;">ww</div>
+				<div class="wControl">
+					<div class="wControlMin" onmouseover="this.scrollTop='13'"
+						onmouseout="this.scrollTop='0'">
+						<img src="images/im/chatcontrolmin.png" title="最小化">
+					</div>
+					<div class="wControlClose" onmouseover="this.scrollTop='15'"
+						onmouseout="this.scrollTop='0'">
+						<img src="images/im/chatcontrolclose.png" title="关闭">
+					</div>
+				</div>
+			</div>
+			<div class="wWindowContent"
+				style="background-color: transparent; height: 465px;">
+				<div class="wChatTool">
+					<div class="wChatSignHolder" style="width: 530px;">
+						<div class="wChatSign">&lt;&gt;</div>
+					</div>
+					<div class="wChatToolBar">
+						<div class="wChatToolBarButton"
+							onmouseover="this.className='wChatToolBarButton wChatToolBarButtonHover'"
+							onmouseout="this.className='wChatToolBarButton'" b="2">
+							<img src="images/im/chatbuttonblock.png"
+								style="height: 30px; width: 29px" title="阻止此联系人">
+						</div>
+						<div class="wChatToolBarButton"
+							onmouseover="this.className='wChatToolBarButton wChatToolBarButtonHover'"
+							onmouseout="this.className='wChatToolBarButton'">
+							<img src="images/im/chatbuttonhistory.png"
+								style="height: 30px; width: 29px" title="查看聊天历史记录">
+						</div>
+						<div class="wChatToolBarButton"
+							onmouseover="this.className='wChatToolBarButton wChatToolBarButtonHover'"
+							onmouseout="this.className='wChatToolBarButton'">
+							<img src="images/im/videochat.png"
+								style="height: 30px; width: 26px" title="发送视频会话">
+						</div>
+						<!--视频按钮  -->
+						<div class="wChatToolBarButton"
+							onmouseover="this.className='wChatToolBarButton wChatToolBarButtonHover'"
+							onmouseout="this.className='wChatToolBarButton'">
+							<img src="images/im/viocechat.png"
+								style="height: 30px; width: 32spx" title="发送语音会话">
+						</div>
+						<div class="wChatToolBarButton"
+							onmouseover="this.className='wChatToolBarButton wChatToolBarButtonHover'"
+							onmouseout="this.className='wChatToolBarButton'">
+							<img src="images/im/videostop-gray.png"
+								style="height: 30px; width: 29px" title="挂断">
+						</div>
+					</div>
+				</div>
+				<div style="background: #ffc; clear: both">
+
+
+					<div style="width: 200px; float: left">
+
+
+						<div class="wMainUserContainer" style="height: 52px;">
+							<div class="wMainUserItem" u
+								onmousedown="_webIM.Common.changeSelItem(this,event)"
+								onmouseup="_webIM.Common.showContextMenu(this,event)"
+								oncontextmenu="function(){return !!0}"
+								ondblclick="var uid = this.getAttribute('uid');if(uid)_webIM.CMD.openChatWindow(uid,true);"
+								style="background-color: rgb(255, 239, 176);">
+								<div class="wMainListButton"
+									onmouseover="this.className='wMainListButton wMainListButtonHover'"
+									onmouseout="this.className='wMainListButton'">
+									<img src="images/im/m3.png" title="查看此人的联系人卡片"
+										style="height: 19px; width: 19px"
+										onclick="_webIM.CMD.showCard(10000,this.parentNode)">
+								</div>
+								<div class="wMainUserItemText">
+									aarongao&nbsp;&nbsp;<span style="color: #777"></span>
+								</div>
+							</div>
+							<div class="wMainUserItem" u
+								onmousedown="_webIM.Common.changeSelItem(this,event)"
+								onmouseup="_webIM.Common.showContextMenu(this,event)"
+								oncontextmenu="function(){return !!0}"
+								ondblclick="var uid = this.getAttribute('uid');if(uid)_webIM.CMD.openChatWindow(uid,true);"
+								style="">
+								<div class="wMainListButton"
+									onmouseover="this.className='wMainListButton wMainListButtonHover'"
+									onmouseout="this.className='wMainListButton'">
+									<img src="images/im/m3.png" title="查看此人的联系人卡片"
+										style="height: 19px; width: 19px"
+										onclick="_webIM.CMD.showCard(10098,this.parentNode)">
+								</div>
+								<div class="wMainUserItemText">
+									ww&nbsp;&nbsp;<span style="color: #777"></span>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+
+
+					<div class="wChatMain" style="height: 395px; width: 338px;">
+						<div style="border: 1px solid #f2b705; background-color: #fff" >
+							<div
+								style="height: 246px; overflow-x: hidden; overflow-y: auto; word-break: break-all; text-align: left;" id="messageoutput">
+								<div class="wChatMsgTitle">qq 说 (13：00)：</div>
+								<div class="wChatMsgContent">ddd</div>
+							</div>
+						</div>
+						<div class="wChatResize" id="wChatResize"></div>
+						<div
+							style="border: 1px solid #f2b705; background-color: #fff; overflow: hidden">
+							<div class="wChatFaceButtonBar">
+								<div class="wChatFaceButton"
+									onmouseover="this.className='wChatFaceButton wChatFaceButtonHover'"
+									onmouseout="this.className='wChatFaceButton'">
+									<img src="images/im/facebuttonface.png"
+										style="height: 23px; width: 20px" title="选择图释" onclick="toggleFice()">
+								</div>
+								<div class="wChatFaceButton"
+									onmouseover="this.className='wChatFaceButton wChatFaceButtonHover'"
+									onmouseout="this.className='wChatFaceButton'">
+									<img src="images/im/facebuttonflash.png"
+										style="height: 23px; width: 16px" title="发送闪屏振动">
+								</div>
+								<div class="wChatFaceButton"
+									onmouseover="this.className='wChatFaceButton wChatFaceButtonHover'"
+									onmouseout="this.className='wChatFaceButton'">
+									<img src="images/im/facebuttonsendimg.png"
+										style="height: 23px; width: 16px" title="发送图片">
+								</div>
+								<div class="wChatFaceButton"
+									onmouseover="this.className='wChatFaceButton wChatFaceButtonHover'"
+									onmouseout="this.className='wChatFaceButton'">
+									<img src="images/im/facebuttonsendfile.png"
+										style="height: 23px; width: 16px" title="发送文件">
+								</div>
+							</div>
+							<textarea
+								style="height: 78px; border: 0px; width: 323px; font-size: 12px; overflow: auto; resize: none;" id="message"></textarea>
+						</div>
+						<div style="float: right; padding-top: 2px">
+							<div style="width: 88px">
+								<div
+									style="float: left; overflow: hidden; height: 21px; width: 64px"
+									onmouseup="this.scrollTop='21'"
+									onmousedown="this.scrollTop='42'"
+									onmouseover="this.scrollTop='21'"
+									onmouseout="this.scrollTop='0'">
+									<img src="images/im/buttonsendmsg.png" title="发送您的消息" id="btnSendMessage">
+								</div>
+								<div
+									style="float: left; overflow: hidden; height: 21px; width: 16px"
+									onmouseup="this.scrollTop='21'"
+									onmousedown="this.scrollTop='42'"
+									onmouseover="this.scrollTop='21'"
+									onmouseout="this.scrollTop='0'">
+									<img src="images/im/buttonsendtype.png" title="快速回复" onclick="toggleMenuMsgSend()">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="wChatSide" style="height: 395px; display: block;">
+						<div class="wChatUserFace" style="top: 5px; left: 5px">
+							<img src="userface/default.gif"
+								style="width: 114px; height: 114px; display: block">
+						</div>
+						<div class="wChatUserFace" style="bottom: 10px; left: 5px">
+							<img src="userface/default.gif"
+								style="width: 114px; height: 114px">
+						</div>
+					</div>
+					<div class="wChatSideBar" style="height: 395px;">
+						<img style="display: none" src="images/im/chatsidebutton.png"
+							title="隐藏参与者的显示图片"> <!--隐藏头像按钮-->
+					</div>
+					<div id="wChatResizeBar" class="wChatResizeBar" style="width: 338px;"></div>
+					<div style="clear: both"></div>
+				</div>
+			</div>
+		</div>
+		<div class="wLoading" style="display: none;">加载中...</div>
+	</div>
+	<div class="wLoading" style="display: none;">加载中...</div>
+	</div>
+	<div id="menuMsgSend" class="sysMenu"
+	style="width: 175px; height: 127px; top: 463px; left: 1107px; display: none;">
+	<div onselectstart="return false;" class="sysMenuItemWithIcon"
+		onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
+		onmouseout="this.className='sysMenuItemWithIcon'"
+		onclick="Evt.NoBubble(event);Elem.Hid('menuMsgSendKey10052Type1');Elem.Value('wChatInputId10052Type1','哦');_webIM.CMD.sendMessage(10052)">哦</div>
+	<div onselectstart="return false;" class="sysMenuItemWithIcon"
+		onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
+		onmouseout="this.className='sysMenuItemWithIcon'"
+		onclick="Evt.NoBubble(event);Elem.Hid('menuMsgSendKey10052Type1');Elem.Value('wChatInputId10052Type1','好吧');_webIM.CMD.sendMessage(10052)">好吧</div>
+	<div onselectstart="return false;" class="sysMenuItemWithIcon"
+		onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
+		onmouseout="this.className='sysMenuItemWithIcon'"
+		onclick="Evt.NoBubble(event);Elem.Hid('menuMsgSendKey10052Type1');Elem.Value('wChatInputId10052Type1','我得下了，拜拜!');_webIM.CMD.sendMessage(10052)">我得下了，拜拜!</div>
+	<div onselectstart="return false;" class="sysMenuItemDisabled"></div>
+	<div onselectstart="return false;" class="sysMenuItemWithIcon"
+		onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover';this.style.backgroundImage='url(http://webos.knowledge.com.cn/webim/images/selectedhover.gif)'"
+		onmouseout="this.className='sysMenuItemWithIcon';this.style.backgroundImage='url(http://webos.knowledge.com.cn/webim/images/selected.gif)'"
+		style="background-image: url(http://webos.knowledge.com.cn/webim/images/selected.gif)"
+		onclick="Evt.NoBubble(event);Elem.Hid('menuMsgSendKey10052Type1');_webIM.Config.MsgSendKey=1">按Enter
+		键发送消息</div>
+	<div onselectstart="return false;" class="sysMenuItemWithIcon"
+		onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
+		onmouseout="this.className='sysMenuItemWithIcon'"
+		onclick="Evt.NoBubble(event);Elem.Hid('menuMsgSendKey10052Type1');_webIM.Config.MsgSendKey=2">按Ctrl+Enter
+		键发送消息</div>
+</div>
+
+	<script>
+	$("#btnSendMessage").click(function(){
+		
+		nodeim.connect();
+
+		var data = {
+			to: "3"
+			, room: "3"
+			, message: $("#message").val()
+		}
+		var cmd = 'message' ;
+		
+		nodeim.socket.command(cmd,data,function(rspn){
+			if(rspn.code=='200')
+			{
+				alert("<p style='color:red'>消息已经发送</p>");
+			}
+			else
+			{
+				alert("<p style='color:red'>服务器返回："+rspn.message+"</p>");
+			}
+		}) ;
+	}) ;
+	
+	jQuery(".wMainUserItem").click(function(){
+		
+		jQuery(".wMainUserItem").each(function(){
+			jQuery(this).css("background-color","");
+		})
+		jQuery(this).css("background-color","rgb(255, 239, 176)");
+	})
+	
+	function toggleFice(){
+		jQuery("#divFaceList").toggle();
+	}
+	jQuery(".wChatFaceItem").children("img").click(function(){
+		toggleFice();
+		$("#message").append( jQuery(this).attr("f")) ;
+	})
+	
+	jQuery("#wChatResize").mousedown(function(e){
+		
+		
+		jQuery("#wChatResizeBar")
+		jQuery("#wChatResizeBar").css( "top", 85 + parseInt( jQuery("#messageoutput").height()))
+		jQuery("#wChatResizeBar").show();
+		var _cb = e.clientY - parseInt(jQuery("#wChatResizeBar").css("top"));
+
+		document.onmousemove = function(e)
+		{
+			jQuery("#wChatResizeBar").css( "top", e.clientY - _cb)
+		};
+		document.onmouseup = function(e)
+		{
+			jQuery("#messageoutput").css( "height", parseInt( jQuery("#wChatResizeBar").css("top"))-90);
+			jQuery("#message").css( "height", parseInt( jQuery(".wChatMain").height()) - parseInt( jQuery("#messageoutput").height())-71);
+			document.onmousemove = document.onmouseup = null;
+			jQuery("#wChatResizeBar").hide();
+		};
+	})
+	
+	function toggleMenuMsgSend(){
+		
+		jQuery("#menuMsgSend").css( "top" , parseInt(jQuery(".wChat").height()) - 15);
+		jQuery("#menuMsgSend").css( "left" , parseInt(jQuery(".wChat").width()) - 168);
+		
+		jQuery("#menuMsgSend").toggle();
+	}
+	</script>
 </body>
 </html>
