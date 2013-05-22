@@ -183,7 +183,6 @@ body {
 .wChatMain {
 	height: 430px;
 	padding: 0px 2px 3px 4px;
-	float: left;
 }
 
 .wChatSide {
@@ -241,7 +240,6 @@ body {
 
 .wChatResizeBar {
 	position: absolute;
-	left: 204px;
 	background-color: #f25c05;
 	filter: alpha(opacity =                                     60);
 	opacity: 0.6;
@@ -335,7 +333,6 @@ body {
 .wMain {
 	width: 266px;
 	height: 620px;
-	right: 60px;
 	position: absolute;
 	border: 1px solid #FF6C00;
 	-webkit-border-radius: 4px;
@@ -382,7 +379,7 @@ body {
 }
 
 .wMainUserInfoRight {
-	float: right;
+	float: left;
 	width: 134px;
 	overflow: hidden;
 	white-space: nowrap;

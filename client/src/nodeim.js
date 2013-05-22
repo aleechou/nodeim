@@ -35,7 +35,8 @@ nodeim.connect = function (){
 					}
 					out+= '<div class="wChatMsgContent">'+data.message+'</div>' ;
 
-					$("#messageoutput").append(out) ;
+					var div = $("#ii")[0].contentWindow.document.getElementById("messageoutput") ;
+					jQuery(div).append(out);
 					break ;
 			}
 		});
