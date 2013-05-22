@@ -9,6 +9,7 @@ nodeim.server = "http://zj001.wonei.com:8765";
  */
 nodeim.connect = function (){
 	
+	
 	if( nodeim.socket == null ){
 		
 		nodeim.socket = io.connect(nodeim.server) ;
@@ -25,41 +26,35 @@ nodeim.connect = function (){
 				case 'agree' :
 					$("#messageoutput").append("<p>"+data.from.username+"(id:"+data.from.id+") 同意了你的好友请求："+data.message+"</p>") ;
 					break ;
-		
+
 				default :
-					$("#messageoutput").append("<p>"+data.from.username+"(id:"+data.from.id+") 发来消息："+data.message+"</p>") ;
+					var out = '<div class="wChatMsgTitle">'+data.from.username+'(id:'+data.from.id+') 说 ('+nodeim.getLocalTime(data.time)+')：</div>' ;
+					if(data.room!==undefined)
+					{
+						out+= "[聊天室id:"+data.room+"]" ;
+					}
+					out+= '<div class="wChatMsgContent">'+data.message+'</div>' ;
+
+					var div = $("#ii")[0].contentWindow.document.getElementById("messageoutput") ;
+					jQuery(div).append(out);
 					break ;
 			}
 		});
 		nodeim.socket.on('connect',function(){
-			console.log('连接服务器成功') ;
+			$("#messageoutput").append("<p style='color:red'>已经连接到服务器</p>") ;
 		}) ;
 		nodeim.socket.on('presence',function(doc){
 			console.log('presence：',doc) ;
 		}) ;
+		nodeim.socket.on('room.join',function(doc){
+			console.log('room.join:',doc) ;
+		}) ;
+		nodeim.socket.on('room.leave',function(doc){
+			console.log('room.leave:',doc) ;
+		}) ;
 	}
 }
 
-/**
- * login
- */
-nodeim.login = function( name, passwd){
-	
-	nodeim.connect();
-	
-	var data = {
-		username: name
-		, password: passwd
-	}
-	nodeim.socket.command('signin',data,function(rspn){
-		if(rspn.code=='200')
-		{
-			alert("登陆成功，ID:"+rspn.doc.id+" \n"+rspn.message) ;
-		}
-		else
-		{
-			alert(rspn.message) ;
-		}
-	}) ;
-	
-}
+nodeim.getLocalTime = function(nS) {     
+	return new Date(parseInt(nS)).toLocaleString().substr(13,20)
+} 
