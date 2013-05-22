@@ -1,0 +1,165 @@
+[2012-10-15 17:31:36] [debug] : ========================================== 
+[2012-10-15 17:31:36] [debug] : compile date :  "Sep 19 2012" 
+[2012-10-15 17:31:36] [debug] : compile time :  "16:15:02" 
+[2012-10-15 17:31:36] [debug] : "watershell" 
+[2012-10-15 17:31:36] [debug] : "1.4.0.41" 
+[2012-10-15 17:31:36] [debug] :  
+[2012-10-15 17:31:36] [debug] : begin load style sheet 
+[2012-10-15 17:31:36] [debug] : load style sheet success 
+[2012-10-15 17:31:36] [debug] : local name: "zh_CN" 
+[2012-10-15 17:31:36] [debug] : item: "qt" 
+[2012-10-15 17:31:36] [debug] : file path: "F:/water/ws_fr_wf_120929_1427/translations/qt_zh_CN.qm" 
+[2012-10-15 17:31:36] [debug] : item: "watershell" 
+[2012-10-15 17:31:36] [debug] : file path: "F:/water/ws_fr_wf_120929_1427/translations/watershell_zh_CN.qm" 
+[2012-10-15 17:31:43] [debug] : Unknown property overflow
+[2012-10-15 17:31:43] [debug] : Unknown property text-shadow
+[2012-10-15 17:31:44] [debug] : Unknown property overflow
+[2012-10-15 17:31:44] [debug] : Unknown property text-shadow
+[2012-10-15 17:31:44] [debug] : run 
+[2012-10-15 17:31:45] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/" )  
+[2012-10-15 17:31:50] [debug] : ~WebView 
+[2012-10-15 17:32:26] [debug] : ========================================== 
+[2012-10-15 17:32:26] [debug] : compile date :  "Sep 19 2012" 
+[2012-10-15 17:32:26] [debug] : compile time :  "16:15:02" 
+[2012-10-15 17:32:26] [debug] : "watershell" 
+[2012-10-15 17:32:26] [debug] : "1.4.0.41" 
+[2012-10-15 17:32:26] [debug] :  
+[2012-10-15 17:32:26] [debug] : begin load style sheet 
+[2012-10-15 17:32:26] [debug] : load style sheet success 
+[2012-10-15 17:32:26] [debug] : local name: "zh_CN" 
+[2012-10-15 17:32:26] [debug] : item: "qt" 
+[2012-10-15 17:32:26] [debug] : file path: "C:/Users/hejie/Desktop/¡Á?¨¤¡ä??3¡ì/client/ws_fr_wf_120929_1427/translations/qt_zh_CN.qm" 
+[2012-10-15 17:32:26] [debug] : item: "watershell" 
+[2012-10-15 17:32:26] [debug] : file path: "C:/Users/hejie/Desktop/¡Á?¨¤¡ä??3¡ì/client/ws_fr_wf_120929_1427/translations/watershell_zh_CN.qm" 
+[2012-10-15 17:32:26] [debug] : Unknown property overflow
+[2012-10-15 17:32:26] [debug] : Unknown property text-shadow
+[2012-10-15 17:32:26] [debug] : Unknown property overflow
+[2012-10-15 17:32:26] [debug] : Unknown property text-shadow
+[2012-10-15 17:32:27] [debug] : run 
+[2012-10-15 17:32:27] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/" )  
+[2012-10-15 17:32:36] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/" )  
+[2012-10-15 17:32:39] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=index" )  
+[2012-10-15 17:32:43] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.output.BaoGao" )  
+[2012-10-15 17:32:48] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.Dispatch.MinMaxAmount" )  
+[2012-10-15 17:32:52] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.Personnel.Statistics" )  
+[2012-10-15 17:32:55] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.Business.ResidentWaterStatistics" )  
+[2012-10-15 17:32:57] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.Personnel.Statistics" )  
+[2012-10-15 17:33:02] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.output.BaoGao" )  
+[2012-10-15 17:33:09] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.index.Index" )  
+[2012-10-15 17:34:54] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.Business.ResidentWaterStatistics" )  
+[2012-10-15 17:34:57] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.Personnel.Statistics" )  
+[2012-10-15 17:35:01] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.Dispatch.MinMaxAmount" )  
+[2012-10-15 17:35:05] [debug] : WaterShellObject::executeProgramInNewTab path= "Maxthon2/Maxthon.exe" 
+[2012-10-15 17:35:05] [debug] : working directory: "Maxthon2" 
+[2012-10-15 17:35:06] [debug] : Unknown property overflow
+[2012-10-15 17:35:06] [debug] : Unknown property text-shadow
+[2012-10-15 17:35:06] [debug] : WindowGraber 
+[2012-10-15 17:35:09] [debug] : setParent child: 0x210ce  new parent: 0x110da  rtn: 0x10010 
+[2012-10-15 17:35:09] [debug] : WindowGraber parent widget rect: QRect(0,0 1680x971) 
+[2012-10-15 17:35:23] [debug] : Unknown property overflow
+[2012-10-15 17:35:23] [debug] : Unknown property text-shadow
+[2012-10-15 17:35:27] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.index.Index" )  
+[2012-10-15 17:35:45] [debug] : ~WindowGraber 
+[2012-10-15 17:35:45] [debug] : setParent child: 0x210ce  new parent: 0x0  rtn: 0x110da 
+[2012-10-15 17:35:50] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.Business.ResidentWaterStatistics" )  
+[2012-10-15 17:35:54] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.index.Index" )  
+[2012-10-15 17:36:10] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.index.Index" )  
+[2012-10-15 17:36:13] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.Business.RecoverDebtsList" )  
+[2012-10-15 17:36:16] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.index.Index" )  
+[2012-10-15 17:36:18] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.Business.ResidentWaterStatistics" )  
+[2012-10-15 17:36:21] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.index.Index" )  
+[2012-10-15 17:36:22] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.Business.SalesWater" )  
+[2012-10-15 17:36:25] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.index.Index" )  
+[2012-10-15 17:36:26] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.Personnel.Statistics" )  
+[2012-10-15 17:36:28] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.index.Index" )  
+[2012-10-15 17:36:38] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.output.BaoGao" )  
+[2012-10-15 17:36:44] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.input.XiaoShouJieGouDuiBi" )  
+[2012-10-15 17:36:49] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.output.BaoGao" )  
+[2012-10-15 17:36:54] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.input.GouXiaoChaLvFenJie" )  
+[2012-10-15 17:36:55] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=login&forward=http://dlsong.9966.org:9090/?c=org.opencomb.water.input.GouXiaoChaLvFenJie" )  
+[2012-10-15 17:37:18] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=login&forward=http://dlsong.9966.org:9090/?c=org.opencomb.water.input.GouXiaoChaLvFenJie" )  
+[2012-10-15 17:37:20] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=index" )  
+[2012-10-15 17:37:29] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.output.BaoGao" )  
+[2012-10-15 17:37:34] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.Dispatch.MinMaxAmount" )  
+[2012-10-15 17:37:37] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.output.BaoGao" )  
+[2012-10-15 17:37:54] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.Dispatch.MinMaxAmount" )  
+[2012-10-15 17:38:05] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.Dispatch.LargeUsers" )  
+[2012-10-15 17:38:10] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.Personnel.Statistics" )  
+[2012-10-15 17:38:41] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.output.BaoGao" )  
+[2012-10-15 17:38:43] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.index.Index" )  
+[2012-10-15 17:38:55] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.Business.SalesWater" )  
+[2012-10-15 17:39:00] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.index.Index" )  
+[2012-10-15 17:50:00] [debug] : ~WebView 
+[2012-10-15 18:09:29] [debug] : ========================================== 
+[2012-10-15 18:09:29] [debug] : compile date :  "Sep 19 2012" 
+[2012-10-15 18:09:29] [debug] : compile time :  "16:15:02" 
+[2012-10-15 18:09:29] [debug] : "watershell" 
+[2012-10-15 18:09:29] [debug] : "1.4.0.41" 
+[2012-10-15 18:09:29] [debug] :  
+[2012-10-15 18:09:29] [debug] : begin load style sheet 
+[2012-10-15 18:09:29] [debug] : load style sheet success 
+[2012-10-15 18:09:29] [debug] : local name: "zh_CN" 
+[2012-10-15 18:09:29] [debug] : item: "qt" 
+[2012-10-15 18:09:29] [debug] : file path: "C:/Users/hejie/Desktop/¡Á?¨¤¡ä??3¡ì/client/ws_fr_wf_120929_1427/translations/qt_zh_CN.qm" 
+[2012-10-15 18:09:29] [debug] : item: "watershell" 
+[2012-10-15 18:09:29] [debug] : file path: "C:/Users/hejie/Desktop/¡Á?¨¤¡ä??3¡ì/client/ws_fr_wf_120929_1427/translations/watershell_zh_CN.qm" 
+[2012-10-15 18:09:29] [debug] : Unknown property overflow
+[2012-10-15 18:09:29] [debug] : Unknown property text-shadow
+[2012-10-15 18:09:29] [debug] : Unknown property overflow
+[2012-10-15 18:09:29] [debug] : Unknown property text-shadow
+[2012-10-15 18:09:29] [debug] : run 
+[2012-10-15 18:09:30] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/" )  
+[2012-10-15 18:10:18] [debug] : Unknown property overflow
+[2012-10-15 18:10:18] [debug] : Unknown property text-shadow
+[2012-10-15 18:10:19] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.Personnel.Statistics" )  
+[2012-10-15 18:10:26] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.Dispatch.MinMaxAmount" )  
+[2012-10-15 18:10:30] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.Dispatch.LargeUsers" )  
+[2012-10-15 18:10:32] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.output.BaoGao" )  
+[2012-10-15 18:10:39] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/?c=org.opencomb.water.index.Index" )  
+[2012-10-15 18:10:42] [debug] : ~WebView 
+[2012-10-30 09:57:35] [debug] : ========================================== 
+[2012-10-30 09:57:35] [debug] : compile date :  "Sep 19 2012" 
+[2012-10-30 09:57:35] [debug] : compile time :  "16:15:02" 
+[2012-10-30 09:57:35] [debug] : "watershell" 
+[2012-10-30 09:57:35] [debug] : "1.4.0.41" 
+[2012-10-30 09:57:35] [debug] :  
+[2012-10-30 09:57:35] [debug] : begin load style sheet 
+[2012-10-30 09:57:35] [debug] : load style sheet success 
+[2012-10-30 09:57:35] [debug] : local name: "zh_CN" 
+[2012-10-30 09:57:35] [debug] : item: "qt" 
+[2012-10-30 09:57:35] [debug] : file path: "C:/Users/hejie/Desktop/¡Á?¨¤¡ä??3¡ì/client/ws_fr_wf_120929_1427/translations/qt_zh_CN.qm" 
+[2012-10-30 09:57:35] [debug] : item: "watershell" 
+[2012-10-30 09:57:35] [debug] : file path: "C:/Users/hejie/Desktop/¡Á?¨¤¡ä??3¡ì/client/ws_fr_wf_120929_1427/translations/watershell_zh_CN.qm" 
+[2012-10-30 09:57:36] [debug] : Unknown property overflow
+[2012-10-30 09:57:36] [debug] : Unknown property text-shadow
+[2012-10-30 09:57:36] [debug] : Unknown property overflow
+[2012-10-30 09:57:36] [debug] : Unknown property text-shadow
+[2012-10-30 09:57:37] [debug] : run 
+[2012-10-30 09:57:37] [debug] : on_urlChanged  QUrl( "http://dlsong.9966.org:9090/" )  
+[2012-10-30 10:32:08] [debug] : ~WebView 
+[2013-05-22 15:42:26] [debug] : ========================================== 
+[2013-05-22 15:42:26] [debug] : compile date :  "Sep 19 2012" 
+[2013-05-22 15:42:26] [debug] : compile time :  "16:15:02" 
+[2013-05-22 15:42:26] [debug] : "watershell" 
+[2013-05-22 15:42:26] [debug] : "1.4.0.41" 
+[2013-05-22 15:42:26] [debug] :  
+[2013-05-22 15:42:26] [debug] : begin load style sheet 
+[2013-05-22 15:42:26] [debug] : can not open file style/style.qss 
+[2013-05-22 15:42:26] [debug] : local name: "zh_CN" 
+[2013-05-22 15:42:26] [debug] : item: "qt" 
+[2013-05-22 15:42:26] [debug] : file path: "D:/project/im/client/shell/bin/translations/qt_zh_CN.qm" 
+[2013-05-22 15:42:27] [debug] : run 
+[2013-05-22 15:42:32] [debug] : ~WebView 
+[2013-05-22 15:43:21] [debug] : ========================================== 
+[2013-05-22 15:43:21] [debug] : compile date :  "Sep 19 2012" 
+[2013-05-22 15:43:21] [debug] : compile time :  "16:15:02" 
+[2013-05-22 15:43:21] [debug] : "watershell" 
+[2013-05-22 15:43:21] [debug] : "1.4.0.41" 
+[2013-05-22 15:43:21] [debug] :  
+[2013-05-22 15:43:21] [debug] : begin load style sheet 
+[2013-05-22 15:43:21] [debug] : can not open file style/style.qss 
+[2013-05-22 15:43:21] [debug] : local name: "zh_CN" 
+[2013-05-22 15:43:21] [debug] : item: "qt" 
+[2013-05-22 15:43:21] [debug] : file path: "D:/project/im/client/shell/bin/translations/qt_zh_CN.qm" 
+[2013-05-22 15:43:21] [debug] : run 
+[2013-05-22 15:43:23] [debug] : ~WebView 
