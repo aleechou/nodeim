@@ -2,6 +2,8 @@
 // kate shell 加载完成事件
 function onKateLoaded()
 {
+	kate.window.show() ;
+
 	// 按钮事件
 	$("#btnOpenConsole").click(function(){
 		kateapi.inspector(kateapi.wndId) ;
