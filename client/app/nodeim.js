@@ -9,12 +9,12 @@ nodeim.server = "http://zj001.wonei.com:8765";
  */
 nodeim.connect = function (){
 	
-	
 	if( nodeim.socket == null ){
 		
 		nodeim.socket = io.connect(nodeim.server) ;
 		nodeim.socket.on('message', function (data) {
 			console.log("收到消息：",data);
+			
 			switch(data.type)
 			{
 				case 'request-subscription' :
@@ -55,6 +55,50 @@ nodeim.connect = function (){
 	}
 }
 
+nodeim.login = function(u,p){
+	
+	nodeim.connect();
+	
+	var data = {
+			username : u,
+			password : p
+	}
+
+	function loginCallBack(rspn) {
+		
+		if (rspn.code == '200') {
+			alert("登陆成功，ID:" + rspn.doc.id + " \n" + rspn.message);
+			
+		} else {
+			alert(rspn.message);
+		};
+	}
+	nodeim.socket.command('signin',data,loginCallBack);
+}
+
+nodeim.message = function(data){
+	
+	nodeim.connect();
+	
+	nodeim.socket.command("message",data,function(rspn){
+		if(rspn.code=='200')
+		{
+			alert("<p style='color:red'>消息已经发送</p>");
+		}
+		else
+		{
+			alert("<p style='color:red'>服务器返回："+rspn.message+"</p>");
+		}
+	}) ;
+}
+
+
+
+
+
+
+
 nodeim.getLocalTime = function(nS) {     
 	return new Date(parseInt(nS)).toLocaleString().substr(13,20)
 } 
+

@@ -122,6 +122,9 @@ var io = ('undefined' === typeof module ? {} : module.exports);
       delete this._pkgcallbacks[pkg.id] ;
     }) ;
     socket.command = function(cmd,data,callback){
+    	
+    	console.log(callback)
+    	
       var pkg = {
         id: this._pkgid ++
         , data: data

@@ -5,8 +5,6 @@
 <title>真知保护</title>
 
 <script src="jquery-1.9.1.min.js"></script>
-<script src="socket.io.js"></script>
-<script src="nodeim.js"></script>
 
 <link rel="stylesheet" type="text/css" href="styles/webim.css" />
 <link rel="stylesheet" type="text/css" href="styles/webimpage.css" />
@@ -590,27 +588,14 @@
 	<script>
 	$("#btnSendMessage").click(function(){
 		
-		var serv = parent.nodeim;
-		
-		serv.connect();
-
 		var data = {
 			to: "3"
 			, room: "3"
 			, message: $("#message").val()
 		}
-		var cmd = 'message' ;
 		
-		serv.socket.command(cmd,data,function(rspn){
-			if(rspn.code=='200')
-			{
-				alert("<p style='color:red'>消息已经发送</p>");
-			}
-			else
-			{
-				alert("<p style='color:red'>服务器返回："+rspn.message+"</p>");
-			}
-		}) ;
+		kate.parentWindow.call("nodeim.message",[data]) ;
+		
 	}) ;
 	
 	jQuery(".wMainUserItem").click(function(){

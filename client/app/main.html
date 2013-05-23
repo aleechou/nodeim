@@ -142,7 +142,7 @@
 							onmousedown="_webIM.Common.changeSelItem(this,event)"
 							onmouseup="_webIM.Common.showContextMenu(this,event)"
 							oncontextmenu="function(){return !!0}"
-							ondblclick="var uid = this.getAttribute('uid');if(uid)_webIM.CMD.openChatWindow(uid,true);"
+							ondblclick="openChatWindow()"
 							style="background-color: rgb(255, 239, 176);width:4000px">
 							<div class="wMainListButton"
 								onmouseover="this.className='wMainListButton wMainListButtonHover'"
@@ -159,7 +159,7 @@
 							onmousedown="_webIM.Common.changeSelItem(this,event)"
 							onmouseup="_webIM.Common.showContextMenu(this,event)"
 							oncontextmenu="function(){return !!0}"
-							ondblclick="var uid = this.getAttribute('uid');if(uid)_webIM.CMD.openChatWindow(uid,true);"
+							ondblclick="openChatWindow();"
 							style="">
 							<div class="wMainListButton"
 								onmouseover="this.className='wMainListButton wMainListButtonHover'"
@@ -225,26 +225,13 @@
 	<script>
 	
 	
-	jQuery("body").append('<br/><br/><br/><br/><br/><br/><iframe id="ii" src="chat.htm" width="100%" height="500px" frameborder="0"></iframe>');
+	//jQuery("body").append('<br/><br/><br/><br/><br/><br/><iframe id="ii" src="chat.htm" width="100%" height="500px" frameborder="0"></iframe>');
 	
-	
-	
-	function _login(){
-		nodeim.connect();
-
-		var data = {
-			username : "qq",
-			password : "qq"
-		}
-		nodeim.socket.command('signin', data, function(rspn) {
-			if (rspn.code == '200') {
-				alert("登陆成功，ID:" + rspn.doc.id + " \n" + rspn.message);
-			} else {
-				alert(rspn.message);
-			}
-		});
+	var chatWindow = null;
+	function openChatWindow(){
+		chatWindow = kate.createWindow(kate.appFolder+'/chat.html') ;
+		chatWindow.resize(695,495) ;
 	}
-	
 	
 	function menuUserNameToggle(){
 		jQuery("#menuUserName").toggle();
@@ -339,6 +326,9 @@
 			};
 	});
 
+	
+	
+	
 	</script>
 </body>
 </html>
