@@ -28,15 +28,8 @@ nodeim.connect = function (){
 					break ;
 
 				default :
-					var out = '<div class="wChatMsgTitle">'+data.from.username+'(id:'+data.from.id+') 说 ('+nodeim.getLocalTime(data.time)+')：</div>' ;
-					if(data.room!==undefined)
-					{
-						out+= "[聊天室id:"+data.room+"]" ;
-					}
-					out+= '<div class="wChatMsgContent">'+data.message+'</div>' ;
-
-					var div = $("#ii")[0].contentWindow.document.getElementById("messageoutput") ;
-					jQuery(div).append(out);
+					
+					chatWindow.call("onMessage",[data]);
 					break ;
 			}
 		});
@@ -68,6 +61,8 @@ nodeim.login = function(u,p){
 		
 		if (rspn.code == '200') {
 			alert("登陆成功，ID:" + rspn.doc.id + " \n" + rspn.message);
+			kate.window.show() ;
+			kate.parentWindow.hide() ;
 			
 		} else {
 			alert(rspn.message);

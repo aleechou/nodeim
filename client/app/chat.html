@@ -93,34 +93,34 @@
 					<div style="width: 200px; float: left">
 						<div class="wMainUserContainer" style="height: 52px;">
 							<div class="wMainUserItem" u
-								onmousedown="_webIM.Common.changeSelItem(this,event)"
-								onmouseup="_webIM.Common.showContextMenu(this,event)"
+								onmousedown=""
+								onmouseup=""
 								oncontextmenu="function(){return !!0}"
-								ondblclick="var uid = this.getAttribute('uid');if(uid)_webIM.CMD.openChatWindow(uid,true);"
+								ondblclick=""
 								style="background-color: rgb(255, 239, 176);">
 								<div class="wMainListButton"
 									onmouseover="this.className='wMainListButton wMainListButtonHover'"
 									onmouseout="this.className='wMainListButton'">
 									<img src="images/im/m3.png" title="查看此人的联系人卡片"
 										style="height: 19px; width: 19px"
-										onclick="_webIM.CMD.showCard(10000,this.parentNode)">
+										onclick="">
 								</div>
 								<div class="wMainUserItemText">
 									aarongao&nbsp;&nbsp;<span style="color: #777"></span>
 								</div>
 							</div>
 							<div class="wMainUserItem" u
-								onmousedown="_webIM.Common.changeSelItem(this,event)"
-								onmouseup="_webIM.Common.showContextMenu(this,event)"
+								onmousedown=""
+								onmouseup=""
 								oncontextmenu="function(){return !!0}"
-								ondblclick="var uid = this.getAttribute('uid');if(uid)_webIM.CMD.openChatWindow(uid,true);"
+								ondblclick=""
 								style="">
 								<div class="wMainListButton"
 									onmouseover="this.className='wMainListButton wMainListButtonHover'"
 									onmouseout="this.className='wMainListButton'">
 									<img src="images/im/m3.png" title="查看此人的联系人卡片"
 										style="height: 19px; width: 19px"
-										onclick="_webIM.CMD.showCard(10098,this.parentNode)">
+										onclick="">
 								</div>
 								<div class="wMainUserItemText">
 									ww&nbsp;&nbsp;<span style="color: #777"></span>
@@ -546,26 +546,26 @@
 									<div onselectstart="return false;" class="sysMenuItemWithIcon"
 										onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
 										onmouseout="this.className='sysMenuItemWithIcon'"
-										onclick="Evt.NoBubble(event);Elem.Hid('menuMsgSendKey10052Type1');Elem.Value('wChatInputId10052Type1','哦');_webIM.CMD.sendMessage(10052)">哦</div>
+										onclick="Elem.Value('wChatInputId10052Type1','哦');">哦</div>
 									<div onselectstart="return false;" class="sysMenuItemWithIcon"
 										onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
 										onmouseout="this.className='sysMenuItemWithIcon'"
-										onclick="Evt.NoBubble(event);Elem.Hid('menuMsgSendKey10052Type1');Elem.Value('wChatInputId10052Type1','好吧');_webIM.CMD.sendMessage(10052)">好吧</div>
+										onclick="Elem.Value('wChatInputId10052Type1','好吧');">好吧</div>
 									<div onselectstart="return false;" class="sysMenuItemWithIcon"
 										onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
 										onmouseout="this.className='sysMenuItemWithIcon'"
-										onclick="Evt.NoBubble(event);Elem.Hid('menuMsgSendKey10052Type1');Elem.Value('wChatInputId10052Type1','我得下了，拜拜!');_webIM.CMD.sendMessage(10052)">我得下了，拜拜!</div>
+										onclick="Elem.Value('wChatInputId10052Type1','我得下了，拜拜!');">我得下了，拜拜!</div>
 									<div onselectstart="return false;" class="sysMenuItemDisabled"></div>
 									<div onselectstart="return false;" class="sysMenuItemWithIcon"
 										onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover';this.style.backgroundImage='url(http://webos.knowledge.com.cn/webim/images/selectedhover.gif)'"
 										onmouseout="this.className='sysMenuItemWithIcon';this.style.backgroundImage='url(http://webos.knowledge.com.cn/webim/images/selected.gif)'"
 										style="background-image: url(http://webos.knowledge.com.cn/webim/images/selected.gif)"
-										onclick="Evt.NoBubble(event);Elem.Hid('menuMsgSendKey10052Type1');_webIM.Config.MsgSendKey=1">按Enter
+										onclick="">按Enter
 										键发送消息</div>
 									<div onselectstart="return false;" class="sysMenuItemWithIcon"
 										onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
 										onmouseout="this.className='sysMenuItemWithIcon'"
-										onclick="Evt.NoBubble(event);Elem.Hid('menuMsgSendKey10052Type1');_webIM.Config.MsgSendKey=2">按Ctrl+Enter
+										onclick="">按Ctrl+Enter
 										键发送消息</div>
 								</div>
 							</div>
@@ -605,6 +605,22 @@
 		})
 		jQuery(this).css("background-color","rgb(255, 239, 176)");
 	})
+	
+	
+	function onMessage(data){
+		
+		var time = kate.parentWindow.call("nodeim.getLocalTime",[data.time]) ;
+		var out = '<div class="wChatMsgTitle">'+data.from.username+'(id:'+data.from.id+') 说 ('+time+')：</div>' ;
+		if(data.room!==undefined)
+		{
+			out+= "[聊天室id:"+data.room+"]" ;
+		}
+		out+= '<div class="wChatMsgContent">'+data.message+'</div>' ;
+
+		//var div = $("#messageoutput")[0].contentWindow.document.getElementById("messageoutput") ;
+		jQuery("#messageoutput").append(out);
+	}
+	
 	
 	function toggleFice(){
 		jQuery("#divFaceList").toggle();
