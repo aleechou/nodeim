@@ -32,7 +32,7 @@
 	}
 	KateHtmlWindow.prototype.hide = function()
 	{
-		return kateapi.show(this.wndId) ;
+		return kateapi.hide(this.wndId) ;
 	}
 	KateHtmlWindow.prototype.resize = function(w,h)
 	{
