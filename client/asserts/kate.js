@@ -4,8 +4,7 @@
 		
 		window: new KateHtmlWindow(kateapi.wndId)
 		, parentWindow: kateapi.parentWndId>-1? new KateHtmlWindow(kateapi.parentWndId): undefined
-
-		, appFolder: kateapi.appFolder
+		, appFolder: location.href.substr(0,location.href.lastIndexOf("/"))
 		
 		, createWindow: function(url)
 		{
@@ -17,8 +16,6 @@
 			return new KateHtmlWindow(wndId) ;
 		}
 	}
-
-
 
 	kate.__proto__ = kateapi ;
 

@@ -135,14 +135,30 @@ $("#btnSignIn").click(function(){
 	}
 	socket.command('signin',data,function(rspn){
 		console.log('signin:',rspn) ;
-		if(rspn.code=='200')
-		{
-			$("#messageoutput").append("<p style='color:red'>登陆成功，ID:"+rspn.doc.id+" \n"+rspn.message+"</p>") ;
-		}
-		else
+		if(rspn.code!='200')
 		{
 			$("#messageoutput").append("<p style='color:red'>"+rspn.message+"</p>") ;
+			return ;
 		}
+
+		$("#messageoutput").append("<p style='color:red'>登陆成功，ID:"+rspn.doc.id+" \n"+rspn.message+"</p>") ;
+
+		socket.command('friends',{},function(rspn){
+			if( rspn.code!=200 )
+			{
+				console.log("返回好友列表出错：",rspn) ;
+				return ;
+			}
+
+			$("#messageoutput").append("<p>好友数量："+rspn.list.length+"</p>") ;
+			
+			for(var i=0;i<rspn.list.length;i++)
+			{
+				$("#messageoutput").append("<p style='color:red'>好友："+rspn.list[i].username+"</p>") ;
+			}
+		}) ;
+
+
 	}) ;
 }) ;
 

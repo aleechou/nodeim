@@ -123,7 +123,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
     }) ;
     socket.command = function(cmd,data,callback){
     	
-    	console.log(callback)
+    	//console.log(callback)
     	
       var pkg = {
         id: this._pkgid ++
