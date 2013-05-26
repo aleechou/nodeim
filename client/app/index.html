@@ -1,30 +1,227 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Kate App</title>
-        <script type="text/javascript" src="jquery-1.9.1.min.js"></script>
-        <script type="text/javascript" src="app.js"></script>
-    </head>
-    
-    <body>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    	hello world ~~
 
-    	<p>
-	    	<button id="btnOpenConsole">控制台</button>
-	    </p>
+<title>真知保护</title>
 
-		<p>
-	    	<button id="btnShotScreen">截屏</button>
-	    </p>
+<script src="jquery-1.9.1.min.js"></script>
 
-		<p>
-	    	<button id="btnOpenWindow">打开窗口</button>
-	    </p>
-		<p>
-	    	<button id="btnRead">读数</button>
-	    </p>
+<link rel="stylesheet" type="text/css" href="styles/webim.css" />
+<link rel="stylesheet" type="text/css" href="styles/webimpage.css" />
+</head>
+<body>
+	<div id="windowContainerBorder" class="wContainerBorder"
+		style="top: 0px; left: 0px;">
+		<div id="windowContainer" class="wContainer">
+			<input id="inputHack" class="wElemHidden"><div id="divSound"
+					class="wElemHidden"></div>
+				<div id="windowBorder" class="wWindowBorder"></div>
+				<div id="windowCover" class="wWindowCover"></div>
+				<div id="winOther6" class="wOther"
+					style="position: absolute; width: 210px; height: 450px; z-index: 9702;">
+					<div class="wRound_lt"></div>
+					<div class="wRound_rt"></div>
+					<div class="wRound_lb"></div>
+					<div class="wRound_rb"></div>
+					<div class="wContent">
+						<div id="winOther6Title" class="wOtherTitle"
+							style="color: rgb(0, 0, 0);">
+							<div id="winOtherIcon6" class="wIcon">
+								<img
+									src="images/im/icon.png">
+							</div>
+							<div id="winOtherText6" class="wText" style="cursor: move;">WebIM
+								1.0</div>
+							<div id="winOtherControl6" class="wControl">
+								<div class="wControlMin" onmouseover="this.scrollTop='13'"
+									onmouseout="this.scrollTop='0'">
+									<img
+										src="images/im/othercontrolmin.png"
+										title="最小化">
+								</div>
+								<div class="wControlClose" onmouseover="this.scrollTop='15'"
+									onmouseout="this.scrollTop='0'">
+									<img
+										src="images/im/othercontrolclose.png"
+										title="关闭">
+								</div>
+							</div>
+						</div>
+						<div id="winMainContentId6Type3" class="wWindowContent"
+							style="background-color: transparent; height: 425px;">
+							<div class="wOtherMain" id="wOtherMainId6Type3"
+								style="padding: 0px 20px; height: 425px;">
+								<div class="im_topad"></div>
+								<div style="padding-top: 15px; padding-left: 4px;">
+									<div style="height: 100px">
+										<div style="height: 18px">用户名(U):</div>
+										<div>
+											<input id="loginTextBoxU" type="text" class="loginTextBox">
+										</div>
+										<div style="height: 18px; padding-top: 8px">密码(W):</div>
+										<div>
+											<input id="loginTextBoxP" type="password"
+												class="loginTextBox">
+										</div>
+									</div>
+									<div style="height: 135px">
+										<div id="divLoginId6Type3">
+											<div style="width: 100%; float: left; height: 18px">
+												<div style="float: left; line-height: 18px">登录状态(G):</div>
+												<div id="divStatusId" us="4" class="loginStatusSelect"
+													onmouseover="this.className='loginStatusSelect loginStatusSelectHover'"
+													onmouseout="this.className='loginStatusSelect'" onclick="showMenuLoginStatus()">通话中</div>
+											</div>
+											<div
+												style="height: 18px; padding-top: 8px; width: 100%; float: left;">
+												<input id="cbSaveUserId" type="checkbox"
+													checked="checked" style="display: none;" >
+													<div class="cCheckBox" style="cursor: pointer;"></div>
+													<span
+													style="padding-left: 5px; cursor: pointer; font-size: 12px;" >保存我的信息(B)</span>
+											</div>
+											<div
+												style="height: 18px; padding-top: 3px; width: 100%; float: left; text-indent: 18px; display: none">
+												<a href="#" id="linkDelCookieId6Type3" class="loginLink">(删除我的信息)(M)</a>
+											</div>
+											<div
+												style="height: 18px; padding-top: 8px; width: 100%; float: left;">
+												<input id="cbSavePassId6Type3" type="checkbox"
+													style="display: none;">
+													<div class="cCheckBox" style="cursor: pointer;"></div>
+													<span
+													style="padding-left: 5px; cursor: pointer; font-size: 12px;">记住我的密码(R)</span>
+											</div>
+											<div
+												style="height: 18px; padding-top: 8px; width: 100%; float: left;">
+												<input id="cbAutoLoginId6Type3" type="checkbox"
+													style="display: none;">
+													<div class="cCheckBox" style="cursor: pointer;"></div>
+													<span
+													style="padding-left: 5px; cursor: pointer; font-size: 12px;">自动为我登录(N)</span>
+											</div>
+										</div>
+										<div id="divLoginingId6Type3"
+											style="display: none; padding-top: 35px; text-align: center">
+											登录中...</div>
+									</div>
+									<div style="height: 35px">
+										<div style="width: 100%; float: left">
+											<div id="btnLogin" class="loginConfirm"
+												onmouseup="this.scrollTop='26'"
+												onmousedown="this.scrollTop='52'"
+												onmouseover="this.scrollTop='26'"
+												onmouseout="this.scrollTop='0'">
+												<img src="images/im/buttonlogin.gif">
+											</div>
+										</div>
+									</div>
+									<div>
+										<!--
+			<div style="width:100%;float:left">
+				<a href="#" class="loginLink">忘记密码了?</a>
+			</div>-->
+										<div style="width: 100%; float: left; padding-top: 3px;">
+											<a href="#" id="reg"
+												class="loginLink">注册新帐号</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="winOtherLoading" class="wLoading" style="display: none;">加载中...</div>
+				</div>
+				<div id="menuLoginStatus" class="sysMenu"
+					style="width: 120px; height: 168px; top: 177px; left: 452px; display: none;">
+					<div onselectstart="return false;" class="sysMenuItemWithIcon"
+						onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
+						onmouseout="this.className='sysMenuItemWithIcon'"
+						style="background-image: url(images/im/m0.png)"
+						onclick="selectMenuLoginStatus()">联机</div>
+					<div onselectstart="return false;" class="sysMenuItemWithIcon"
+						onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
+						onmouseout="this.className='sysMenuItemWithIcon'"
+						style="background-image: url(images/im/m1.png)"
+						onclick="selectMenuLoginStatus()">忙碌</div>
+					<div onselectstart="return false;" class="sysMenuItemWithIcon"
+						onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
+						onmouseout="this.className='sysMenuItemWithIcon'"
+						style="background-image: url(images/im/m2.png)"
+						onclick="selectMenuLoginStatus()">马上回来</div>
+					<div onselectstart="return false;" class="sysMenuItemWithIcon"
+						onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
+						onmouseout="this.className='sysMenuItemWithIcon'"
+						style="background-image: url(images/im/m2.png)"
+						onclick="selectMenuLoginStatus()">离开</div>
+					<div onselectstart="return false;" class="sysMenuItemWithIcon"
+						onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
+						onmouseout="this.className='sysMenuItemWithIcon'"
+						style="background-image: url(images/im/m2.png)"
+						onclick="selectMenuLoginStatus()">通话中</div>
+					<div onselectstart="return false;" class="sysMenuItemWithIcon"
+						onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
+						onmouseout="this.className='sysMenuItemWithIcon'"
+						style="background-image: url(images/im/m2.png)"
+						onclick="selectMenuLoginStatus()">外出就餐</div>
+					<div onselectstart="return false;" class="sysMenuItemWithIcon"
+						onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
+						onmouseout="this.className='sysMenuItemWithIcon'"
+						style="background-image: url(images/im/m3.png)"
+						onclick="selectMenuLoginStatus()">隐身</div>
+				</div>
+		</div>
+	</div>
 
-    </body>
+	<script>
+		
+		function showMenuLoginStatus(){
+			jQuery("#menuLoginStatus").css("display","block");
+		}
+		
+		function selectMenuLoginStatus(){
+			jQuery("#menuLoginStatus").css("display","none");
+		}
+		
+		
+		function signup(data){
+			mainWindow.call("nodeim.signup",[data]);
+		}
+		
+		jQuery("input[type=checkbox]").next().click(function(){
+			
+			$(this).toggleClass("cCheckBoxChecked");
+		});
+
+		jQuery("input[type=checkbox]").next().next().click(function(){
+
+			$(this).prev().toggleClass("cCheckBoxChecked");
+		});
+		
+		var mainWindow = null;
+		$("#btnLogin").click(function() {
+			mainWindow.call("nodeim.login",[$("#loginTextBoxU").val(),$("#loginTextBoxP").val()]);
+		});
+		
+		
+		var regWindow = null;
+		$("#reg").click(function() {
+			regWindow = kate.createWindow(kate.appFolder+'/reg.html') ;
+			regWindow.resize(213,453) ;
+			regWindow.show();
+		});
+		
+		
+		function onKateLoaded()
+		{
+			kate.window.show() ;
+			kate.window.resize(213,453) ;
+			mainWindow = kate.createWindow(kate.appFolder+'/main.html') ;
+			mainWindow.resize(264,554) ;
+			mainWindow.hide();
+		}
+	</script>
+</body>
 </html>
