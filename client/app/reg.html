@@ -5,8 +5,6 @@
 <title>真知保护</title>
 
 <script src="jquery-1.9.1.min.js"></script>
-<script src="socket.io.js"></script>
-<script src="nodeim.js"></script>
 
 
 <link rel="stylesheet" type="text/css" href="styles/webim.css" />
@@ -14,7 +12,7 @@
 </head>
 <body>
 	<div id="winOther7" class="wOther"
-		style="position: absolute; left: 855px; top: 50px; width: 210px; height: 450px; z-index: 9704;">
+		style="position: absolute;  width: 210px; height: 450px; z-index: 9704;">
 		<div class="wContent">
 			<div id="winOther7Title" class="wOtherTitle"
 				style="color: rgb(0, 0, 0);">
@@ -53,8 +51,7 @@
 							</tr>
 							<tr>
 								<td align="left"><input name="tbUsername" type="text"
-									class="input1" id="tbUsername" maxlength="50"
-									onblur="chkUsername()"></td>
+									class="input1" id="tbUsername" maxlength="50"></td>
 							</tr>
 							<tr>
 								<td align="left" height="20"><span id="spanUsername"
@@ -65,7 +62,7 @@
 							</tr>
 							<tr>
 								<td align="left"><input name="tbPass" type="password"
-									class="input1" id="tbPass" maxlength="12" onblur="chkPass()"></td>
+									class="input1" id="tbPass" maxlength="12" ></td>
 							</tr>
 							<tr>
 								<td align="left" height="20"><span id="spanPass"
@@ -76,8 +73,7 @@
 							</tr>
 							<tr>
 								<td align="left"><input name="tbRepass" type="password"
-									class="input1" id="tbRepass" maxlength="12"
-									onblur="chkRepass()"></td>
+									class="input1" id="tbRepass" maxlength="12"></td>
 							</tr>
 							<tr>
 								<td align="left" height="20"><span id="spanRepass"
@@ -129,20 +125,11 @@
 				return false;
 			}
 
-			nodeim.connect();
 			var data = {
 				username : $("#tbUsername").val(),
 				password : $("#tbPass").val()
 			}
-			nodeim.socket.command('signup', data, function(rspn) {
-				if (rspn.code == '200') {
-					alert("注册成功，ID:" + rspn.id);
-				} else if (rspn.code == '405') {
-					alert("用户名已经存在");
-				} else {
-					alert("注册错误：" + rspn.message);
-				}
-			});
+			kate.parentWindow.call("signup",[data]) ;
 		});
 	</script>
 </body>
