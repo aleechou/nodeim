@@ -276,6 +276,21 @@ data参数
 
 
 
+## 聊天记录：log
+
+
+data参数:
+
+* from 指定好友(可选)，缺省返回所有好友的聊天记录
+* room 指定聊天室(可选)
+* page 页数(可选)，缺省1
+
+
+返回：
+
+* currentPage 当前页数
+* lastPage 最后一页
+* docs (Array) 聊天记录
 
 ---
 

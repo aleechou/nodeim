@@ -24,6 +24,7 @@ var usercommands = [
 	'room.leave' ,
 	'room.list' ,
 	'room.message' ,
+	'log' ,
 ] ;
 
 var server = {
