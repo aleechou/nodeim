@@ -37,7 +37,9 @@
 		<option selected>好友</option>
 		<option>聊天室</option>
 	</select>
-	ID: <input name="to" ><br />
+	ID: <input name="to" >
+	<button id="btnSubscribe">加好友</button>
+	<br />
 	<textarea name="message" style="width:400px;height:80px"></textarea><br />
 	<button id="btnMessage">发送消息</button>
 </div>
@@ -56,7 +58,17 @@ $("#btnConnect").click(function(){
 		switch(data.type)
 		{
 			case 'request-subscription' :
-				$("#messageoutput").append("<p>"+data.from.username+"(id:"+data.from.id+") 请求加你为好友："+data.message+"</p>") ;
+
+				if( confirm(data.from.username+"(id:"+data.from.id+") 请求加你为好友：") )
+				// 同意
+				{
+					socket.command("reply",{to:data.from.id}) ;
+				}
+				// 拒绝
+				else
+				{
+					socket.command("reply",{to:data.from.id,refuse:1}) ;
+				}
 				break ;
 			case 'refuse' :
 				$("#messageoutput").append("<p>"+data.from.username+"(id:"+data.from.id+") 拒绝了你的好友请求："+data.message+"</p>") ;
@@ -151,7 +163,7 @@ $("#btnSignIn").click(function(){
 			}
 
 			$("#messageoutput").append("<p>好友数量："+rspn.list.length+"</p>") ;
-			
+
 			for(var i=0;i<rspn.list.length;i++)
 			{
 				$("#messageoutput").append("<p style='color:red'>好友："+rspn.list[i].username+"</p>") ;
@@ -215,6 +227,26 @@ $("#btnMessage").click(function(){
 		else
 		{
 			$("#messageoutput").append("<p style='color:red'>服务器返回："+rspn.message+"</p>") ;
+		}
+	}) ;
+}) ;
+
+
+// 加好友
+$("#btnSubscribe").click(function(){
+	var data = {
+		to: $("[name=to]").val()
+		, message: $("[name=message]").val()
+	} ;
+	if( !data.to )
+	{
+		alert("没输入好友id") ;
+		return ;
+	}
+	socket.command("subscribe",data,function(rspn){
+		if(rspn.code==200)
+		{
+			alert("等着吧") ;
 		}
 	}) ;
 }) ;
