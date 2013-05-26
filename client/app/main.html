@@ -117,7 +117,7 @@
 					<div style="padding-top: 4px">
 						<div class="wMainContentButton"
 							onmouseover="this.className='wMainContentButton wMainContentButtonHover'"
-							onmouseout="this.className='wMainContentButton'">
+							onmouseout="this.className='wMainContentButton'" onclick="openusersWindow()">
 							<img src="images/im/tooladdfriend.png"
 								style="height: 16px; width: 16px" title="添加联系人">
 						</div>
@@ -132,46 +132,12 @@
 				<div class="wMainMain" onselectstart="return false"
 					style="height: 374px;">
 					<div class="wMainUserHeaderEx" g>联机</div>
-					<div class="wMainUserContainer" style="height: 26px;">
-						<div class="wMainUserItemText"
-							style="padding-left: 25px; width: 100%; color: #aca899">此组中没有联系人</div>
+					<div class="wMainUserContainer" style="height: 26px;" id="onlineList">
+						
 					</div>
 					<div class="wMainUserHeaderEx" g>脱机 ( 2 )</div>
-					<div class="wMainUserContainer" style="height: 52px;">
-						<div class="wMainUserItem" u
-							onmousedown=""
-							onmouseup=""
-							oncontextmenu="function(){return !!0}"
-							ondblclick="openChatWindow()"
-							style="background-color: rgb(255, 239, 176);width:4000px">
-							<div class="wMainListButton"
-								onmouseover="this.className='wMainListButton wMainListButtonHover'"
-								onmouseout="this.className='wMainListButton'">
-								<img src="images/im/m3.png" title="查看此人的联系人卡片"
-									style="height: 19px; width: 19px"
-									onclick="">
-							</div>
-							<div class="wMainUserItemText">
-								aarongao&nbsp;&nbsp;<span style="color: #777"></span>
-							</div>
-						</div>
-						<div class="wMainUserItem" u
-							onmousedown=""
-							onmouseup=""
-							oncontextmenu="function(){return !!0}"
-							ondblclick="openChatWindow();"
-							style="">
-							<div class="wMainListButton"
-								onmouseover="this.className='wMainListButton wMainListButtonHover'"
-								onmouseout="this.className='wMainListButton'">
-								<img src="images/im/m3.png" title="查看此人的联系人卡片"
-									style="height: 19px; width: 19px"
-									onclick="">
-							</div>
-							<div class="wMainUserItemText">
-								ww&nbsp;&nbsp;<span style="color: #777"></span>
-							</div>
-						</div>
+					<div class="wMainUserContainer" style="height: 52px;" id="unlineList">
+						
 					</div>
 				</div>
 				<div class="wMainSearchWebPannel">
@@ -233,7 +199,18 @@
 		chatWindow.resize(695,495) ;
 		chatWindow.show();
 	}
-	
+	var find1Window = null;
+	var find2Window = null;
+	function openusersWindow(){
+		find1Window = kate.createWindow(kate.appFolder+'/add1.html') ;
+		find1Window.resize(359,289) ;
+		find1Window.show();
+		
+		find2Window = kate.createWindow(kate.appFolder+'/add2.html') ;
+		find2Window.resize(359,289) ;
+		find2Window.hide();
+	}
+
 	function menuUserNameToggle(){
 		jQuery("#menuUserName").toggle();
 	}
@@ -327,8 +304,6 @@
 			};
 	});
 
-	
-	
 	
 	</script>
 </body>

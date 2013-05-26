@@ -124,7 +124,7 @@
 				<a href="#" class="loginLink">忘记密码了?</a>
 			</div>-->
 										<div style="width: 100%; float: left; padding-top: 3px;">
-											<a href="#" onclick="_webIM.CMD.showRegWindow()"
+											<a href="#" id="reg"
 												class="loginLink">注册新帐号</a>
 										</div>
 									</div>
@@ -185,6 +185,11 @@
 			jQuery("#menuLoginStatus").css("display","none");
 		}
 		
+		
+		function signup(data){
+			mainWindow.call("nodeim.signup",[data]);
+		}
+		
 		jQuery("input[type=checkbox]").next().click(function(){
 			
 			$(this).toggleClass("cCheckBoxChecked");
@@ -198,6 +203,14 @@
 		var mainWindow = null;
 		$("#btnLogin").click(function() {
 			mainWindow.call("nodeim.login",[$("#loginTextBoxU").val(),$("#loginTextBoxP").val()]);
+		});
+		
+		
+		var regWindow = null;
+		$("#reg").click(function() {
+			regWindow = kate.createWindow(kate.appFolder+'/reg.html') ;
+			regWindow.resize(213,453) ;
+			regWindow.show();
 		});
 		
 		
