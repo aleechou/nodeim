@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>真知保护</title>
+
+<script src="jquery-1.9.1.min.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="styles/webim.css" />
+<link rel="stylesheet" type="text/css" href="styles/webimpage.css" />
+</head>
+<body>
+	<div id="winOther7" class="wOther"
+		style="position: absolute;  width: 210px; height: 450px; z-index: 9704;">
+		<div class="wContent">
+			<div id="winOther7Title" class="wOtherTitle"
+				style="color: rgb(0, 0, 0);">
+				<div id="winOtherIcon7" class="wIcon">
+					<img src="images/im/icon.png">
+				</div>
+				<div id="winOtherText7" class="wText" style="cursor: move;">注册新帐号</div>
+				<div id="winOtherControl7" class="wControl">
+					<div class="wControlMin" onmouseover="this.scrollTop='13'"
+						onmouseout="this.scrollTop='0'">
+						<img
+							src="images/im/othercontrolmin.png"
+							title="最小化">
+					</div>
+					<div class="wControlClose" onmouseover="this.scrollTop='15'"
+						onmouseout="this.scrollTop='0'">
+						<img
+							src="images/im/othercontrolclose.png"
+							title="关闭">
+					</div>
+				</div>
+			</div>
+			<div id="winMainContentId7Type3" class="wWindowContent"
+				style="background-color: transparent; height: 425px;">
+				<div class="im_topad"></div>
+				<form action="regresult.php" method="post"
+					enctype="multipart/form-data" name="form1" id="form1">
+					<table width="180" border="0" align="center" cellpadding="0"
+						cellspacing="0">
+						<tbody>
+							<tr>
+								<td height="15" colspan="3"></td>
+							</tr>
+							<tr>
+								<td height="16" class="white" align="left">用户名：</td>
+							</tr>
+							<tr>
+								<td align="left"><input name="tbUsername" type="text"
+									class="input1" id="tbUsername" maxlength="50"></td>
+							</tr>
+							<tr>
+								<td align="left" height="20"><span id="spanUsername"
+									class="dark">*注册后不能修改</span></td>
+							</tr>
+							<tr>
+								<td height="16" class="white" align="left">密码：</td>
+							</tr>
+							<tr>
+								<td align="left"><input name="tbPass" type="password"
+									class="input1" id="tbPass" maxlength="12" ></td>
+							</tr>
+							<tr>
+								<td align="left" height="20"><span id="spanPass"
+									class="dark">由6～12位字符组成,如"abcdef"</span></td>
+							</tr>
+							<tr>
+								<td height="16" class="white" align="left">重复密码：</td>
+							</tr>
+							<tr>
+								<td align="left"><input name="tbRepass" type="password"
+									class="input1" id="tbRepass" maxlength="12"></td>
+							</tr>
+							<tr>
+								<td align="left" height="20"><span id="spanRepass"
+									class="dark">由6～12位字符组成,如"123456"</span></td>
+
+							</tr>
+							<!--  <tr>
+    <td height="25">个性签名：</td>
+    <td><textarea name="tbSign" class="input1" id="tbSign" style="height:55px" maxlength="200"></textarea></td>
+    <td><span class="gray">建议填写</span></td>
+  </tr>
+  <tr>
+    <td height="25">个人头像：</td>
+    <td><input name="fileFace" type="file" class="input1" style="width:164px" size="14" id="fileFace" />
+    </td>
+    <td><span class="gray">Jpg|Gif|Png均可</span></td>
+  </tr>-->
+							<tr>
+								<td height="16" class="white" align="left">性别：<input
+									name="rdGender" type="radio" id="rdMale" value="1"
+									checked="checked"> <label for="rdMale" class="white">男</label>
+										<input name="rdGender" type="radio" id="rdFemale" value="2">
+											<label for="rdFemale" class="white">女</label></td>
+							</tr>
+							<tr>
+								<td height="30" colspan="3" align="center" class="mb10"><input
+									class="button1" type="button" name="btnSubmit" id="btnSubmit"
+									value="注册"> <input class="button1" type="button"
+										name="btnCancel" id="btnCancel"
+										onclick="winMax(6,3);winClose(event);" value="返回"></td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+		</div>
+		<div id="winOtherLoading7" class="wLoading" style="display: none;">加载中...</div>
+	</div>
+
+	<script>
+		$("#btnSubmit").click(function() {
+
+			if ($("#tbPass").val() == "" || $("#tbUsername").val() == "") {
+				alert("用户名，密码不能为空");
+				return false;
+			}
+			if ($("#tbPass").val() != $("#tbRepass").val()) {
+				alert("密码不相同");
+				return false;
+			}
+
+			var data = {
+				username : $("#tbUsername").val(),
+				password : $("#tbPass").val()
+			}
+			kate.parentWindow.call("signup",[data]) ;
+		});
+	</script>
+</body>
+</html>

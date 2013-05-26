@@ -1,0 +1,205 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<h3>这是一个API测试工具，按 F12 打开chrome的控制器，在控制台里调用api</h3>
+
+<a href="https://github.com/aleechou/nodeim/blob/master/README.md#-api" target="_blank">客户端API文档</a>
+
+<hr />
+
+<h1>DEMO</h1>
+<script src="jquery-1.9.1.min.js"></script>
+<script src="socket.io.js"></script>
+
+
+
+<div id="messageoutput"></div>
+
+
+
+<div>
+	服务器：<input name="server" value="http://localhost:8765" style="width:250px" /> 
+	<button id="btnConnect">连接</button>
+</div>
+
+<br />
+
+<div>
+	用户名：<input name="username" value="alee" >
+	密码：<input name="password" type="password" value="111111" >
+	<button id="btnSignUp">注册</button>
+	<button id="btnSignIn">登陆</button>
+	<button id="btnSignOut">退出</button>
+</div>
+
+<hr />
+
+<div>
+	<select name=type>
+		<option selected>好友</option>
+		<option>聊天室</option>
+	</select>
+	ID: <input name="to" ><br />
+	<textarea name="message" style="width:400px;height:80px"></textarea><br />
+	<button id="btnMessage">发送消息</button>
+</div>
+
+
+
+
+<script>
+
+var socket = null ;
+
+$("#btnConnect").click(function(){
+	socket = io.connect($("[name=server]").val()) ;
+	socket.on('message', function (data) {
+		console.log("收到消息：",data);
+		switch(data.type)
+		{
+			case 'request-subscription' :
+				$("#messageoutput").append("<p>"+data.from.username+"(id:"+data.from.id+") 请求加你为好友："+data.message+"</p>") ;
+				break ;
+			case 'refuse' :
+				$("#messageoutput").append("<p>"+data.from.username+"(id:"+data.from.id+") 拒绝了你的好友请求："+data.message+"</p>") ;
+				break ;
+			case 'agree' :
+				$("#messageoutput").append("<p>"+data.from.username+"(id:"+data.from.id+") 同意了你的好友请求："+data.message+"</p>") ;
+				break ;
+
+			default :
+				var out = "<p>"+data.from.username+"(id:"+data.from.id+") " ;
+				if(data.room!==undefined)
+				{
+					out+= "[聊天室id:"+data.room+"]" ;
+				}
+				out+= "发来消息："+data.message+"</p>" ;
+
+				$("#messageoutput").append(out) ;
+				break ;
+		}
+	});
+	socket.on('connect',function(){
+		$("#messageoutput").append("<p style='color:red'>已经连接到服务器</p>") ;
+	}) ;
+	socket.on('presence',function(doc){
+		console.log('presence：',doc) ;
+	}) ;
+	socket.on('room.join',function(doc){
+		console.log('room.join:',doc) ;
+	}) ;
+	socket.on('room.leave',function(doc){
+		console.log('room.leave:',doc) ;
+	}) ;
+}) ;
+
+
+// 用户注册
+$("#btnSignUp").click(function(){
+	if(!socket)
+	{
+		$("#messageoutput").append("<p style='color:red'>尚未连接服务器</p>") ;
+		return ;
+	}
+
+	var data = {
+		username: $("[name=username]").val()
+		, password: $("[name=password]").val()
+	}
+	socket.command('signup',data,function(rspn){
+		if(rspn.code=='200')
+		{
+			$("#messageoutput").append("<p style='color:red'>注册成功，ID:</p>"+rspn.id) ;
+		}
+		else if(rspn.code=='405')
+		{
+			$("#messageoutput").append("<p style='color:red'>用户名已经存在</p>") ;
+		}
+		else
+		{
+			$("#messageoutput").append("<p style='color:red'>注册错误：</p>"+rspn.message) ;
+		}
+	}) ;
+}) ;
+
+
+// 用户登陆
+$("#btnSignIn").click(function(){
+	if(!socket)
+	{
+		$("#messageoutput").append("<p style='color:red'>尚未连接服务器</p>") ;
+		return ;
+	}
+
+	var data = {
+		username: $("[name=username]").val()
+		, password: $("[name=password]").val()
+	}
+	socket.command('signin',data,function(rspn){
+		console.log('signin:',rspn) ;
+		if(rspn.code=='200')
+		{
+			$("#messageoutput").append("<p style='color:red'>登陆成功，ID:"+rspn.doc.id+" \n"+rspn.message+"</p>") ;
+		}
+		else
+		{
+			$("#messageoutput").append("<p style='color:red'>"+rspn.message+"</p>") ;
+		}
+	}) ;
+}) ;
+
+
+// 用户退出
+$("#btnSignOut").click(function(){
+	if(!socket)
+	{
+		$("#messageoutput").append("<p style='color:red'>尚未连接服务器</p>") ;
+		return ;
+	}
+
+	socket.command('signout',{},function(rspn){
+		if(rspn.code=='200')
+		{
+			$("#messageoutput").append("<p style='color:red'>用户已退出</p>") ;
+		}
+		else
+		{
+			$("#messageoutput").append("<p style='color:red'>"+rspn.message+"</p>") ;
+		}
+	}) ;
+}) ;
+
+// 发送消息
+$("#btnMessage").click(function(){
+	if(!socket)
+	{
+		$("#messageoutput").append("<p style='color:red'>尚未连接服务器</p>") ;
+		return ;
+	}
+
+	var data = {
+		to: undefined
+		, room: undefined
+		, message: $("[name=message]").val()
+	}
+
+	if( $("[name=type]")[0].selectedIndex==0 )
+	{
+		data.to = $("[name=to]").val() ;
+		var cmd = 'message' ;
+	}
+	else
+	{
+		data.room = $("[name=to]").val() ;
+		var cmd = 'room.message' ;
+	}
+	socket.command(cmd,data,function(rspn){
+		if(rspn.code=='200')
+		{
+			$("#messageoutput").append("<p style='color:red'>消息已经发送</p>") ;
+		}
+		else
+		{
+			$("#messageoutput").append("<p style='color:red'>服务器返回："+rspn.message+"</p>") ;
+		}
+	}) ;
+}) ;
+</script>
