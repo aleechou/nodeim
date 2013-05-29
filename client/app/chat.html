@@ -22,8 +22,8 @@
 				<div class="wIcon">
 					<img src="images/im/icon.png">
 				</div>
-				<div class="wText" style="cursor: move;">ww</div>
-				<div class="wControl">
+				<div class="wText" style="cursor: move;">wwffff</div>
+				<div class="wControl" style="display:none">
 					<div class="wControlMin" onmouseover="this.scrollTop='13'"
 						onmouseout="this.scrollTop='0'">
 						<img src="images/im/chatcontrolmin.png" title="最小化">
@@ -91,7 +91,7 @@
 					
 					
 					<div style="width: 200px; float: left">
-						<div class="wMainUserContainer" style="height: 52px;">
+						<div class="wMainUserContainer" style="height: 52px;display:none">
 							<div class="wMainUserItem" u
 								onmousedown=""
 								onmouseup=""
@@ -136,8 +136,7 @@
 						<div style="border: 1px solid #f2b705; background-color: #fff" >
 							<div
 								style="height: 246px; overflow-x: hidden; overflow-y: auto; word-break: break-all; text-align: left;" id="messageoutput">
-								<div class="wChatMsgTitle">qq 说 (13：00)：</div>
-								<div class="wChatMsgContent">ddd</div>
+								
 							</div>
 						</div>
 						<div class="wChatResize" id="wChatResize"></div>
@@ -589,13 +588,21 @@
 	$("#btnSendMessage").click(function(){
 		
 		var data = {
-			to: "3"
-			, room: "3"
+			to: userObj.id
 			, message: $("#message").val()
 		}
 		
+		var _data = {};
+		var _from = {};
+		_from.username = userLocalObj.username;
+		_from.id = userLocalObj.id;
+		_data.from = _from;
+		_data.message = $("#message").val();
+		_data.time = Date.parse(new Date());
+		onMessage(_data);
 		kate.parentWindow.call("nodeim.message",[data]) ;
 		
+		$("#message").val("")
 	}) ;
 	
 	jQuery(".wMainUserItem").click(function(){
@@ -606,6 +613,17 @@
 		jQuery(this).css("background-color","rgb(255, 239, 176)");
 	})
 	
+	var userObj = {};
+	var userLocalObj = {};
+	function initUser(data){
+		userObj.id = data.id;
+		userObj.username = data.username;
+		console.log(data)
+		jQuery(".wText").text(data.username);
+	}
+	function initLocalUser(data){
+		userLocalObj = data;
+	}
 	
 	function onMessage(data){
 		
@@ -663,6 +681,12 @@
 		jQuery("#menuMsgSend").css( "left" , parseInt(jQuery(".wChat").width()) - 168);
 		
 		jQuery("#menuMsgSend").toggle();
+	}
+	
+
+	function onKateLoaded()
+	{
+		kate.parentWindow.call("openChatWindow_CallBack",[kate.wndId]) ;
 	}
 	
 	</script>

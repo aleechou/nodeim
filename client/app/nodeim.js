@@ -2,6 +2,7 @@
 
 var nodeim = {};
 nodeim.socket = null;
+nodeim.chatWindowArr = [];
 nodeim.server = "http://zj001.wonei.com:8765";
 
 /**
@@ -22,11 +23,11 @@ nodeim.connect = function (){
 //					alert("<p>"+data.from.username+"(id:"+data.from.id+") 请求加你为好友："+data.message+"</p>")
 					if(window.confirm("<p>"+data.from.username+"(id:"+data.from.id+") 请求加你为好友："+data.message+"</p>")){
 		                 //alert("确定");
-						nodeim.replyFriend({to:data.from.id  ,refuse:1});
+						nodeim.replyFriend({to:data.from.id  ,refuse:0});
 		                return true;
 		              }else{
 		                 //alert("取消");
-						nodeim.replyFriend({to:data.from.id  ,refuse:0});
+						nodeim.replyFriend({to:data.from.id  ,refuse:1});
 		                return false;
 		             } 
 					break ;
@@ -39,7 +40,21 @@ nodeim.connect = function (){
 
 				default :
 					
-					chatWindow.call("onMessage",[data]);
+					var _isWin = false;
+					for(var i=0;i<nodeim.chatWindowArr.length;i++){
+						if( nodeim.chatWindowArr[i].id == data.from.id){
+							nodeim.chatWindowArr[i].window.call("onMessage",[data]);
+							nodeim.chatWindowArr[i].window.show()
+							_isWin = true;
+						}
+					}
+					
+					if(_isWin == false){
+						openChatWindow(data.from.id,data.from.username,function(obj){
+							obj.call("onMessage",[data]);
+						});
+						
+					}
 					break ;
 			}
 		});
@@ -47,7 +62,10 @@ nodeim.connect = function (){
 			$("#messageoutput").append("<p style='color:red'>已经连接到服务器</p>") ;
 		}) ;
 		nodeim.socket.on('presence',function(doc){
-			alert("状态改变")
+			console.log('presence:',doc) ;
+			//onlineList
+			//presence
+			//wMainUserItem
 		}) ;
 		nodeim.socket.on('room.join',function(doc){
 			console.log('room.join:',doc) ;
@@ -66,10 +84,13 @@ nodeim.login = function(u,p){
 			password : p
 	}
 
-	function loginCallBack(rspn) {
-		
+	nodeim.socket.command('signin',data,function(rspn){
 		if (rspn.code == '200') {
 			//alert("登陆成功，ID:" + rspn.doc.id + " \n" + rspn.message);
+			
+			nodeim.localUser = rspn.doc;
+
+			jQuery("#title_Username").text(rspn.doc.username);
 			kate.window.show() ;
 			kate.parentWindow.hide() ;
 			
@@ -78,8 +99,7 @@ nodeim.login = function(u,p){
 		} else {
 			alert(rspn.message);
 		};
-	}
-	nodeim.socket.command('signin',data,loginCallBack);
+	});
 }
 
 nodeim.message = function(data){
@@ -89,7 +109,7 @@ nodeim.message = function(data){
 	nodeim.socket.command("message",data,function(rspn){
 		if(rspn.code=='200')
 		{
-			alert("<p style='color:red'>消息已经发送</p>");
+			
 		}
 		else
 		{
@@ -178,37 +198,17 @@ nodeim.friends = function(){
 	nodeim.socket.command("friends",{},function(rspn){
 		if(rspn.code=='200')
 		{
-			if( rspn.list.length == 0){
-				var out = "";
-				out += '<div class="wMainUserItemText"';
-				out += 	'style="padding-left: 25px; width: 100%; color: #aca899">此组中没有联系人</div>'
-	    		jQuery("#unlineList").append(out)
-	    		jQuery("#onlineList").append(out)
-			}else{
-				var out = "";
-				jQuery(rspn.list).each(function(i){
-					out += '<div class="wMainUserItem" u'
-					out += 'onmousedown=""'
-					out += 'onmouseup=""'
-					out += 'oncontextmenu="function(){return !!0}"'
-					out += 'ondblclick="openChatWindow()"'
-					out += 'style="background-color: rgb(255, 239, 176);width:4000px">'
-					out += '<div class="wMainListButton"'
-					out += '	onmouseover="this.className=\'wMainListButton wMainListButtonHover\'"'
-					out += '	onmouseout="this.className=\'wMainListButton\'">'
-					out += '	<img src="images/im/m3.png" title="查看此人的联系人卡片"'
-					out += '		style="height: 19px; width: 19px"'
-					out += '		onclick="">'
-					out += '</div>'
-					out += '<div class="wMainUserItemText">'
-					out += '	aarongao&nbsp;&nbsp;<span style="color: #777"></span>'
-					out += '</div>'
-					out += '</div>'
-		    	})
-	    		jQuery("#unlineList").append(out)
-	    		jQuery("#onlineList").append(out)
-			}
-			
+
+			nodeim.noUser("online");
+			nodeim.noUser("unline");
+			jQuery(rspn.list).each(function(i){
+				
+				if( rspn.list[i].presence == "在线"){
+					nodeim.createUser("online" , rspn.list[i]);
+				}else{
+					nodeim.createUser("unline" , rspn.list[i]);
+				}
+	    	})
 		}
 		else
 		{
@@ -218,7 +218,98 @@ nodeim.friends = function(){
 }
 
 
+nodeim.createUser = function(type,data){
+	var out = "";
+	
+	var _isUser = false;
+
+
+	if( type == "online"){
+		jQuery("#onlineList > .wMainUserItem").each(function(i){
+			if( jQuery(this).attr("uid") == data.id){
+				_isUser = true;
+			}
+		})
+	}else{
+		jQuery("#unlineList > .wMainUserItem").each(function(i){
+			if( jQuery(this).attr("uid") == data.id){
+				_isUser = true;
+			}
+		})
+	}
+	
+	if( _isUser == false){
+		out += '<div class="wMainUserItem" uid="'+data.id+'"' ;
+		out += 'onmousedown=""';
+		out += 'onmouseup=""';
+		out += 'oncontextmenu="function(){return !!0}"';
+		out += 'ondblclick="openChatWindow('+data.id+',\''+data.username+'\')" onclick="setBjcolor(this)"';
+		out += 'style="width:4000px">';
+		out += '<div class="wMainListButton"';
+		out += '	onmouseover="this.className=\'wMainListButton wMainListButtonHover\'"';
+		out += '	onmouseout="this.className=\'wMainListButton\'">';
+		out += '	<img src="images/im/m3.png" title="查看此人的联系人卡片"';
+		out += '		style="height: 19px; width: 19px"';
+		out += '		onclick="">';
+		out += '</div>';
+		out += '<div class="wMainUserItemText">';
+		out += '	'+data.username+'&nbsp;&nbsp;<span style="color: #777"></span>';
+		out += '</div>';
+		out += '</div>';
+		
+
+		if( type == "online"){
+			jQuery("#onlineListNum").text(Number(jQuery("#onlineListNum").text()) +1);
+			if( Number(jQuery("#onlineListNum").text() == 1)){
+				jQuery("#onlineList").html("");
+			}
+			jQuery("#onlineList").append(out);
+			
+		}else{
+			jQuery("#unlineListNum").text(Number(jQuery("#unlineListNum").text()) +1);
+			if( Number(jQuery("#unlineListNum").text() == 1)){
+				jQuery("#unlineList").html("");
+			}
+			jQuery("#unlineList").append(out);
+		}
+	}
+
+	
+}
+
+nodeim.removeUser = function(type,data){
+
+	if( type == "online"){
+		jQuery("#onlineList > .wMainUserItem").each(function(i){
+			if( jQuery(this).attr("uid") == data.id){
+				jQuery(this).remove();
+			}
+		})
+	}else{
+		jQuery("#unlineList > .wMainUserItem").each(function(i){
+			if( jQuery(this).attr("uid") == data.id){
+				jQuery(this).remove();
+			}
+		})
+	}
+}
+nodeim.noUser = function(type){
+
+	var out = "";
+	out += '<div class="wMainUserItemText"';
+	out += 	'style="padding-left: 25px; width: 100%; color: #aca899">此组中没有联系人</div>';
+	
+	if( type == "online"){
+		jQuery("#onlineList").append(out)
+	}else{
+
+		jQuery("#unlineList").append(out)
+	}
+	
+	
+}
+
 nodeim.getLocalTime = function(nS) {     
-	return new Date(parseInt(nS)).toLocaleString().substr(13,20)
+	return new Date(parseInt(nS)).toLocaleString()
 } 
 
