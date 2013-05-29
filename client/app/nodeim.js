@@ -36,6 +36,8 @@ nodeim.connect = function (){
 					break ;
 				case 'agree' :
 					alert("<p>"+data.from.username+"(id:"+data.from.id+") 同意了你的好友请求："+data.message+"</p>") ;
+					
+					nodeim.createUser("online" , data.from);
 					break ;
 
 				default :
