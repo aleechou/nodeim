@@ -16,6 +16,7 @@
 			return new KateHtmlWindow(wndId) ;
 		}
 	}
+    kate.appFolder.path = kate.appFolder.replace(/^file:\/\//,"") ;
 
 	kate.__proto__ = kateapi ;
 
