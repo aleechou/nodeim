@@ -30,7 +30,7 @@
 				<div class="wText" style="cursor: move;">
 					<span style="color: #fff">WebIM 1.0</span>
 				</div>
-				<div class="wControl">
+				<div class="wControl" style="display:none">
 					<div class="wControlMin" onmouseover="this.scrollTop='13'"
 						onmouseout="this.scrollTop='0'">
 						<img src="images/im/maincontrolmin.png" title="最小化">
@@ -54,7 +54,7 @@
 						<div class="wMainUserInfoRight" style="width: 178px;">
 							<div style="width: 100%; float: left">
 								<div class="wMainUserName">
-									<span>qq <span style="font-size: 12px; color: #fff" onclick="menuUserNameToggle()">[联机]</span></span>
+									<span><span id="title_Username">xx</span> <span style="font-size: 12px; color: #fff" onclick="menuUserNameToggle()">[联机]</span></span>
 									<img src="images/im/arrowdown.png" style="padding-left: 3px" onclick="menuUserNameToggle()">
 								</div>
 								<div id="menuUserName" class="sysMenu"
@@ -131,11 +131,11 @@
 				</div>
 				<div class="wMainMain" onselectstart="return false"
 					style="height: 374px;">
-					<div class="wMainUserHeaderEx" g>联机</div>
+					<div class="wMainUserHeaderEx" g>联机 ( <span id="onlineListNum">0</span> )</div>
 					<div class="wMainUserContainer" style="height: 26px;" id="onlineList">
 						
 					</div>
-					<div class="wMainUserHeaderEx" g>脱机 ( 2 )</div>
+					<div class="wMainUserHeaderEx" g>脱机 ( <span id="unlineListNum">0</span> )</div>
 					<div class="wMainUserContainer" style="height: 52px;" id="unlineList">
 						
 					</div>
@@ -193,11 +193,43 @@
 	
 	//jQuery("body").append('<br/><br/><br/><br/><br/><br/><iframe id="ii" src="chat.htm" width="100%" height="500px" frameborder="0"></iframe>');
 	
-	var chatWindow = null;
-	function openChatWindow(){
-		chatWindow = kate.createWindow(kate.appFolder+'/chat.html') ;
-		chatWindow.resize(695,495) ;
-		chatWindow.show();
+	function openChatWindow(id,username,callback){
+		
+		for(var i=0;i<nodeim.chatWindowArr.length;i++){
+			if( nodeim.chatWindowArr[i].id == id){
+				nodeim.chatWindowArr[i].window.show();
+				return true;
+			}
+		}
+		
+		var chatObj = {};
+		chatObj.id = id;
+		chatObj.username = username;
+		chatObj.window = kate.createWindow(kate.appFolder+'/chat.html') ;
+		chatObj.window.resize(695,495) ;
+		chatObj.window.show();
+		chatObj.wndId = chatObj.window.wndId;
+		chatObj.callback = callback;
+		
+		nodeim.chatWindowArr.push(chatObj);
+		
+		return chatObj.window;
+	}
+	
+	function openChatWindow_CallBack( wndId ){
+		
+		for(var i=0;i<nodeim.chatWindowArr.length;i++){
+			if( nodeim.chatWindowArr[i].wndId == wndId){
+				
+				nodeim.chatWindowArr[i].window.call("initUser",[nodeim.chatWindowArr[i]]);
+				nodeim.chatWindowArr[i].window.call("initLocalUser",[nodeim.localUser]);
+				
+				if(typeof nodeim.chatWindowArr[i].callback == 'function')
+				{
+					nodeim.chatWindowArr[i].callback(nodeim.chatWindowArr[i].window);
+				}
+			}
+		}
 	}
 	var find1Window = null;
 	var find2Window = null;
@@ -207,7 +239,7 @@
 		find1Window.show();
 		
 		find2Window = kate.createWindow(kate.appFolder+'/add2.html') ;
-		find2Window.resize(359,289) ;
+		find2Window.resize(370,300) ;
 		find2Window.hide();
 	}
 
@@ -231,13 +263,13 @@
 		}
 		
 	})
-	jQuery(".wMainUserItem").click(function(){
+	function setBjcolor(obj){
 		
 		jQuery(".wMainUserItem").each(function(){
 			jQuery(this).css("background-color","");
 		})
-		jQuery(this).css("background-color","rgb(255, 239, 176)");
-	})
+		jQuery(obj).css("background-color","rgb(255, 239, 176)");
+	};
 
 	
 	
