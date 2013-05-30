@@ -27,7 +27,6 @@ module.exports = function(app){
 		'room.list' ,
 		'room.message' ,
 		'log' ,
-		'upload' ,
 	] ;
 
 	var server = module.exports.server = {
