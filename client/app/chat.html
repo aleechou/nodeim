@@ -5,6 +5,7 @@
 <title>真知保护</title>
 
 <script src="jquery-1.9.1.min.js"></script>
+<script charset="utf-8" src="kindeditor-min.js" type="text/javascript"></script>
 
 <link rel="stylesheet" type="text/css" href="styles/webim.css" />
 <link rel="stylesheet" type="text/css" href="styles/webimpage.css" />
@@ -688,7 +689,12 @@
 	{
 		kate.parentWindow.call("openChatWindow_CallBack",[kate.wndId]) ;
 	}
-	
+	KE.show({
+        id: 'message',
+        resizeMode: 1,
+        allowPreviewEmoticons: false,
+        allowUpload: false,
+    });
 	</script>
 </body>
 </html>
