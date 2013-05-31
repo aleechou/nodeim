@@ -16,7 +16,7 @@
 
 
 <div>
-	服务器：<input name="server" value="http://localhost:8765" style="width:250px" /> 
+	服务器：<input name="server" value="http://127.0.0.1:6060" style="width:250px" /> 
 	<button id="btnConnect">连接</button>
 </div>
 
@@ -45,9 +45,18 @@
 </div>
 
 
+<hr />
+
+
+<iframe id="ifrUpload"></iframe>
 
 
 <script>
+
+
+function hi(data){
+	alert(data) ;
+}
 
 var socket = null ;
 
@@ -100,6 +109,10 @@ $("#btnConnect").click(function(){
 	}) ;
 	socket.on('room.leave',function(doc){
 		console.log('room.leave:',doc) ;
+	}) ;
+	socket.on('upload',function(doc){
+		alert("文件上传成功："+doc.filename+", url:"+doc.url) ;
+		console.log("文件上传成功："+doc.filename+", url:"+doc.url) ;
 	}) ;
 }) ;
 
@@ -170,7 +183,9 @@ $("#btnSignIn").click(function(){
 			}
 		}) ;
 
-
+		// 上传文件面板
+		var server = $("[name=server]").val() ;
+		$("#ifrUpload").attr('src',server+"/nodeim-server/upload?user="+rspn.doc.id) ;
 	}) ;
 }) ;
 
@@ -249,5 +264,38 @@ $("#btnSubscribe").click(function(){
 			alert("等着吧") ;
 		}
 	}) ;
+}) ;
+
+
+// 发送文件
+$("#btnSendFile").click(function(){
+
+	var fileList = $("#file")[0].files ;
+	if(!fileList.length)
+	{
+		alert("请选择文件") ;
+		return ;
+	}
+
+	var file = fileList[0] ;
+
+    var reader = new FileReader();  
+    reader.onload = function(e){
+    	
+    	socket.command(
+    		"upload"
+    		, {
+	    		contents:  this.result
+	    		, filename: file.name
+	    	}
+	    	, function(rspn){
+
+	    	}
+	    ) ;
+
+    }
+
+    reader.readAsBinaryString(file) ;
+
 }) ;
 </script>

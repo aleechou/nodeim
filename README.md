@@ -331,6 +331,19 @@ data 中的参数
 
 
 
+## upload
+
+文件上传面板 `http://<server addr>:<port>/nodeim-server/upload?user=<user id>` ，上传完成后会在对应客户端触发 `upload` 事件，事件传回文件在服务器上的 http url 。
+
+可用于发送文件,图片,以及设置用户头像
+
+data 中的参数：
+
+* url		文件在服务器上的访问地址，不包括主机名部分
+* filename	文件名
+
+
+
 
 
 
