@@ -292,6 +292,14 @@ data参数:
 * lastPage 最后一页
 * docs (Array) 聊天记录
 
+
+## 用户状态：presence
+
+data 中的参数
+
+* presence		状态(string)
+
+
 ---
 
 # 客户端事件
