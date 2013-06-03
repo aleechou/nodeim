@@ -3,8 +3,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Kate App</title>
+        <link href="jquery-ui.css" >
         <script type="text/javascript" src="jquery-1.9.1.js"></script>
+        <script type="text/javascript" src="jquery-ui.js"></script>
         <script type="text/javascript" src="app.js"></script>
+        <style>
+        .box {
+        	border: 1px solid #DDD;
+        	width: 100px ;
+        	height: 100px ;
+        }
+        </style>
     </head>
     
     <body>
@@ -36,5 +45,12 @@ padding: 0;">
 		 	<li>item 3</li>
 		 	<li>item 4</li>
 		 </ul>
+
+		 <div class="box" id="my-name-is-drag">
+		 	我姓“拖”
+		</div>
+		 <div class="box" id="my-name-is-drop" style="width:200px;height:200px">
+		 	我姓“放”
+		</div>
     </body>
 </html>

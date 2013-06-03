@@ -60,3 +60,16 @@ $(function(){
 		alert( $(event.target).text() ) ;
 	}) ;
 });
+
+
+
+
+$(function(){
+	$("#my-name-is-drag").draggable();
+	$("#my-name-is-drop").droppable({
+      drop: function( event, ui ) {
+      	alert("收到！") ;
+      }
+  	});
+}) ;
+

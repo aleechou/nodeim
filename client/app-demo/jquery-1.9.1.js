@@ -5039,6 +5039,7 @@ function tokenize( selector, parseOnly ) {
 
 		// Combinators
 		if ( (match = rcombinators.exec( soFar )) ) {
+			//console.log(rcombinators,soFar,match)
 			matched = match.shift();
 			tokens.push( {
 				value: matched,
@@ -5049,9 +5050,13 @@ function tokenize( selector, parseOnly ) {
 		}
 
 		// Filters
-		for ( type in Expr.filter ) {
-			if(!matchExpr[type].exec)
+		var types = Object.keys(Expr.filter) ;
+		for ( var i=0;i<types.length;i++ ) {
+			type = types[i] ;
+			//console.log(type) ;
+			if(typeof matchExpr[type].exec!="function")
 			{
+				console.log(selector) ;
 				console.log(type,matchExpr[ type ].exec) ;
 				var a = new Error("hengheng") ;
 				console.log(a.stack) ;
