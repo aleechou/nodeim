@@ -4,19 +4,31 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>真知保护</title>
 
-<script src="jquery-1.9.1.min.js"></script>
+<script src="jquery-1.9.1.js"></script>
 <script src="socket.io.js"></script>
 <script src="nodeim.js"></script>
-
 <link rel="stylesheet" type="text/css" href="styles/webim.css" />
 <link rel="stylesheet" type="text/css" href="styles/webimpage.css" />
+
+
+<script src="contextmenu/jquery.contextMenu.js"></script>
+<link rel="stylesheet" type="text/css" href="contextmenu/jquery.contextMenu.css" />
+
+ <link rel="stylesheet" href="jquery-ui.css" />
+ <script src="jquery-ui.js"></script>
+  
+  <style>
+  #draggable { width: 100px; height: 40px; padding: 0.5em; float: left; margin: 10px 10px 10px 0; }
+  #droppable, #droppable2 { width: 230px; height: 120px; padding: 0.5em; float: left; margin: 10px; }
+  #droppable-inner, #droppable2-inner { width: 170px; height: 60px; padding: 0.5em; float: left; margin: 10px; }
+  </style>
 </head>
 <body onselectstart="return false;">
 
 	<div id="windowBorder" class="wWindowBorder" style=" width: 260px; height: 550px; display: none;"></div>
 	
 	<div class="wMain" id="wMain"
-		style="position: absolute;  width: 260px; height: 550px; z-index: 9713; left:0px;top:0px">
+		style="position: absolute;  width: 260px; height: 550px; z-index: -500; left:0px;top:0px">
 		<div class="wRound_lt"></div>
 		<div class="wRound_rt"></div>
 		<div class="wRound_lb"></div>
@@ -54,7 +66,7 @@
 						<div class="wMainUserInfoRight" style="width: 178px;">
 							<div style="width: 100%; float: left">
 								<div class="wMainUserName">
-									<span><span id="title_Username">xx</span> <span style="font-size: 12px; color: #fff" onclick="menuUserNameToggle()">[联机]</span></span>
+									<span><span id="title_Username">xx</span> <span style="font-size: 12px; color: #fff" onclick="menuUserNameToggle()">[<apan id="statusDiv">在线</apan>]</span></span>
 									<img src="images/im/arrowdown.png" style="padding-left: 3px" onclick="menuUserNameToggle()">
 								</div>
 								<div id="menuUserName" class="sysMenu"
@@ -63,43 +75,43 @@
 									onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
 									onmouseout="this.className='sysMenuItemWithIcon'"
 									style="background-image: url(images/im/m0.png)"
-									onclick="selectMenuUserName()">联机</div>
+									onclick="selectMenuUserName('在线')">在线</div>
 								<div onselectstart="return false;" class="sysMenuItemWithIcon"
 									onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
 									onmouseout="this.className='sysMenuItemWithIcon'"
 									style="background-image: url(images/im/m1.png)"
-									onclick="selectMenuUserName()">忙碌</div>
+									onclick="selectMenuUserName('忙碌')">忙碌</div>
 								<div onselectstart="return false;" class="sysMenuItemWithIcon"
 									onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
 									onmouseout="this.className='sysMenuItemWithIcon'"
 									style="background-image: url(images/im/m2.png)"
-									onclick="selectMenuUserName()">马上回来</div>
+									onclick="selectMenuUserName('马上回来')">马上回来</div>
 								<div onselectstart="return false;" class="sysMenuItemWithIcon"
 									onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
 									onmouseout="this.className='sysMenuItemWithIcon'"
 									style="background-image: url(images/im/m2.png)"
-									onclick="selectMenuUserName()">离开</div>
+									onclick="selectMenuUserName('离开')">离开</div>
 								<div onselectstart="return false;" class="sysMenuItemWithIcon"
 									onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
 									onmouseout="this.className='sysMenuItemWithIcon'"
 									style="background-image: url(images/im/m2.png)"
-									onclick="selectMenuUserName()">通话中</div>
+									onclick="selectMenuUserName('通话中')">通话中</div>
 								<div onselectstart="return false;" class="sysMenuItemWithIcon"
 									onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
 									onmouseout="this.className='sysMenuItemWithIcon'"
 									style="background-image: url(images/im/m2.png)"
-									onclick="selectMenuUserName()">外出就餐</div>
+									onclick="selectMenuUserName('外出就餐')">外出就餐</div>
 								<div onselectstart="return false;" class="sysMenuItemWithIcon"
 									onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
 									onmouseout="this.className='sysMenuItemWithIcon'"
 									style="background-image: url(images/im/m3.png)"
-									onclick="selectMenuUserName()">隐身</div>
+									onclick="selectMenuUserName('隐身')">隐身</div>
 								<div onselectstart="return false;" class="sysMenuItemDisabled"></div>
 								<div onselectstart="return false;" class="sysMenuItemWithIcon"
 									onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
 									onmouseout="this.className='sysMenuItemWithIcon'"
 									style="background-image: url(images/im/m4.png)"
-									onclick="selectMenuUserName()">注销</div>
+									onclick="selectMenuUserName('注销')">注销</div>
 							</div>
 							</div>
 							<div style="width: 100%; float: left">
@@ -131,14 +143,22 @@
 				</div>
 				<div class="wMainMain" onselectstart="return false"
 					style="height: 374px;">
-					<div class="wMainUserHeaderEx" g>联机 ( <span id="onlineListNum">0</span> )</div>
-					<div class="wMainUserContainer" style="height: 26px;" id="onlineList">
-						
+					
+					
+					<div class="wMainUserHeaderEx" id="defaultGroup">默认分组 ( <span id="defaultGroupNum">0</span> )</div>
+					<div class="wMainUserContainer" style="min-height: 26px" id="defaultGroupList">
+						<div class="wMainUserItemText" style="padding-left: 25px; width: 100%; color: #aca899">此组中没有联系人</div>
 					</div>
-					<div class="wMainUserHeaderEx" g>脱机 ( <span id="unlineListNum">0</span> )</div>
-					<div class="wMainUserContainer" style="height: 26px;" id="unlineList">
+<!-- 					<div class="wMainUserHeaderEx" g>联机 ( <span id="onlineListNum">0</span> )</div> -->
+<!-- 					<div class="wMainUserContainer" style="min-height: 26px" id="onlineList"> -->
+<!-- 						<div class="wMainUserItemText" style="padding-left: 25px; width: 100%; color: #aca899">此组中没有联系人</div> -->
 						
-					</div>
+<!-- 					</div> -->
+<!-- 					<div class="wMainUserHeaderEx" g>脱机 ( <span id="unlineListNum">0</span> )</div> -->
+<!-- 					<div class="wMainUserContainer" style="min-height: 26px" id="unlineList"> -->
+<!-- 						<div class="wMainUserItemText" style="padding-left: 25px; width: 100%; color: #aca899">此组中没有联系人</div> -->
+						
+<!-- 					</div> -->
 				</div>
 				<div class="wMainSearchWebPannel">
 					<div class="wMainToolBar">
@@ -187,7 +207,12 @@
 		<div class="wLoading" style="display: none;">加载中...</div>
 	</div>
 	
-	<a href="#" onClick="_login();">登陆</a>
+	
+ 
+
+
+
+
 	<script>
 	
 	
@@ -246,8 +271,11 @@
 	function menuUserNameToggle(){
 		jQuery("#menuUserName").toggle();
 	}
-	function selectMenuUserName(){
+	function selectMenuUserName(sStatus){
 		menuUserNameToggle();
+		nodeim.status(sStatus, function(){
+			jQuery("#statusDiv").text( sStatus)
+		});
 	}
 	
 	jQuery(".wMainUserHeaderEx").click(function(){
@@ -335,8 +363,48 @@
 				bs.hide();
 			};
 	});
-
 	
+	$(function(){
+		
+	    $.contextMenu({
+	        selector: '.wMainUserItem', 
+	        callback: function(key, options) {
+	            var m = "clicked: " + key;
+	            window.console && console.log(m) || alert(m); 
+	        },
+	        items: {
+	            "edit": {name: "Edit", icon: "edit"},
+	            "cut": {name: "Cut", icon: "cut"},
+	            "copy": {name: "Copy", icon: "copy"},
+	            "paste": {name: "Paste", icon: "paste"},
+	            "delete": {name: "Delete", icon: "delete"},
+	            "sep1": "---------",
+	            "quit": {name: "Quit", icon: "quit"}
+	        }
+	    });
+	    $.contextMenu({
+	        selector: '.wMainUserHeaderEx', 
+	        callback: function(key, options) {
+	            var m = "clicked: " + key;
+	            window.console && console.log(m) || alert(m); 
+	        },
+	        items: {
+	            "edit": {name: "Edit", icon: "edit"}
+	        }
+	    });
+	    
+	    
+	    $( ".wMainUserItem" ).draggable({ revert: "invalid" });
+	    $( "#defaultGroup" ).droppable({
+	        greedy: true,
+	        activeClass: "ui-state-hover",
+	        hoverClass: "ui-state-active",
+	        drop: function( event, ui ) {
+	        	alert("sddddddds")
+	        }
+        });
+	 
+	});
 	</script>
 </body>
 </html>
