@@ -5,6 +5,7 @@
 <title>真知保护</title>
 
 <script src="jquery-1.9.1.min.js"></script>
+<script charset="utf-8" src="kindeditor/kindeditor-min.js" type="text/javascript"></script>
 
 <link rel="stylesheet" type="text/css" href="styles/webim.css" />
 <link rel="stylesheet" type="text/css" href="styles/webimpage.css" />
@@ -141,382 +142,7 @@
 						</div>
 						<div class="wChatResize" id="wChatResize"></div>
 						<div
-							style="border: 1px solid #f2b705; background-color: #fff; overflow: hidden">
-							<div class="wChatFaceButtonBar">
-								<div class="wChatFaceButton"
-									onmouseover="this.className='wChatFaceButton wChatFaceButtonHover'"
-									onmouseout="this.className='wChatFaceButton'">
-									<img src="images/im/facebuttonface.png"
-										style="height: 23px; width: 20px" title="选择图释" onclick="toggleFice()">
-								</div>
-								<div class="wChatFaceButton"
-									onmouseover="this.className='wChatFaceButton wChatFaceButtonHover'"
-									onmouseout="this.className='wChatFaceButton'">
-									<img src="images/im/facebuttonflash.png"
-										style="height: 23px; width: 16px" title="发送闪屏振动">
-								</div>
-								<div class="wChatFaceButton"
-									onmouseover="this.className='wChatFaceButton wChatFaceButtonHover'"
-									onmouseout="this.className='wChatFaceButton'">
-									<img src="images/im/facebuttonsendimg.png"
-										style="height: 23px; width: 16px" title="发送图片">
-								</div>
-								<div class="wChatFaceButton"
-									onmouseover="this.className='wChatFaceButton wChatFaceButtonHover'"
-									onmouseout="this.className='wChatFaceButton'">
-									<img src="images/im/facebuttonsendfile.png"
-										style="height: 23px; width: 16px" title="发送文件">
-								</div>
-								
-								<div id="divFaceList" class="wChatFaceContainer"
-								style="display: none; top: 118px; left: 204px; width: 305px; height: 216px;">
-								<div class="wChatFaceItem">
-									<img f=":-)"
-										src="msnface/regular_smile.gif"
-										title="笑脸 :-)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f=":-D"
-										src="msnface/teeth_smile.gif"
-										title="咧嘴笑脸 :-D">
-								</div>
-								<div class="wChatFaceItem">
-									<img f=":-O"
-										src="msnface/omg_smile.gif"
-										title="惊讶的笑脸 :-O">
-								</div>
-								<div class="wChatFaceItem">
-									<img f=":-P"
-										src="msnface/tongue_smile.gif"
-										title="吐舌笑脸 :-P">
-								</div>
-								<div class="wChatFaceItem">
-									<img f=";-)"
-										src="msnface/wink_smile.gif"
-										title="眨眼笑脸 ;-)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f=":-("
-										src="msnface/sad_smile.gif"
-										title="悲伤的脸 :-(">
-								</div>
-								<div class="wChatFaceItem">
-									<img f=":-S"
-										src="msnface/confused_smile.gif"
-										title="困惑的笑脸 :-S">
-								</div>
-								<div class="wChatFaceItem">
-									<img f=":-|"
-										src="msnface/what_smile.gif"
-										title="失望的脸 :-|">
-								</div>
-								<div class="wChatFaceItem">
-									<img f=":B"
-										src="msnface/cry_smile.gif"
-										title="哭泣的脸 :B">
-								</div>
-								<div class="wChatFaceItem">
-									<img f=":-$"
-										src="msnface/red_smile.gif"
-										title="尴尬的笑脸 :-$">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(H)"
-										src="msnface/shades_smile.gif"
-										title="热烈的笑脸 (H)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f=":-@"
-										src="msnface/angry_smile.gif"
-										title="生气的脸 :-@">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(A)"
-										src="msnface/angel_smile.gif"
-										title="天使 (A)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(6)"
-										src="msnface/devil_smile.gif"
-										title="恶魔 (6)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f=":-#"
-										src="msnface/47_47.gif"
-										title="保守秘密 :-#">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="8o|"
-										src="msnface/48_48.gif"
-										title="咬牙切齿 8o|">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="8-|"
-										src="msnface/49_49.gif"
-										title="书呆子 8-|">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="^o)"
-										src="msnface/50_50.gif"
-										title="讽刺的脸 ^o)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f=":-*"
-										src="msnface/51_51.gif"
-										title="悄悄话 :-*">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="+o("
-										src="msnface/52_52.gif"
-										title="生病的脸 +o(">
-								</div>
-								<div class="wChatFaceItem">
-									<img f=":^)"
-										src="msnface/71_71.gif"
-										title="不知道 :^)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="*-)"
-										src="msnface/72_72.gif"
-										title="正在思考 *-)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f=":-M"
-										src="msnface/74_74.gif"
-										title="聚会笑脸 :-M">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="8-)"
-										src="msnface/75_75.gif"
-										title="转动眼睛 8-)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="|-)"
-										src="msnface/77_77.gif"
-										title="困了 |-)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(C)"
-										src="msnface/coffee.gif"
-										title="咖啡 (C)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(Y)"
-										src="msnface/thumbs_up.gif"
-										title="太棒了 (Y)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(N)"
-										src="msnface/thumbs_down.gif"
-										title="太差了 (N)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(B)"
-										src="msnface/beer_mug.gif"
-										title="啤酒杯 (B)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(D)"
-										src="msnface/martini.gif"
-										title="高脚杯 (D)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(X)"
-										src="msnface/girl.gif"
-										title="女孩 (X)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(Z)"
-										src="msnface/guy.gif"
-										title="男孩 (Z)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="({)"
-										src="msnface/guy_hug.gif"
-										title="左侧拥抱 ({)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(})"
-										src="msnface/girl_hug.gif"
-										title="右侧拥抱 (})">
-								</div>
-								<div class="wChatFaceItem">
-									<img f=":-["
-										src="msnface/bat.gif"
-										title="吸血蝙蝠 :-[">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(^)"
-										src="msnface/cake.gif"
-										title="生日蛋糕 (^)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(L)"
-										src="msnface/heart.gif"
-										title="红心 (L)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(U)"
-										src="msnface/broken_heart.gif"
-										title="破碎的心 (U)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(K)"
-										src="msnface/kiss.gif"
-										title="红唇 (K)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(G)"
-										src="msnface/present.gif"
-										title="礼品盒 (G)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(F)"
-										src="msnface/rose.gif"
-										title="红玫瑰 (F)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(W)"
-										src="msnface/wilted_rose.gif"
-										title="凋谢的玫瑰 (W)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(P)"
-										src="msnface/camera.gif"
-										title="照相机 (P)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(~)"
-										src="msnface/film.gif"
-										title="电影胶片 (~)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(@)"
-										src="msnface/cat.gif"
-										title="猫脸 (@)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(dog)"
-										src="msnface/dog.gif"
-										title="狗脸 (dog)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(T)"
-										src="msnface/phone.gif"
-										title="电话听筒 (T)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(I)"
-										src="msnface/lightbulb.gif"
-										title="灯泡 (I)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(8)"
-										src="msnface/note.gif"
-										title="音符 (8)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(S)"
-										src="msnface/moon.gif"
-										title="沉睡的弯月 (S)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(*)"
-										src="msnface/star.gif"
-										title="星星 (*)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(E)"
-										src="msnface/envelope.gif"
-										title="电子邮件 (E)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(O)"
-										src="msnface/clock.gif"
-										title="时钟 (O)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(M)"
-										src="msnface/messenger.gif"
-										title="MSN Messenger 图标 (M)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(sn)"
-										src="msnface/53_53.gif"
-										title="蜗牛 (sn)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(bah)"
-										src="msnface/70_70.gif"
-										title="黑羊 (bah)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(pl)"
-										src="msnface/55_55.gif"
-										title="餐盘 (pl)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(||)"
-										src="msnface/56_56.gif"
-										title="餐具 (||)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(pi)"
-										src="msnface/57_57.gif"
-										title="比萨 (pi)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(so)"
-										src="msnface/58_58.gif"
-										title="足球 (so)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(au)"
-										src="msnface/59_59.gif"
-										title="汽车 (au)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(ap)"
-										src="msnface/60_60.gif"
-										title="飞机 (ap)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(um)"
-										src="msnface/61_61.gif"
-										title="雨伞 (um)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(ip)"
-										src="msnface/62_62.gif"
-										title="有棕榈树的小岛 (ip)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(co)"
-										src="msnface/63_63.gif"
-										title="计算机 (co)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(mp)"
-										src="msnface/64_64.gif"
-										title="移动电话 (mp)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(st)"
-										src="msnface/66_66.gif"
-										title="乌云 (st)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(li)"
-										src="msnface/73_73.gif"
-										title="闪电 (li)">
-								</div>
-								<div class="wChatFaceItem">
-									<img f="(mo)"
-										src="msnface/69_69.gif"
-										title="金钱 (mo)">
-								</div>
-							</div>
-							</div>
+							style="background-color: #fff; overflow: hidden">
 							<textarea
 								style="height: 78px; border: 0px; width: 323px; font-size: 12px; overflow: auto; resize: none;" id="message"></textarea>
 						</div>
@@ -554,18 +180,6 @@
 										onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
 										onmouseout="this.className='sysMenuItemWithIcon'"
 										onclick="Elem.Value('wChatInputId10052Type1','我得下了，拜拜!');">我得下了，拜拜!</div>
-									<div onselectstart="return false;" class="sysMenuItemDisabled"></div>
-									<div onselectstart="return false;" class="sysMenuItemWithIcon"
-										onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover';this.style.backgroundImage='url(http://webos.knowledge.com.cn/webim/images/selectedhover.gif)'"
-										onmouseout="this.className='sysMenuItemWithIcon';this.style.backgroundImage='url(http://webos.knowledge.com.cn/webim/images/selected.gif)'"
-										style="background-image: url(http://webos.knowledge.com.cn/webim/images/selected.gif)"
-										onclick="">按Enter
-										键发送消息</div>
-									<div onselectstart="return false;" class="sysMenuItemWithIcon"
-										onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
-										onmouseout="this.className='sysMenuItemWithIcon'"
-										onclick="">按Ctrl+Enter
-										键发送消息</div>
 								</div>
 							</div>
 						</div>
@@ -587,9 +201,10 @@
 	<script>
 	$("#btnSendMessage").click(function(){
 		
+		
 		var data = {
 			to: userObj.id
-			, message: $("#message").val()
+			, message: editor.html()
 		}
 		
 		var _data = {};
@@ -597,12 +212,12 @@
 		_from.username = userLocalObj.username;
 		_from.id = userLocalObj.id;
 		_data.from = _from;
-		_data.message = $("#message").val();
+		_data.message = editor.html();
 		_data.time = Date.parse(new Date());
 		onMessage(_data);
 		kate.parentWindow.call("nodeim.message",[data]) ;
 		
-		$("#message").val("")
+		editor.html("")
 	}) ;
 	
 	jQuery(".wMainUserItem").click(function(){
@@ -666,7 +281,7 @@
 			if( _oldClientY != e.clientY){
 
 				jQuery("#messageoutput").css( "height", parseInt( jQuery("#wChatResizeBar").css("top"))-90);
-				jQuery("#message").css( "height", parseInt( jQuery(".wChatMain").height()) - parseInt( jQuery("#messageoutput").height())-71);
+				//jQuery("#message").css( "height", parseInt( jQuery(".wChatMain").height()) - parseInt( jQuery("#messageoutput").height())-71);
 				jQuery(".wChatFaceContainer").css( "top", e.clientY - _cb - 218);
 			}
 			
@@ -689,6 +304,21 @@
 		kate.parentWindow.call("openChatWindow_CallBack",[kate.wndId]) ;
 	}
 	
+	var editor;
+	KindEditor.ready(function(K) {
+		editor = K.create('#message', {
+			allowFileManager : true,
+			resizeType : 1,
+			width : '330',
+			minWidth : '330',
+			height:70,
+			minHeight : '70',
+			allowPreviewEmoticons : false,
+			allowImageUpload : false,
+			items : [
+				'emoticons','|','fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline' ]
+		});
+	});
 	</script>
 </body>
 </html>
