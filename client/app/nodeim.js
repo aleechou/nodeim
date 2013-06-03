@@ -23,7 +23,9 @@ nodeim.connect = function (){
 //					alert("<p>"+data.from.username+"(id:"+data.from.id+") 请求加你为好友："+data.message+"</p>")
 					if(window.confirm("<>"+data.from.username+"(id:"+data.from.id+") 请求加你为好友："+data.message+"<>")){
 		                 //alert("确定");
-						nodeim.replyFriend({to:data.from.id  ,refuse:0});
+						nodeim.replyFriend({to:data.from.id  ,refuse:0},function(){
+							nodeim.friends();
+						});
 		                return true;
 		              }else{
 		                 //alert("取消");
@@ -65,6 +67,13 @@ nodeim.connect = function (){
 		}) ;
 		nodeim.socket.on('presence',function(doc){
 			console.log('presence:',doc) ;
+			
+			if( doc.presence == "在线"){
+				nodeim.status("online", doc.id);
+			}
+			if( doc.presence == "离线"){
+				nodeim.status("unline", doc.id);
+			}
 			//onlineList
 			//presence
 			//wMainUserItem
@@ -89,6 +98,8 @@ nodeim.login = function(u,p){
 	nodeim.socket.command('signin',data,function(rspn){
 		if (rspn.code == '200') {
 			//alert("登陆成功，ID:" + rspn.doc.id + " \n" + rspn.message);
+			
+			console.log(rspn)
 			
 			nodeim.localUser = rspn.doc;
 
@@ -174,14 +185,14 @@ nodeim.addFirend = function(id){
 	}) ;
 }
 
-nodeim.replyFriend = function(data){
+nodeim.replyFriend = function(data,callback){
 
 	nodeim.connect();
 	
 	nodeim.socket.command("reply",data,function(rspn){
 		if(rspn.code=='200')
 		{
-			alert("test");
+			callback()
 		}
 		else
 		{
@@ -266,6 +277,7 @@ nodeim.createUser = function(type,data){
 				jQuery("#onlineList").html("");
 			}
 			jQuery("#onlineList").append(out);
+			jQuery("#onlineList").css("height" , Number(jQuery("#onlineListNum").text()) * 26);
 			
 		}else{
 			jQuery("#unlineListNum").text(Number(jQuery("#unlineListNum").text()) +1);
@@ -273,10 +285,47 @@ nodeim.createUser = function(type,data){
 				jQuery("#unlineList").html("");
 			}
 			jQuery("#unlineList").append(out);
+
+			jQuery("#unlineList").css("height" , Number(jQuery("#unlineListNum").text()) * 26);
 		}
 	}
 
 	
+}
+nodeim.status = function( type, id){
+
+	if( type == "online"){
+		jQuery("#unlineList > .wMainUserItem").each(function(i){
+			if( jQuery(this).attr("uid") == id){
+				
+
+				if( Number(jQuery("#onlineListNum").text() == 0)){
+					jQuery("#onlineList").html("");
+				}
+				
+				jQuery(this).prependTo("#onlineList");
+				jQuery("#onlineListNum").text(Number(jQuery("#onlineListNum").text()) +1);
+				jQuery("#unlineListNum").text(Number(jQuery("#unlineListNum").text()) -1);
+				
+				jQuery("#onlineList").css("height" , Number(jQuery("#onlineListNum").text()) * 26);
+				//jQuery(this).remove();
+			}
+		})
+	}else{
+		jQuery("#unlineList > .wMainUserItem").each(function(i){
+			if( jQuery(this).attr("uid") == id){
+
+				if( Number(jQuery("#unlineListNum").text() == 0)){
+					jQuery("#unlineList").html("");
+				}
+				jQuery(this).prependTo("#unlineList");
+				jQuery("#unlineListNum").text(Number(jQuery("#unlineListNum").text()) +1);
+				jQuery("#onlineListNum").text(Number(jQuery("#onlineListNum").text()) -1);
+				
+				jQuery("#unlineList").css("height" , Number(jQuery("#unlineListNum").text()) * 26);
+			}
+		})
+	}
 }
 
 nodeim.removeUser = function(type,data){
@@ -302,10 +351,12 @@ nodeim.noUser = function(type){
 	out += 	'style="padding-left: 25px; width: 100%; color: #aca899">此组中没有联系人</div>';
 	
 	if( type == "online"){
-		jQuery("#onlineList").append(out)
+		jQuery("#onlineList").html(out)
+		jQuery("#onlineListNum").text("0");
 	}else{
 
-		jQuery("#unlineList").append(out)
+		jQuery("#unlineList").html(out)
+		jQuery("#unlineListNum").text("0");
 	}
 	
 	
