@@ -35,3 +35,28 @@ fromChildWindow = function(value)
 {
 	alert("子窗口传来的参数："+value) ;
 }
+
+
+
+
+$(function(){
+	$(".contextMenuDemo").on('contextmenu',function(event){
+    	console.log(event) ;
+
+    	$("#menu")
+    		.show()
+    		.css("left",event.clientX)
+    		.css("top",event.clientY) ;
+
+        return false;
+	}) ;
+
+	// 关闭菜单
+	$(document).on('click',function(event){
+    	$("#menu").hide() ;
+	}) ;
+
+	$("#menu li").click(function(event){
+		alert( $(event.target).text() ) ;
+	}) ;
+});
