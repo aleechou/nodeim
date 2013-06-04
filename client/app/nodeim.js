@@ -228,6 +228,18 @@ nodeim.friends = function(){
 				
 				nodeim.createUser(rspn.list[i]);
 	    	})
+	    	
+	    	
+
+		    $( ".wMainUserItem" ).draggable({ revert: "invalid" });
+		    $( "#defaultGroup" ).droppable({
+		        greedy: true,
+		        activeClass: "ui-state-hover",
+		        hoverClass: "ui-state-active",
+		        drop: function( event, ui ) {
+		        	alert("sddddddds")
+		        }
+	        });
 		}
 		else
 		{
