@@ -4,12 +4,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <title>真知保护</title>
 
+<script src="jquery-1.9.1.min.js"></script>
 <link rel="stylesheet" type="text/css"  href="styles/webim.css"/>
 <link rel="stylesheet" type="text/css"  href="styles/webimpage.css"/>
 
 </head>
 <body >
-    <div  class="wOther" style="position: absolute; left: 612px; top: 20px; width: 334px; height: 422px; z-index: 9724;"><div class="wContent"><div  class="wOtherTitle" style="color: rgb(0, 0, 0);"><div  class="wIcon"><img src="http://webos.knowledge.com.cn/webim/images/im/toolprofile_s.png"></div><div  class="wText" style="cursor: move;">编辑个人资料</div><div  class="wControl"><div class="wControlMin" onmouseover="this.scrollTop='13'" onmouseout="this.scrollTop='0'"><img src="http://webos.knowledge.com.cn/webim/images/im/othercontrolmin.png" title="最小化"></div><div class="wControlClose" onmouseover="this.scrollTop='15'" onmouseout="this.scrollTop='0'"><img src="http://webos.knowledge.com.cn/webim/images/im/othercontrolclose.png" title="关闭"></div></div></div><div  class="wWindowContent" style="background-color: transparent; height: 397px;"><form action="profilesave.php" class="profilesave" method="post" enctype="multipart/form-data" name="form1" >
+    <div  class="wOther" style="position: absolute; width: 334px; height: 422px; z-index: 9724;"><div class="wContent"><div  class="wOtherTitle" style="color: rgb(0, 0, 0);"><div  class="wIcon"><img src="http://webos.knowledge.com.cn/webim/images/im/toolprofile_s.png"></div><div  class="wText" style="cursor: move;">编辑个人资料</div><div  class="wControl"><div class="wControlMin" onmouseover="this.scrollTop='13'" onmouseout="this.scrollTop='0'"><img src="http://webos.knowledge.com.cn/webim/images/im/othercontrolmin.png" title="最小化"></div><div class="wControlClose" onmouseover="this.scrollTop='15'" onmouseout="this.scrollTop='0'"><img src="http://webos.knowledge.com.cn/webim/images/im/othercontrolclose.png" title="关闭"></div></div></div><div  class="wWindowContent" style="background-color: transparent; height: 397px;"><form action="profilesave.php" class="profilesave" method="post" enctype="multipart/form-data" name="form1" >
 		<table width="330" border="0" align="center" cellpadding="0" cellspacing="0">
 		  <tbody><tr>
 			<td height="15" colspan="3"></td>
@@ -71,7 +72,7 @@
 		  <tr>
 			<td height="25" align="right">个人头像：</td>
 			<td align="left">&nbsp;</td>
-			<td align="left"><input name="fileFace" type="file" style="width:164px" size="14" ></td>
+			<td align="left"><iframe id="ifrUpload" frameborder=0 width=260 height=38 marginheight=0 marginwidth=0 scrolling=no></iframe></td>
 			</tr>
 		  <tr>
 		  	<td height="25" align="right"></td>
@@ -96,5 +97,20 @@
 		</form></div></div><div  class="wLoading" style="display: none;">加载中...</div></div>
       <div  class="wLoading" style="display: none;">加载中...</div>
     </div>
+    
+    
+    <script>
+    
+    function onKateLoaded()
+	{
+
+		// 上传文件面板
+		var user = kate.parentWindow.call("nodeim.getUser",[]) ;
+		var server = kate.parentWindow.call("nodeim.getServer",[]) ;
+		
+		$("#ifrUpload").attr('src',server+"/nodeim-server/upload?user="+user.id) ;
+		
+	}
+    </script>
 </body>
 </html>

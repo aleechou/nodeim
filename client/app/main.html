@@ -133,12 +133,6 @@
 							<img src="images/im/tooladdfriend.png"
 								style="height: 16px; width: 16px" title="添加联系人">
 						</div>
-						<div class="wMainContentButton"
-							onmouseover="this.className='wMainContentButton wMainContentButtonHover'"
-							onmouseout="this.className='wMainContentButton'">
-							<img src="images/im/toollisttype.png"
-								style="height: 16px; width: 16px" title="对联系人进行排序">
-						</div>
 					</div>
 				</div>
 				<div class="wMainMain" onselectstart="return false"
@@ -170,13 +164,7 @@
 						</div>
 						<div class="wMainToolButton"
 							onmouseover="this.className='wMainToolButton wMainToolButtonHover'"
-							onmouseout="this.className='wMainToolButton'">
-							<img src="images/im/toolmsghistory.png"
-								style="height: 27px; width: 22px" title="打开聊天记录">
-						</div>
-						<div class="wMainToolButton"
-							onmouseover="this.className='wMainToolButton wMainToolButtonHover'"
-							onmouseout="this.className='wMainToolButton'">
+							onmouseout="this.className='wMainToolButton'" onclick="openEditWindow()">
 							<img src="images/im/toolprofile.png"
 								style="height: 27px; width: 23px" title="编辑个人资料">
 						</div>
@@ -268,6 +256,15 @@
 		find2Window.hide();
 	}
 
+
+	var editWindow = null;
+	function openEditWindow(){
+		editWindow = kate.createWindow(kate.appFolder+'/edit.html') ;
+		editWindow.resize(338,426) ;
+		editWindow.show();
+	}
+	
+	
 	function menuUserNameToggle(){
 		jQuery("#menuUserName").toggle();
 	}
