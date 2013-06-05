@@ -7,6 +7,8 @@
         <script type="text/javascript" src="jquery-1.9.1.js"></script>
         <script type="text/javascript" src="jquery-ui.js"></script>
         <script type="text/javascript" src="app.js"></script>
+        <script type="text/javascript" src="nodeim.js"></script>
+        <script type="text/javascript" src="socket.io.js"></script>
         <style>
         .box {
         	border: 1px solid #DDD;
@@ -17,9 +19,30 @@
     </head>
     
     <body>
+<script >
 
+nodeim.login("aa","aa",function(){
+	nodeim.friends();
+});
+
+$(document).ready(function(){
+	//start()
+});
+
+
+</script>
     	hello world ~~
-
+					----------------------------------------------------------------------------------------
+<div class="wMainUserHeaderEx" id="defaultGroup">默认分组 ( <span id="defaultGroupNum">0</span> )</div>
+					<div class="wMainUserContainer" style="min-height: 26px" id="defaultGroupList">
+<!-- 							<div class="wMainUserItem" style="width:100%" > -->
+<!-- 							<div class="wMainListButton"' > -->
+<!-- 							</div> -->
+<!-- 							<div class="wMainUserItemText">aarongao&nbsp;&nbsp;<span style="color: #777"></span> -->
+<!-- 							</div> -->
+<!-- 							</div> -->
+					</div>
+					----------------------------------------------------------------------------------------
     	<p>
 	    	<button id="btnOpenConsole">控制台</button>
 	    </p>
