@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>真知保护</title>
+
+<script src="jquery-1.9.1.min.js"></script>
+<link rel="stylesheet" type="text/css"  href="styles/webim.css"/>
+<link rel="stylesheet" type="text/css"  href="styles/webimpage.css"/>
+
+</head>
+<body >
+    <div  class="wOther" style="position: absolute; width: 350px; height: 285px; z-index: 9750;"><div class="wContent"><div  class="wOtherTitle" style="color: rgb(0, 0, 0);">
+      <div  class="wIcon"><img src="http://webos.knowledge.com.cn/webim/images/im/tooladdfriend.png"></div><div  class="wText" style="cursor: move;">找回密码</div><div  class="wControl" style="display:none"><div class="wControlMin" onmouseover="this.scrollTop='13'" onmouseout="this.scrollTop='0'"><img src="http://webos.knowledge.com.cn/webim/images/im/othercontrolmin.png" title="最小化"></div><div class="wControlClose" onmouseover="this.scrollTop='15'" onmouseout="this.scrollTop='0'"><img src="http://webos.knowledge.com.cn/webim/images/im/othercontrolclose.png" title="关闭"></div></div></div><div  class="wWindowContent" style="background-color: transparent; height: 260px;">
+        <form action="addfriend.php" method="get" name="form1"  class="friend_bg">
+          <table width="330" border="0" align="center" cellpadding="0" cellspacing="0">
+        <tbody>
+          <tr>
+            <td height="15" colspan="3"></td>
+          </tr>
+          <tr>
+            <td width="66" height="25" align="right">邮箱地址：</td>
+            <td width="6" align="left">&nbsp;</td>
+            <td width="160" align="left"><input name="tbOldPass" type="password" class="input1"  maxlength="50" />            </td>
+          </tr>
+          <tr>
+            <td height="22" align="right"></td>
+            <td align="left">&nbsp;</td>
+            <td align="left"><span  class="orange">不修改请保持为空</span></td>
+          </tr>
+
+
+          <tr>
+            <td height="35" align="center"></td>
+            <td align="center">&nbsp;</td>
+            <td height="35" align="left"><input class="button1" type="button" name="btnSubmit"  value="确定" onclick="chkAll()" />
+              &nbsp;&nbsp;
+              <input class="button1" type="button" name="btnCancel"  onclick="winClose(event);" value="取消" /></td>
+          </tr>
+        </tbody>
+      </table>
+    </form></div></div><div  class="wLoading" style="display: none;">加载中...</div></div>
+      <div  class="wLoading" style="display: none;">加载中...</div>
+    </div>
+    <script>
+	$("#btnSearch1").change(function(){
+		
+		jQuery("#btnSearch1").attr("checked","checked");
+		jQuery("#btnSearch1").attr("checked","");
+		jQuery("#searchDiv1").show();
+		jQuery("#searchDiv2").hide();
+		
+	}) ;
+	$("#btnSearch2").click(function(){
+		
+		jQuery("#btnSearch1").attr("checked","");
+		jQuery("#btnSearch1").attr("checked","checked");
+		jQuery("#searchDiv1").hide();
+		jQuery("#searchDiv2").show();
+		
+	}) ;
+
+	function search(){
+		
+		if( jQuery("#btnSearch1").attr("checked") == "checked"){
+			
+			kate.parentWindow.call("nodeim.searchUser",[{username:jQuery("#tbUsername").val()}]) ;
+		}else{
+			kate.parentWindow.call("nodeim.searchUser",[{}]) ;
+		}
+		
+		
+	}
+	</script>
+    
+</body>
+</html>
