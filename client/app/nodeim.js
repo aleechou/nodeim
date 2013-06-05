@@ -68,12 +68,20 @@ nodeim.connect = function (){
 		nodeim.socket.on('presence',function(doc){
 			console.log('presence:',doc) ;
 			
-			if( doc.presence == "在线"){
+			jQuery(".wMainUserItem").each(function(i){
 				
-			}
-			if( doc.presence == "离线"){
-				
-			}
+				if( jQuery(this).attr("uid") == doc.id){
+					
+					if( doc.presence == "在线"){
+						jQuery(this).find("img").attr("class","");
+					}else{
+						jQuery(this).find("img").attr("class","c2");
+					}
+				}
+			})
+			
+			
+			
 			//onlineList
 			//presence
 			//wMainUserItem
@@ -252,15 +260,21 @@ nodeim.friends = function(){
 nodeim.createUser = function(data){
 	var out = "";
 	
+	if( data.presence == "在线"){
+		var sCls = "";
+	}else{
+		var sCls = "c2";
+	}
+	
+	
 	out += '<div class="wMainUserItem" uid="'+data.id+'"' ;
 	out += 'ondblclick="openChatWindow('+data.id+',\''+data.username+'\')" onclick="setBjcolor(this)"';
 	out += 'style="width:100%">';
 	out += '<div class="wMainListButton"';
 	out += '	onmouseover="this.className=\'wMainListButton wMainListButtonHover\'"';
 	out += '	onmouseout="this.className=\'wMainListButton\'">';
-	out += '	<img src="images/im/m3.png" title="查看此人的联系人卡片"';
-	out += '		style="height: 19px; width: 19px"';
-	out += '		onclick="">';
+	out += '	<img src="images/im/m33.png" class="'+sCls+'"';
+	out += '		style="height: 19px; width: 19px" >';
 	out += '</div>';
 	out += '<div class="wMainUserItemText">';
 	out += '	'+data.username+'&nbsp;&nbsp;<span style="color: #777"></span>';

@@ -56,7 +56,7 @@
 							<img
 								src="http://webos.knowledge.com.cn/webim/userface/default.gif"
 								style="width: 51px; height: 51px; cursor: pointer"
-								title="查看您的联系人卡片">
+								id="facePic" >
 						</div>
 						<div class="wMainUserInfoRight" style="width: 178px;">
 							<div style="width: 100%; float: left">
@@ -276,6 +276,12 @@
 		menuUserNameToggle();
 		nodeim.status(sStatus, function(){
 			jQuery("#statusDiv").text( sStatus)
+			
+			if( sStatus != "在线"){
+				jQuery("#facePic").attr("class","c2")
+			}else{
+				jQuery("#facePic").attr("class","")
+			}
 		});
 	}
 	
