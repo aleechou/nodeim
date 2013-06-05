@@ -415,13 +415,5 @@ if (typeof JSON !== 'object') {
 // These forms are obsolete. It is recommended that JSON.stringify and
 // JSON.parse be used instead.
 
-    if (!Object.prototype.toJSONString) {
-        Object.prototype.toJSONString = function (filter) {
-            return JSON.stringify(this, filter);
-        };
-        Object.prototype.parseJSON = function (filter) {
-            return JSON.parse(this, filter);
-        };
-    }
 }());
 
