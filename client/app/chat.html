@@ -50,7 +50,7 @@
 						</div>
 						<div class="wChatToolBarButton"
 							onmouseover="this.className='wChatToolBarButton wChatToolBarButtonHover'"
-							onmouseout="this.className='wChatToolBarButton'">
+							onmouseout="this.className='wChatToolBarButton'" onclick="openLogWindow()">
 							<img src="images/im/chatbuttonhistory.png"
 								style="height: 30px; width: 29px" title="查看聊天历史记录">
 						</div>
@@ -302,6 +302,28 @@
 	function onKateLoaded()
 	{
 		kate.parentWindow.call("openChatWindow_CallBack",[kate.wndId]) ;
+	}
+	
+	
+	
+
+	var logWindow = null;
+	function openLogWindow(){
+		logWindow = kate.createWindow(kate.appFolder+'/chatlog.html') ;
+		logWindow.resize(554,454) ;
+		logWindow.show();
+	}
+	function openLogWindowCallBack (){
+		openLog(1);
+	}
+	function openLog(page){
+
+		kate.parentWindow.call("nodeim.log",[ userObj.id,page]) ;
+	}
+	function openLogCallBack(data){
+
+		console.log("log",data)
+		logWindow.call("callBack",[ data]);
 	}
 	
 	var editor;

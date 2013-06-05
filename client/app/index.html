@@ -7,6 +7,7 @@
 <title>真知保护</title>
 
 <script src="jquery-1.9.1.min.js"></script>
+<script src="jquery.cookie.js"></script>
 
 <link rel="stylesheet" type="text/css" href="styles/webim.css" />
 <link rel="stylesheet" type="text/css" href="styles/webimpage.css" />
@@ -70,15 +71,15 @@
 										<div id="divLoginId6Type3">
 											<div style="width: 100%; float: left; height: 18px">
 												<div style="float: left; line-height: 18px">登录状态(G):</div>
-												<div id="divStatusId" us="4" class="loginStatusSelect"
+												<div id="divStatus" us="4" class="loginStatusSelect"
 													onmouseover="this.className='loginStatusSelect loginStatusSelectHover'"
-													onmouseout="this.className='loginStatusSelect'" onclick="showMenuLoginStatus()">通话中</div>
+													onmouseout="this.className='loginStatusSelect'" onclick="showMenuLoginStatus()">在线</div>
 											</div>
 											<div
 												style="height: 18px; padding-top: 8px; width: 100%; float: left;">
-												<input id="cbSaveUserId" type="checkbox"
-													checked="checked" style="display: none;" >
-													<div class="cCheckBox" style="cursor: pointer;"></div>
+												<input id="cbSaveUser" type="checkbox"
+													style="display: none;" >
+													<div class="cCheckBox" style="cursor: pointer;" id="isSaveUser"></div>
 													<span
 													style="padding-left: 5px; cursor: pointer; font-size: 12px;" >保存我的信息(B)</span>
 											</div>
@@ -90,18 +91,18 @@
 												style="height: 18px; padding-top: 8px; width: 100%; float: left;">
 												<input id="cbSavePassId6Type3" type="checkbox"
 													style="display: none;">
-													<div class="cCheckBox" style="cursor: pointer;"></div>
+													<div class="cCheckBox" style="cursor: pointer;" id="isSavePass"></div>
 													<span
 													style="padding-left: 5px; cursor: pointer; font-size: 12px;">记住我的密码(R)</span>
 											</div>
-											<div
-												style="height: 18px; padding-top: 8px; width: 100%; float: left;">
-												<input id="cbAutoLoginId6Type3" type="checkbox"
-													style="display: none;">
-													<div class="cCheckBox" style="cursor: pointer;"></div>
-													<span
-													style="padding-left: 5px; cursor: pointer; font-size: 12px;">自动为我登录(N)</span>
-											</div>
+<!-- 											<div -->
+<!-- 												style="height: 18px; padding-top: 8px; width: 100%; float: left;"> -->
+<!-- 												<input id="cbAutoLoginId6Type3" type="checkbox" -->
+<!-- 													style="display: none;"> -->
+<!-- 													<div class="cCheckBox" style="cursor: pointer;" id="isAutoLogin"></div> -->
+<!-- 													<span -->
+<!-- 													style="padding-left: 5px; cursor: pointer; font-size: 12px;">自动为我登录(N)</span> -->
+<!-- 											</div> -->
 										</div>
 										<div id="divLoginingId6Type3"
 											style="display: none; padding-top: 35px; text-align: center">
@@ -125,7 +126,9 @@
 			</div>-->
 										<div style="width: 100%; float: left; padding-top: 3px;">
 											<a href="#" id="reg"
-												class="loginLink">注册新帐号</a>
+												class="loginLink">注册新帐号</a>&nbsp;&nbsp;&nbsp;&nbsp;
+												<a href="#" id="findPass"
+												class="loginLink">找回密码</a>
 										</div>
 									</div>
 								</div>
@@ -135,42 +138,42 @@
 					<div id="winOtherLoading" class="wLoading" style="display: none;">加载中...</div>
 				</div>
 				<div id="menuLoginStatus" class="sysMenu"
-					style="width: 120px; height: 168px; top: 177px; left: 452px; display: none;">
+					style="width: 120px; height: 168px; top: 255px; left: 70px; display: none;">
 					<div onselectstart="return false;" class="sysMenuItemWithIcon"
 						onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
 						onmouseout="this.className='sysMenuItemWithIcon'"
 						style="background-image: url(images/im/m0.png)"
-						onclick="selectMenuLoginStatus()">联机</div>
+						onclick="selectMenuLoginStatus('在线')">在线</div>
 					<div onselectstart="return false;" class="sysMenuItemWithIcon"
 						onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
 						onmouseout="this.className='sysMenuItemWithIcon'"
 						style="background-image: url(images/im/m1.png)"
-						onclick="selectMenuLoginStatus()">忙碌</div>
+						onclick="selectMenuLoginStatus('忙碌')">忙碌</div>
 					<div onselectstart="return false;" class="sysMenuItemWithIcon"
 						onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
 						onmouseout="this.className='sysMenuItemWithIcon'"
 						style="background-image: url(images/im/m2.png)"
-						onclick="selectMenuLoginStatus()">马上回来</div>
+						onclick="selectMenuLoginStatus('马上回来')">马上回来</div>
 					<div onselectstart="return false;" class="sysMenuItemWithIcon"
 						onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
 						onmouseout="this.className='sysMenuItemWithIcon'"
 						style="background-image: url(images/im/m2.png)"
-						onclick="selectMenuLoginStatus()">离开</div>
+						onclick="selectMenuLoginStatus('离开')">离开</div>
 					<div onselectstart="return false;" class="sysMenuItemWithIcon"
 						onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
 						onmouseout="this.className='sysMenuItemWithIcon'"
 						style="background-image: url(images/im/m2.png)"
-						onclick="selectMenuLoginStatus()">通话中</div>
+						onclick="selectMenuLoginStatus('通话中')">通话中</div>
 					<div onselectstart="return false;" class="sysMenuItemWithIcon"
 						onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
 						onmouseout="this.className='sysMenuItemWithIcon'"
 						style="background-image: url(images/im/m2.png)"
-						onclick="selectMenuLoginStatus()">外出就餐</div>
+						onclick="selectMenuLoginStatus('外出就餐')">外出就餐</div>
 					<div onselectstart="return false;" class="sysMenuItemWithIcon"
 						onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
 						onmouseout="this.className='sysMenuItemWithIcon'"
 						style="background-image: url(images/im/m3.png)"
-						onclick="selectMenuLoginStatus()">隐身</div>
+						onclick="selectMenuLoginStatus('隐身')">隐身</div>
 				</div>
 		</div>
 	</div>
@@ -178,11 +181,14 @@
 	<script>
 		
 		function showMenuLoginStatus(){
-			jQuery("#menuLoginStatus").css("display","block");
+			jQuery("#menuLoginStatus").toggle();
 		}
 		
-		function selectMenuLoginStatus(){
+		function selectMenuLoginStatus(sStatus){
 			jQuery("#menuLoginStatus").css("display","none");
+			jQuery("#divStatus").text( sStatus);
+			
+			
 		}
 		
 		
@@ -193,18 +199,46 @@
 		jQuery("input[type=checkbox]").next().click(function(){
 			
 			$(this).toggleClass("cCheckBoxChecked");
+			
 		});
 
 		jQuery("input[type=checkbox]").next().next().click(function(){
 
 			$(this).prev().toggleClass("cCheckBoxChecked");
+			
 		});
 		
 		var mainWindow = null;
 		$("#btnLogin").click(function() {
 			mainWindow.call("nodeim.login",[$("#loginTextBoxU").val(),$("#loginTextBoxP").val()]);
+			
+			if(jQuery("#isSaveUser").attr("class") == "cCheckBox"){
+
+				$.cookie('saveUser',"" , {expires: 365});
+				$.cookie('isSaveUser',false , {expires: 365});
+			}else{
+				$.cookie('saveUser',$("#loginTextBoxU").val() , {expires: 365});
+				$.cookie('isSaveUser',true , {expires: 365});
+			}
+			if(jQuery("#isSavePass").attr("class") == "cCheckBox"){
+
+				$.cookie('savePass',"" , {expires: 365});
+				$.cookie('isSavePass',false , {expires: 365});
+			}else{
+				$.cookie('savePass',$("#loginTextBoxP").val() , {expires: 365});
+				$.cookie('isSavePass',true , {expires: 365});
+			}
 		});
 		
+
+		if( $.cookie('isSaveUser')){
+			$("#loginTextBoxU").val( $.cookie('saveUser'))
+			jQuery("#isSaveUser").attr("class","cCheckBoxChecked")
+		}
+		if( $.cookie('isSavePass')){
+			$("#loginTextBoxP").val( $.cookie('savePass'))
+			jQuery("#isSavePass").attr("class","cCheckBoxChecked")
+		}
 		
 		var regWindow = null;
 		$("#reg").click(function() {
@@ -212,6 +246,14 @@
 			regWindow.resize(213,453) ;
 			regWindow.show();
 		});
+
+		var findPassWindow = null;
+		$("#findPass").click(function() {
+			findPassWindow = kate.createWindow(kate.appFolder+'/findpass.html') ;
+			findPassWindow.resize(359,289) ;
+			findPassWindow.show();
+		});
+		
 		
 		
 		function onKateLoaded()
@@ -222,6 +264,7 @@
 			mainWindow.resize(264,554) ;
 			mainWindow.hide();
 		}
+		
 	</script>
 </body>
 </html>

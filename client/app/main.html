@@ -17,11 +17,6 @@
  <link rel="stylesheet" href="jquery-ui.css" />
  <script src="jquery-ui.js"></script>
   
-  <style>
-  #draggable { width: 100px; height: 40px; padding: 0.5em; float: left; margin: 10px 10px 10px 0; }
-  #droppable, #droppable2 { width: 230px; height: 120px; padding: 0.5em; float: left; margin: 10px; }
-  #droppable-inner, #droppable2-inner { width: 170px; height: 60px; padding: 0.5em; float: left; margin: 10px; }
-  </style>
 </head>
 <body onselectstart="return false;">
 
@@ -61,7 +56,7 @@
 							<img
 								src="http://webos.knowledge.com.cn/webim/userface/default.gif"
 								style="width: 51px; height: 51px; cursor: pointer"
-								title="查看您的联系人卡片">
+								id="facePic" >
 						</div>
 						<div class="wMainUserInfoRight" style="width: 178px;">
 							<div style="width: 100%; float: left">
@@ -133,12 +128,6 @@
 							<img src="images/im/tooladdfriend.png"
 								style="height: 16px; width: 16px" title="添加联系人">
 						</div>
-						<div class="wMainContentButton"
-							onmouseover="this.className='wMainContentButton wMainContentButtonHover'"
-							onmouseout="this.className='wMainContentButton'">
-							<img src="images/im/toollisttype.png"
-								style="height: 16px; width: 16px" title="对联系人进行排序">
-						</div>
 					</div>
 				</div>
 				<div class="wMainMain" onselectstart="return false"
@@ -148,6 +137,15 @@
 					<div class="wMainUserHeaderEx" id="defaultGroup">默认分组 ( <span id="defaultGroupNum">0</span> )</div>
 					<div class="wMainUserContainer" style="min-height: 26px" id="defaultGroupList">
 						<div class="wMainUserItemText" style="padding-left: 25px; width: 100%; color: #aca899">此组中没有联系人</div>
+<!-- 							<div class="wMainUserItem" style="width:100%" > -->
+<!-- 							<div class="wMainListButton"' > -->
+<!-- 							<img src="images/im/m3.png" title="查看此人的联系人卡片" -->
+<!-- 							style="height: 19px; width: 19px" -->
+<!-- 							onclick=""> -->
+<!-- 							</div> -->
+<!-- 							<div class="wMainUserItemText">ddd&nbsp;&nbsp;<span style="color: #777"></span> -->
+<!-- 							</div> -->
+<!-- 							</div> -->
 					</div>
 <!-- 					<div class="wMainUserHeaderEx" g>联机 ( <span id="onlineListNum">0</span> )</div> -->
 <!-- 					<div class="wMainUserContainer" style="min-height: 26px" id="onlineList"> -->
@@ -170,13 +168,7 @@
 						</div>
 						<div class="wMainToolButton"
 							onmouseover="this.className='wMainToolButton wMainToolButtonHover'"
-							onmouseout="this.className='wMainToolButton'">
-							<img src="images/im/toolmsghistory.png"
-								style="height: 27px; width: 22px" title="打开聊天记录">
-						</div>
-						<div class="wMainToolButton"
-							onmouseover="this.className='wMainToolButton wMainToolButtonHover'"
-							onmouseout="this.className='wMainToolButton'">
+							onmouseout="this.className='wMainToolButton'" onclick="openEditWindow()">
 							<img src="images/im/toolprofile.png"
 								style="height: 27px; width: 23px" title="编辑个人资料">
 						</div>
@@ -268,6 +260,15 @@
 		find2Window.hide();
 	}
 
+
+	var editWindow = null;
+	function openEditWindow(){
+		editWindow = kate.createWindow(kate.appFolder+'/edit.html') ;
+		editWindow.resize(338,426) ;
+		editWindow.show();
+	}
+	
+	
 	function menuUserNameToggle(){
 		jQuery("#menuUserName").toggle();
 	}
@@ -275,6 +276,12 @@
 		menuUserNameToggle();
 		nodeim.status(sStatus, function(){
 			jQuery("#statusDiv").text( sStatus)
+			
+			if( sStatus != "在线"){
+				jQuery("#facePic").attr("class","c2")
+			}else{
+				jQuery("#facePic").attr("class","")
+			}
 		});
 	}
 	
@@ -394,15 +401,6 @@
 	    });
 	    
 	    
-	    $( ".wMainUserItem" ).draggable({ revert: "invalid" });
-	    $( "#defaultGroup" ).droppable({
-	        greedy: true,
-	        activeClass: "ui-state-hover",
-	        hoverClass: "ui-state-active",
-	        drop: function( event, ui ) {
-	        	alert("sddddddds")
-	        }
-        });
 	 
 	});
 	</script>

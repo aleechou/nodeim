@@ -68,12 +68,20 @@ nodeim.connect = function (){
 		nodeim.socket.on('presence',function(doc){
 			console.log('presence:',doc) ;
 			
-			if( doc.presence == "在线"){
+			jQuery(".wMainUserItem").each(function(i){
 				
-			}
-			if( doc.presence == "离线"){
-				
-			}
+				if( jQuery(this).attr("uid") == doc.id){
+					
+					if( doc.presence == "在线"){
+						jQuery(this).find("img").attr("class","");
+					}else{
+						jQuery(this).find("img").attr("class","c2");
+					}
+				}
+			})
+			
+			
+			
 			//onlineList
 			//presence
 			//wMainUserItem
@@ -83,6 +91,11 @@ nodeim.connect = function (){
 		}) ;
 		nodeim.socket.on('room.leave',function(doc){
 			console.log('room.leave:',doc) ;
+		}) ;
+		
+		nodeim.socket.on('upload',function(doc){
+			alert("文件上传成功："+doc.filename+", url:"+doc.url) ;
+			console.log("文件上传成功："+doc.filename+", url:"+doc.url) ;
 		}) ;
 	}
 }
@@ -113,6 +126,14 @@ nodeim.login = function(u,p){
 			alert(rspn.message);
 		};
 	});
+}
+
+nodeim.getUser = function(){
+	return nodeim.localUser;
+}
+
+nodeim.getServer = function(){
+	return nodeim.server;
 }
 
 nodeim.message = function(data){
@@ -215,6 +236,18 @@ nodeim.friends = function(){
 				
 				nodeim.createUser(rspn.list[i]);
 	    	})
+	    	
+	    	
+
+		    $( ".wMainUserItem" ).draggable({ revert: "invalid" });
+		    $( "#defaultGroup" ).droppable({
+		        greedy: true,
+		        activeClass: "ui-state-hover",
+		        hoverClass: "ui-state-active",
+		        drop: function( event, ui ) {
+		        	alert("sddddddds")
+		        }
+	        });
 		}
 		else
 		{
@@ -227,15 +260,21 @@ nodeim.friends = function(){
 nodeim.createUser = function(data){
 	var out = "";
 	
+	if( data.presence == "在线"){
+		var sCls = "";
+	}else{
+		var sCls = "c2";
+	}
+	
+	
 	out += '<div class="wMainUserItem" uid="'+data.id+'"' ;
 	out += 'ondblclick="openChatWindow('+data.id+',\''+data.username+'\')" onclick="setBjcolor(this)"';
 	out += 'style="width:100%">';
 	out += '<div class="wMainListButton"';
 	out += '	onmouseover="this.className=\'wMainListButton wMainListButtonHover\'"';
 	out += '	onmouseout="this.className=\'wMainListButton\'">';
-	out += '	<img src="images/im/m3.png" title="查看此人的联系人卡片"';
-	out += '		style="height: 19px; width: 19px"';
-	out += '		onclick="">';
+	out += '	<img src="images/im/m33.png" class="'+sCls+'"';
+	out += '		style="height: 19px; width: 19px" >';
 	out += '</div>';
 	out += '<div class="wMainUserItemText">';
 	out += '	'+data.username+'&nbsp;&nbsp;<span style="color: #777"></span>';
@@ -260,7 +299,26 @@ nodeim.createUser = function(data){
 
 	
 }
+nodeim.log = function( id, page, room){
+	nodeim.connect();
 
+	nodeim.socket.command("log",{from :id ,room :room, page:page},function(rspn){
+		if(rspn.code=='200')
+		{
+			for(var i=0;i<nodeim.chatWindowArr.length;i++){
+				if( nodeim.chatWindowArr[i].id == id){
+					
+					
+					nodeim.chatWindowArr[i].window.call("openLogCallBack",[rspn]);
+				}
+			}
+		}
+		else
+		{
+			alert("<p style='color:red'>服务器返回："+rspn.message+"</p>");
+		}
+	}) ;
+}
 
 nodeim.status = function( sStatus, func){
 	nodeim.connect();
@@ -340,6 +398,7 @@ nodeim.noUser = function(type){
 }
 
 nodeim.getLocalTime = function(nS) {     
-	return new Date(parseInt(nS)).toLocaleString()
+	var d =  new Date(parseInt(nS)); 
+	return  d.getFullYear() + "-" +(d.getMonth()+1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
 } 
 
