@@ -74,6 +74,22 @@
 			return value ;
 		}
 	}
+	KateHtmlWindow.prototype.posX = function()
+	{
+		return kateapi.wndPosX(this.wndId) ;
+	}
+	KateHtmlWindow.prototype.posY = function()
+	{
+		return kateapi.wndPosY(this.wndId) ;
+	}
+	KateHtmlWindow.prototype.move = function(x,y)
+	{
+		return kateapi.move(this.wndId,x,y) ;
+	}
+	KateHtmlWindow.prototype.drag = function(y)
+	{
+		return kateapi.drag(this.wndId) ;
+	}
 
 
 
