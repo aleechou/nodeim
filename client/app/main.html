@@ -131,12 +131,12 @@
 					</div>
 				</div>
 				<div class="wMainMain" onselectstart="return false"
-					style="height: 374px;">
+					style="height: 374px;" id="groupList">
 					
 					
-					<div class="wMainUserHeaderEx" id="defaultGroup">默认分组 ( <span id="defaultGroupNum">0</span> )</div>
+					<div class="wMainUserHeaderEx" id="defaultGroup" groupName="默认分组" onclick="toggleFriend(this)">默认分组 ( <span id="defaultGroupNum" class="groupNum">0</span> )</div>
 					<div class="wMainUserContainer" style="min-height: 26px" id="defaultGroupList">
-						<div class="wMainUserItemText" style="padding-left: 25px; width: 100%; color: #aca899">此组中没有联系人</div>
+						<div class="wMainUserItemText noFriend" style="padding-left: 25px; width: 100%; color: #aca899">此组中没有联系人</div>
 <!-- 							<div class="wMainUserItem" style="width:100%" > -->
 <!-- 							<div class="wMainListButton"' > -->
 <!-- 							<img src="images/im/m3.png" title="查看此人的联系人卡片" -->
@@ -285,19 +285,19 @@
 		});
 	}
 	
-	jQuery(".wMainUserHeaderEx").click(function(){
-		
-		if( jQuery(this).attr("class") == "wMainUserHeaderEx"){
+	
+	function toggleFriend(obj){
+	
+		if( jQuery(obj).attr("class") == "wMainUserHeaderEx ui-droppable"){
 			
-			jQuery(this).next().hide();
-			jQuery(this).attr("class" , "wMainUserHeader");
+			jQuery(obj).next().hide();
+			jQuery(obj).attr("class" , "wMainUserHeader");
 		}else{
 
-			jQuery(this).next().show();
-			jQuery(this).attr("class" , "wMainUserHeaderEx");
+			jQuery(obj).next().show();
+			jQuery(obj).attr("class" , "wMainUserHeaderEx ui-droppable");
 		}
-		
-	})
+	}
 	function setBjcolor(obj){
 		
 		jQuery(".wMainUserItem").each(function(){
@@ -371,36 +371,53 @@
 			};
 	});
 	
+
+
+	var createGroupWindow = null;
+	function openCreateGroupWindow(){
+		createGroupWindow = kate.createWindow(kate.appFolder+'/addgroup.html') ;
+		createGroupWindow.resize(214,124) ;
+		createGroupWindow.show();
+	}
+	
 	$(function(){
 		
 	    $.contextMenu({
 	        selector: '.wMainUserItem', 
 	        callback: function(key, options) {
-	            var m = "clicked: " + key;
-	            window.console && console.log(m) || alert(m); 
+
+	        	if( key == "delete"){
+	        		
+					nodeim.removeUser( jQuery(this).attr("uid"));
+		        	
+	        	}
 	        },
 	        items: {
-	            "edit": {name: "Edit", icon: "edit"},
-	            "cut": {name: "Cut", icon: "cut"},
-	            "copy": {name: "Copy", icon: "copy"},
-	            "paste": {name: "Paste", icon: "paste"},
-	            "delete": {name: "Delete", icon: "delete"},
-	            "sep1": "---------",
-	            "quit": {name: "Quit", icon: "quit"}
+	            "delete": {name: "删除好友", icon: "delete"}
 	        }
 	    });
 	    $.contextMenu({
 	        selector: '.wMainUserHeaderEx', 
 	        callback: function(key, options) {
-	            var m = "clicked: " + key;
-	            window.console && console.log(m) || alert(m); 
+	            
+	        	if( key == "create"){
+
+		        	openCreateGroupWindow();
+	        	}
+	        	if( key == "delete"){
+	        		
+					nodeim.deleteGroup( jQuery(this).attr("groupName"));
+		        	
+	        	}
+	        	
+	            
 	        },
 	        items: {
-	            "edit": {name: "Edit", icon: "edit"}
+	            "create": {name: "增加分组", icon: "add"},
+	            "delete": {name: "删除分组", icon: "delete"}
 	        }
 	    });
-	    
-	    
+
 	 
 	});
 	</script>

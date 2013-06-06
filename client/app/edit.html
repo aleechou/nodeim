@@ -15,20 +15,9 @@
 		  <tbody><tr>
 			<td height="15" colspan="3"></td>
 		  </tr>
-		   <tr>
-			<td width="66" height="25" align="right">原密码：</td>
-			<td width="6" align="left">&nbsp;</td>
-			<td width="160" align="left"><input name="tbOldPass" type="password" class="input1"  maxlength="50">			</td>
-			</tr>
-		 <tr>
-		  	<td height="22" align="right"></td>
-		  	<td align="left">&nbsp;</td>
-		  	<td align="left"><span  class="orange">不修改请保持为空</span></td>
-		  	</tr>
-		  <tr>
 		  <td height="25" align="right">新密码：</td>
 			<td align="left">&nbsp;</td>
-			<td align="left"><input name="tbPass" type="password" class="input1"  maxlength="12" onblur="chkPass()"></td>
+			<td align="left"><input id="tbPass" type="password" class="input1"  maxlength="12" onblur="chkPass()"></td>
 			</tr>
 			 <tr>
 		  	<td height="22" align="right"></td>
@@ -38,7 +27,7 @@
 		  <tr>
 		 <td height="25" align="right">重复密码：</td>
 			<td align="left">&nbsp;</td>
-			<td align="left"><input name="tbRepass" type="password" class="input1"  maxlength="12" onblur="chkRepass()"></td>
+			<td align="left"><input id="tbRepass" type="password" class="input1"  maxlength="12"></td>
 			</tr>
 		  <tr>
 		  	<td height="22" align="right"></td>
@@ -48,7 +37,7 @@
 		  <tr>
 			<td height="25" align="right">昵称：</td>
 			<td align="left">&nbsp;</td>
-			<td align="left"><input name="tbNick" type="text" class="input1"  maxlength="20" onblur="chkNick()" value="qq"></td>
+			<td align="left"><input id="tbNick" type="text" class="input1"  maxlength="20" ></td>
 			</tr>
 		  <tr>
 		  	<td height="22" align="right"></td>
@@ -58,7 +47,7 @@
 		 <tr>
 			<td height="12" align="right">个性签名：</td>
 			<td rowspan="3" align="left">&nbsp;</td>
-			<td rowspan="3" align="left"><textarea name="tbSign" class="mineinput"  style="height:55px" maxlength="200"></textarea></td>
+			<td rowspan="3" align="left"><textarea id="tbSign" class="mineinput"  style="height:55px" maxlength="200"></textarea></td>
 			</tr>
 		  <tr><td height="13" align="right"></td>
 	  	</tr><tr>
@@ -82,7 +71,7 @@
 		   <tr>
 			<td height="22" align="right">性别：</td>
 			<td align="left">&nbsp;</td>
-			<td align="left"><input name="rdGender" type="radio"  value="1" checked="checked">
+			<td align="left"><input name="rdGender" type="radio"  value="1">
 				<label for="rdMale">男</label>
 				<input name="rdGender" type="radio"  value="2">
 				<label for="rdFemale">女</label>			</td>
@@ -90,7 +79,7 @@
 		  <tr>
 			<td height="35" align="center"></td>
 			<td align="center">&nbsp;</td>
-			<td height="35" align="left"><input class="button1" type="button" name="btnSubmit"  value="确定" onclick="chkAll()">&nbsp;&nbsp;
+			<td height="35" align="left"><input class="button1" type="button" name="btnSubmit"  value="确定" onclick="save()">&nbsp;&nbsp;
 			  <input class="button1" type="button" name="btnCancel"  onclick="winClose(event);" value="取消"></td>
 		  </tr>
 		</tbody></table>    
@@ -100,13 +89,49 @@
     
     
     <script>
+
+	var user = null ;
+	var server = null ;
+    
+	function save(){
+		
+		user.nick = jQuery("#tbNick").val();
+		user.sign = jQuery("#tbSign").val();
+		
+		if( jQuery("#tbRepass").val()!=""  ){
+
+
+			if( jQuery("#tbRepass").val() == jQuery("#tbPass").val() ){
+
+				user.password = jQuery("#tbRepass").val();
+			}else{
+				alert("密码不符")
+			}
+			
+		}
+		
+		
+		
+		
+		user.sex = jQuery("input:radio[name=rdGender]:checked").val();
+		kate.parentWindow.call("nodeim.setUser",[user]) ;
+		
+		kate.window.hide();
+	}
     
     function onKateLoaded()
 	{
-
 		// 上传文件面板
-		var user = kate.parentWindow.call("nodeim.getUser",[]) ;
-		var server = kate.parentWindow.call("nodeim.getServer",[]) ;
+		user = kate.parentWindow.call("nodeim.getUser",[]) ;
+		server = kate.parentWindow.call("nodeim.getServer",[]) ;
+		
+		
+
+		 jQuery("#tbNick").val(user.nick);
+		 jQuery("#tbSign").val(user.sign);
+		 
+		 $('input:radio[name=rdGender]')[Number(user.sex)-1].checked = true;
+		
 		
 		$("#ifrUpload").attr('src',server+"/nodeim-server/upload?user="+user.id) ;
 		

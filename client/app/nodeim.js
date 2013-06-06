@@ -39,7 +39,8 @@ nodeim.connect = function (){
 				case 'agree' :
 					alert("<>"+data.from.username+"(id:"+data.from.id+") 同意了你的好友请求："+data.message+"<>") ;
 					
-					nodeim.createUser("online" , data.from);
+					nodeim.createUser(data.from);
+			    	nodeim.startDraggable();
 					break ;
 
 				default :
@@ -73,10 +74,12 @@ nodeim.connect = function (){
 				if( jQuery(this).attr("uid") == doc.id){
 					
 					if( doc.presence == "在线"){
-						jQuery(this).find("img").attr("class","");
+						jQuery(this).find("[class='zz']").hide();
 					}else{
-						jQuery(this).find("img").attr("class","c2");
+						jQuery(this).find("[class='zz']").show();
 					}
+					
+					nodeim.reOrder();
 				}
 			})
 			
@@ -94,8 +97,11 @@ nodeim.connect = function (){
 		}) ;
 		
 		nodeim.socket.on('upload',function(doc){
-			alert("文件上传成功："+doc.filename+", url:"+doc.url) ;
-			console.log("文件上传成功："+doc.filename+", url:"+doc.url) ;
+			
+			nodeim.localUser.facePath = nodeim.server + doc.url;
+			
+			nodeim.profile()
+			
 		}) ;
 	}
 }
@@ -120,6 +126,21 @@ nodeim.login = function(u,p){
 			kate.window.show() ;
 			kate.parentWindow.hide() ;
 			
+			//face
+			if( nodeim.localUser.facePath){
+				jQuery("#facePic").attr("src" , nodeim.localUser.facePath);
+			}
+			
+			
+			//group
+			if( nodeim.localUser.groups ){
+
+				for(var i=0;i<nodeim.localUser.groups.length;i++){
+					nodeim.createGroup(nodeim.localUser.groups[i].name)
+				}
+			}			
+
+			nodeim.startDroppable();		    
 			nodeim.friends();
 			
 		} else {
@@ -130,6 +151,10 @@ nodeim.login = function(u,p){
 
 nodeim.getUser = function(){
 	return nodeim.localUser;
+}
+nodeim.setUser = function(data){
+	nodeim.localUser = data;
+	nodeim.profile()
 }
 
 nodeim.getServer = function(){
@@ -222,6 +247,87 @@ nodeim.replyFriend = function(data,callback){
 	}) ;
 }
 
+
+nodeim.profile = function(data,action){
+	
+	nodeim.connect();
+	
+	if( action == "createGroup"){
+
+		if( nodeim.localUser.groups == undefined){
+			nodeim.localUser.groups = [];
+		}
+		
+		nodeim.localUser.groups.push({name:data.name});
+		
+	}
+	
+	nodeim.socket.command("profile",{doc:nodeim.localUser},function(rspn){
+		
+		if(rspn.code=='200')
+		{
+			if( action == "createGroup"){
+
+				createGroupWindow.hide()
+				nodeim.createGroup(data.name);
+				nodeim.startDroppable();
+				
+			}
+			
+		}
+		else
+		{
+			alert("<p style='color:red'>服务器返回："+rspn.message+"</p>");
+		}
+	}) ;
+}
+
+
+nodeim.createGroup = function( name){
+	
+	var html = "";
+	
+	
+	html += '<div class="wMainUserHeaderEx" groupName="'+name+'" onclick="toggleFriend(this)">'+name+' ( <span class="groupNum">0</span> )</div>';
+	html += '<div class="wMainUserContainer" style="min-height: 26px" >';
+	html += '	<div class="wMainUserItemText noFriend" style="padding-left: 25px; width: 100%; color: #aca899">此组中没有联系人</div>';
+	html += '</div>';
+	
+	
+	jQuery("#groupList").append(html);
+	
+}
+nodeim.deleteGroup = function( name){
+	
+	for(var i=0;i<nodeim.localUser.groups.length;i++){
+		if( nodeim.localUser.groups[i].name == name){
+			nodeim.localUser.groups.splice(i,1);
+		}
+	}	
+	
+	
+	nodeim.socket.command("profile",{doc:nodeim.localUser},function(rspn){
+		if(rspn.code=='200')
+		{
+			jQuery(".wMainUserHeaderEx").each(function(){
+				
+				if( jQuery(this).attr("groupName") == name){
+					
+					jQuery(this).next().remove()
+					jQuery(this).remove()
+					
+				}
+			})
+		    
+		}
+		else
+		{
+			alert("<p style='color:red'>服务器返回："+rspn.message+"</p>");
+		}
+	}) ;
+	
+}
+
 /**
  * 好友列表
  */
@@ -237,17 +343,12 @@ nodeim.friends = function(){
 				nodeim.createUser(rspn.list[i]);
 	    	})
 	    	
-	    	
+	    	nodeim.startDraggable();
+			
 
-		    $( ".wMainUserItem" ).draggable({ revert: "invalid" });
-		    $( "#defaultGroup" ).droppable({
-		        greedy: true,
-		        activeClass: "ui-state-hover",
-		        hoverClass: "ui-state-active",
-		        drop: function( event, ui ) {
-		        	alert("sddddddds")
-		        }
-	        });
+			nodeim.sumFriend();
+			nodeim.reOrder();
+		    
 		}
 		else
 		{
@@ -261,11 +362,15 @@ nodeim.createUser = function(data){
 	var out = "";
 	
 	if( data.presence == "在线"){
-		var sCls = "";
+		var isOn = "none";
 	}else{
-		var sCls = "c2";
+		var isOn = "";
 	}
 	
+	var facePath = "images/im/m33.png";
+	if( data.facePath){
+		facePath = data.facePath;
+	}
 	
 	out += '<div class="wMainUserItem" uid="'+data.id+'"' ;
 	out += 'ondblclick="openChatWindow('+data.id+',\''+data.username+'\')" onclick="setBjcolor(this)"';
@@ -273,19 +378,16 @@ nodeim.createUser = function(data){
 	out += '<div class="wMainListButton"';
 	out += '	onmouseover="this.className=\'wMainListButton wMainListButtonHover\'"';
 	out += '	onmouseout="this.className=\'wMainListButton\'">';
-	out += '	<img src="images/im/m33.png" class="'+sCls+'"';
+	out += '	<div class="zz" style="position:absolute;left:16px;display:'+isOn+'"><img src="images/im/zz.png"  style="height: 19px; width: 19px" ></div>';
+	out += '	<img src="'+facePath+'"  uid="'+data.id+'"';
 	out += '		style="height: 19px; width: 19px" >';
 	out += '</div>';
-	out += '<div class="wMainUserItemText">';
+	out += '<div class="wMainUserItemText" uid="'+data.id+'">';
 	out += '	'+data.username+'&nbsp;&nbsp;<span style="color: #777"></span>';
 	out += '</div>';
 	out += '</div>';
 	
 	if( typeof(data.group) == "undefined"){
-		
-		if( jQuery("#defaultGroupNum").text() == "0"){
-			jQuery("#defaultGroupList").empty();
-		}
 		
 		jQuery("#defaultGroupList > .wMainUserItem").each(function(i){
 			if( jQuery(this).attr("uid") == data.id){
@@ -293,8 +395,23 @@ nodeim.createUser = function(data){
 			}
 		})
 		
-		jQuery("#defaultGroupNum").text(Number(jQuery("#defaultGroupNum").text()) +1);
 		jQuery("#defaultGroupList").append(out);
+	}
+	else{
+		
+		var isInsert = false;
+		jQuery(".wMainUserHeaderEx").each(function(){
+			
+			if( jQuery(this).attr("groupName") == data.group){
+				
+				jQuery(this).next().append(out);
+				isInsert = true;
+			}
+		})
+		if( isInsert == false){
+			jQuery("#defaultGroupList").append(out);
+		}
+		
 	}
 
 	
@@ -336,64 +453,72 @@ nodeim.status = function( sStatus, func){
 }
 
 
-nodeim.group = function( type, id){
+nodeim.group = function( uid ,groupname){
 
-	if( type == "online"){
-		jQuery("#unlineList > .wMainUserItem").each(function(i){
-			if( jQuery(this).attr("uid") == id){
+	nodeim.socket.command("group",{to:uid,group:groupname},function(rspn){
+		if(rspn.code=='200')
+		{
+
+			jQuery(".wMainUserItem").each(function(i){
 				
+				if( jQuery(this).attr("uid") == uid){
+					
+					
 
-				if( Number(jQuery("#onlineListNum").text() == 0)){
-					jQuery("#onlineList").html("");
+					var tagDiv = jQuery("[groupName='"+groupname+"']").next();
+					var tagDivNum = jQuery(tagDiv).prev().find("span[class=\"groupNum\"]")
+					
+					
+					// 移动
+					tagDivNum.html( Number(tagDivNum.text())+1);
+					jQuery(this).css("top","0px");
+					jQuery(this).css("left","0px");
+					jQuery(this).prependTo( tagDiv);
+					
+					
+					 // 重新计算好友数量
+					nodeim.sumFriend();
+					nodeim.reOrder();
+					
+					
+					
+					//jQuery("#onlineListNum").text(Number(jQuery("#onlineListNum").text()) +1);
+					//jQuery("#unlineListNum").text(Number(jQuery("#unlineListNum").text()) -1);
+					
 				}
-				
-				jQuery(this).prependTo("#onlineList");
-				jQuery("#onlineListNum").text(Number(jQuery("#onlineListNum").text()) +1);
-				jQuery("#unlineListNum").text(Number(jQuery("#unlineListNum").text()) -1);
-				
-				jQuery("#onlineList").css("height" , Number(jQuery("#onlineListNum").text()) * 26);
-				//jQuery(this).remove();
-			}
-		})
-	}else{
-		jQuery("#unlineList > .wMainUserItem").each(function(i){
-			if( jQuery(this).attr("uid") == id){
-
-				if( Number(jQuery("#unlineListNum").text() == 0)){
-					jQuery("#unlineList").html("");
-				}
-				jQuery(this).prependTo("#unlineList");
-				jQuery("#unlineListNum").text(Number(jQuery("#unlineListNum").text()) +1);
-				jQuery("#onlineListNum").text(Number(jQuery("#onlineListNum").text()) -1);
-				
-				jQuery("#unlineList").css("height" , Number(jQuery("#unlineListNum").text()) * 26);
-			}
-		})
-	}
-}
-
-nodeim.removeUser = function(type,data){
-
-	if( type == "online"){
-		jQuery("#onlineList > .wMainUserItem").each(function(i){
-			if( jQuery(this).attr("uid") == data.id){
-				jQuery(this).remove();
-			}
-		})
-	}else{
-		jQuery("#unlineList > .wMainUserItem").each(function(i){
-			if( jQuery(this).attr("uid") == data.id){
-				jQuery(this).remove();
-			}
-		})
-	}
-}
-nodeim.noUser = function(type){
-
-	var out = "";
-	out += '<div class="wMainUserItemText"';
-	out += 	'style="padding-left: 25px; width: 100%; color: #aca899">此组中没有联系人</div>';
+			})
+		    
+		}
+		else
+		{
+			alert("<p style='color:red'>服务器返回："+rspn.message+"</p>");
+		}
+	}) ;
 	
+	
+}
+
+nodeim.removeUser = function(id){
+
+	
+	nodeim.connect();
+	nodeim.socket.command("unsubscribe",{to:id},function(rspn){
+		if(rspn.code=='200')
+		{
+
+			jQuery(".wMainUserItem").each(function(i){
+				
+				if( jQuery(this).attr("uid") == id){
+					
+					jQuery(this).remove()
+				}
+			})			
+		}
+		else
+		{
+			alert("<p style='color:red'>服务器返回："+rspn.message+"</p>");
+		}
+	}) ;
 	
 }
 
@@ -402,3 +527,59 @@ nodeim.getLocalTime = function(nS) {
 	return  d.getFullYear() + "-" +(d.getMonth()+1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
 } 
 
+nodeim.startDroppable = function(){
+	
+	$( ".wMainUserHeaderEx" ).droppable({
+        greedy: true,
+        activeClass: "ui-state-hover",
+        hoverClass: "ui-state-active",
+        drop: function( event, ui ) {
+        	
+        	var groupName = jQuery(event.target).attr("groupName");
+        	var uid = jQuery(event.toElement).attr("uid");
+        	
+        	
+        	nodeim.group( uid, groupName);
+        }
+    });
+}
+nodeim.startDraggable = function(){
+	
+	$( ".wMainUserItem" ).draggable({ revert: "invalid" });
+}
+
+nodeim.sumFriend = function(){
+	
+	
+	jQuery(".wMainUserHeaderEx").each(function(){
+		
+		var num = 0;
+		jQuery(this).next().find(".wMainUserItem").each(function(){
+
+			num++;
+		})
+		
+		if(num == 0){
+			var out = "";
+			out += '<div class="wMainUserItemText noFriend"';
+			out += 	'style="padding-left: 25px; width: 100%; color: #aca899">此组中没有联系人</div>';
+			jQuery(this).next().html(out);
+		}else{
+			jQuery(this).next().find(".noFriend").remove()
+		}
+		jQuery(this).find("span[class=\"groupNum\"]").html( num);
+		
+	})
+	
+}
+
+nodeim.reOrder = function(){
+
+	jQuery(".wMainUserItem").each(function(i){
+		
+		if( jQuery(this).find("div[class='zz']").css("display") == "none"){
+			
+			jQuery(this).prependTo( jQuery(this).parent());
+		}
+	})
+}

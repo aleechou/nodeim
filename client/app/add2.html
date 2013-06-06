@@ -47,11 +47,28 @@
     		jQuery("#userList > tbody").append('<tr><td style="height:26px;background-color:#fff;width:25px;text-align:center"><img title="脱机" src="images/im/m3.png"></td><td style="background-color:#fff;text-indent:3px"><a title="" href="javascript:void(0)">'+data[i].username+'</a></td><td style="background-color:#fff;width:80px;text-align:center"><a style=" color:#09F" title="admin" href="#" onClick="addFriend('+data[i].id+')">加为好友</a></td></tr>')
     	})
     }
-    
+
+	var selectGroupWindow = null;
+	var _id = null;
     function addFriend( id){
-    	kate.parentWindow.call("nodeim.addFirend",[id]) ;
+    	
+    	_id = id;
+		selectGroupWindow = kate.createWindow(kate.appFolder+'/selectgroup.html') ;
+		selectGroupWindow.resize(214,124) ;
+		selectGroupWindow.show();
+
     }
     
+    
+    function saveGroup(group){
+
+    	kate.parentWindow.call("nodeim.addFirend",[_id]) ;
+    }
+    function callback(){
+    	
+    	var aUser = kate.parentWindow.call("nodeim.getUser",[]) ;
+    	selectGroupWindow.call("initSelect",[aUser.groups])
+    }
     </script>
 </body>
 </html>
