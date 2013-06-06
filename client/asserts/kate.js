@@ -32,6 +32,10 @@
 	{
 		return kateapi.hide(this.wndId) ;
 	}
+	KateHtmlWindow.prototype.close = function()
+	{
+		return kateapi.close(this.wndId) ;
+	}
 	KateHtmlWindow.prototype.resize = function(w,h)
 	{
 		return kateapi.resize(this.wndId,w,h) ;
@@ -73,6 +77,22 @@
 			kateapi.eval(this.wndId,varName+"="+value+";") ;
 			return value ;
 		}
+	}
+	KateHtmlWindow.prototype.posX = function()
+	{
+		return kateapi.wndPosX(this.wndId) ;
+	}
+	KateHtmlWindow.prototype.posY = function()
+	{
+		return kateapi.wndPosY(this.wndId) ;
+	}
+	KateHtmlWindow.prototype.move = function(x,y)
+	{
+		return kateapi.move(this.wndId,x,y) ;
+	}
+	KateHtmlWindow.prototype.drag = function(y)
+	{
+		return kateapi.drag(this.wndId) ;
 	}
 
 
