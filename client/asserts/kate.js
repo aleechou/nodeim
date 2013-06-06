@@ -32,6 +32,10 @@
 	{
 		return kateapi.hide(this.wndId) ;
 	}
+	KateHtmlWindow.prototype.close = function()
+	{
+		return kateapi.close(this.wndId) ;
+	}
 	KateHtmlWindow.prototype.resize = function(w,h)
 	{
 		return kateapi.resize(this.wndId,w,h) ;

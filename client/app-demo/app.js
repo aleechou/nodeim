@@ -1,9 +1,14 @@
 // kate shell 加载完成事件
 function onKateLoaded()
 {
+	// 不显示窗口边框 (必须在 window.show() 之前调用)
+	kate.window.setFlags( 0x00000800 ) ;	
+	
 	// 显示窗口 (默认是不显示窗口的)
 	kate.window.show() ;
+	
 
+	
 	var secondWindow ;
 
 	// 按钮事件
