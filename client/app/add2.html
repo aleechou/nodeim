@@ -113,8 +113,10 @@
     function addFriend( id){
     	
     	_id = id;
+    	
 		selectGroupWindow = kate.createWindow(kate.appFolder+'/selectgroup.html') ;
 		selectGroupWindow.resize(214,124) ;
+		selectGroupWindow.setFlags( 0x00000800 ) ;
 		selectGroupWindow.show();
 
     }

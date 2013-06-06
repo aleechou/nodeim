@@ -243,6 +243,7 @@
 		$("#reg").click(function() {
 			regWindow = kate.createWindow(kate.appFolder+'/reg.html') ;
 			regWindow.resize(213,453) ;
+			regWindow.setFlags( 0x00000800 ) ;
 			regWindow.show();
 		});
 
@@ -250,16 +251,19 @@
 		$("#findPass").click(function() {
 			findPassWindow = kate.createWindow(kate.appFolder+'/findpass.html') ;
 			findPassWindow.resize(359,289) ;
+			findPassWindow.setFlags( 0x00000800 ) ;
 			findPassWindow.show();
 		});
 		
 		
 		function onKateLoaded()
 		{
+			kate.window.setFlags( 0x00000800 ) ;
 			kate.window.show() ;
 			kate.window.resize(213,453) ;
 			mainWindow = kate.createWindow(kate.appFolder+'/main.html') ;
 			mainWindow.resize(264,554) ;
+			mainWindow.setFlags( 0x00000800 ) ;
 			mainWindow.hide();
 		}
 		

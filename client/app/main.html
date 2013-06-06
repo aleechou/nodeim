@@ -45,7 +45,7 @@
 					</div>
 					<div class="wControlClose" onmouseover="this.scrollTop='15'"
 						onmouseout="this.scrollTop='0'">
-						<img src="images/im/maincontrolclose.png" title="关闭" onclick="kate.window.close()">
+						<img src="images/im/maincontrolclose.png" title="关闭" onclick="kate.window.close();kate.parentWindow.close()">
 					</div>
 				</div>
 			</div>
@@ -225,6 +225,7 @@
 		chatObj.username = username;
 		chatObj.window = kate.createWindow(kate.appFolder+'/chat.html') ;
 		chatObj.window.resize(695,495) ;
+		chatObj.window.setFlags( 0x00000800 ) ;
 		chatObj.window.show();
 		chatObj.wndId = chatObj.window.wndId;
 		chatObj.callback = callback;
@@ -254,10 +255,12 @@
 	function openusersWindow(){
 		find1Window = kate.createWindow(kate.appFolder+'/add1.html') ;
 		find1Window.resize(359,289) ;
+		find1Window.setFlags( 0x00000800 ) ;
 		find1Window.show();
 		
 		find2Window = kate.createWindow(kate.appFolder+'/add2.html') ;
 		find2Window.resize(370,300) ;
+		find2Window.setFlags( 0x00000800 ) ;
 		find2Window.hide();
 	}
 
@@ -266,6 +269,7 @@
 	function openEditWindow(){
 		editWindow = kate.createWindow(kate.appFolder+'/edit.html') ;
 		editWindow.resize(338,426) ;
+		editWindow.setFlags( 0x00000800 ) ;
 		editWindow.show();
 	}
 	
@@ -382,6 +386,7 @@
 	function openCreateGroupWindow(){
 		createGroupWindow = kate.createWindow(kate.appFolder+'/addgroup.html') ;
 		createGroupWindow.resize(214,124) ;
+		createGroupWindow.setFlags( 0x00000800 ) ;
 		createGroupWindow.show();
 	}
 	

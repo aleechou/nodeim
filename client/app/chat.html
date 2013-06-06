@@ -31,7 +31,7 @@
 					</div>
 					<div class="wControlClose" onmouseover="this.scrollTop='15'"
 						onmouseout="this.scrollTop='0'">
-						<img src="images/im/chatcontrolclose.png" title="关闭" onclick="kate.window.close()">
+						<img src="images/im/chatcontrolclose.png" title="关闭" onclick="kate.window.hide()">
 					</div>
 				</div>
 			</div>
@@ -313,6 +313,7 @@
 	function openLogWindow(){
 		logWindow = kate.createWindow(kate.appFolder+'/chatlog.html') ;
 		logWindow.resize(554,454) ;
+		logWindow.setFlags( 0x00000800 ) ;
 		logWindow.show();
 	}
 	function openLogWindowCallBack (){
