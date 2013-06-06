@@ -34,6 +34,17 @@ function onKateLoaded()
 
 		alert( secondWindow.call("getValue",[1,2,3]) ) ;
 	}) ;
+	
+	// 屏幕截图快捷键
+	window.onKateGlobalKeyEvent = function(keys){
+		console.log("emit global keys: ",keys) ;
+		if(keys.toLowerCase()=='ctrl+alt+a')
+		{
+			kate.shotScreen() ;
+		}
+	}
+	// 注册快捷键
+	kate.window.regGlobalKeyEvent("CTRL+ALT+A") ;
 }
 
 fromChildWindow = function(value)

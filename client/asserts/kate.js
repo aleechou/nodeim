@@ -1,5 +1,10 @@
 (function(window){
 
+	// 默认的全局键盘事件
+	window.onKateGlobalKeyEvent = function(keys){
+		console.log(keys) ;
+	}
+
 	var kate = window.kate = {
 		
 		window: new KateHtmlWindow(kateapi.wndId)
@@ -94,6 +99,11 @@
 	{
 		return kateapi.drag(this.wndId) ;
 	}
+	KateHtmlWindow.prototype.regGlobalKeyEvent = function(keys)
+	{
+		return kateapi.regGlobalKeyEvent(this.wndId,keys) ;
+	}
+	
 
 
 
