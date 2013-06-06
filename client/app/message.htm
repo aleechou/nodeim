@@ -1,26 +1,59 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<title>真知保护</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>BB宝</title>
 
-<link rel="stylesheet" type="text/css"  href="styles/webim.css"/>
-<link rel="stylesheet" type="text/css"  href="styles/webimpage.css"/>
+<link rel="stylesheet" type="text/css" href="styles/webim.css" />
+<link rel="stylesheet" type="text/css" href="styles/webimpage.css" />
 </head>
-<body >
-    <div  class="wOther" style="position: absolute; left: 612px; top: 20px; width: 350px; height: 284px; z-index: 9750;"><div class="wContent"><div  class="wOtherTitle" style="color: rgb(0, 0, 0);"><div  class="wIcon"><img src="http://webos.knowledge.com.cn/webim/images/im/tooladdfriend.png"></div><div  class="wText" style="cursor: move;">添加联系人</div><div  class="wControl"><div class="wControlMin" onmouseover="this.scrollTop='13'" onmouseout="this.scrollTop='0'"><img src="http://webos.knowledge.com.cn/webim/images/im/othercontrolmin.png" title="最小化"></div><div class="wControlClose" onmouseover="this.scrollTop='15'" onmouseout="this.scrollTop='0'"><img src="http://webos.knowledge.com.cn/webim/images/im/othercontrolclose.png" title="关闭"></div></div></div><div  class="wWindowContent" style="background-color: transparent; height: 260px;"><table width="200" border="0" align="center" cellpadding="0" cellspacing="0">
-  <tbody><tr>
-    <td height="180" align="center">发送成功，请等待验证结果!<br>
-        <br>
-        <br>
-	    <a href="javascript:location.href='http://webos.knowledge.com.cn/webim/page/addfriend.php?p=4&face=-1&Username=&status=-1&gender=-1&t=2'">←返回上页</a></td>
-  </tr>
-  <tr>
-    <td height="85" align="center">
-        <input class="button1" type="button" name="btnCancel"  onclick="winClose(event);" value="关闭"></td>
-  </tr>
-</tbody></table></div></div><div  class="wLoading" style="display: none;">加载中...</div></div>
-      <div  class="wLoading" style="display: none;">加载中...</div>
-    </div>
+<body onselectstart="return false;">
+	<div class="wOther"
+		style="position: absolute; left: 612px; top: 20px; width: 350px; height: 284px; z-index: 9750;">
+		<div class="wContent">
+			<div class="wOtherTitle" style="color: rgb(0, 0, 0);" onmousedown="kate.window.drag()">
+				<div class="wIcon">
+					<img
+						src="http://webos.knowledge.com.cn/webim/images/im/tooladdfriend.png">
+				</div>
+				<div class="wText">添加联系人</div>
+				<div class="wControl">
+					<div class="wControlMin" onmouseover="this.scrollTop='13'"
+						onmouseout="this.scrollTop='0'">
+						<img
+							src="http://webos.knowledge.com.cn/webim/images/im/othercontrolmin.png"
+							title="最小化">
+					</div>
+					<div class="wControlClose" onmouseover="this.scrollTop='15'"
+						onmouseout="this.scrollTop='0'">
+						<img
+							src="http://webos.knowledge.com.cn/webim/images/im/othercontrolclose.png"
+							title="关闭" onclick="kate.window.close()">
+					</div>
+				</div>
+			</div>
+			<div class="wWindowContent"
+				style="background-color: transparent; height: 260px;">
+				<table width="200" border="0" align="center" cellpadding="0"
+					cellspacing="0">
+					<tbody>
+						<tr>
+							<td height="180" align="center">发送成功，请等待验证结果!<br> <br>
+										<br> <a
+											href="javascript:location.href='http://webos.knowledge.com.cn/webim/page/addfriend.php?p=4&face=-1&Username=&status=-1&gender=-1&t=2'">←返回上页</a></td>
+						</tr>
+						<tr>
+							<td height="85" align="center"><input class="button1"
+								type="button" name="btnCancel" onclick="winClose(event);"
+								value="关闭"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="wLoading" style="display: none;">加载中...</div>
+	</div>
+	<div class="wLoading" style="display: none;">加载中...</div>
+	</div>
 </body>
 </html>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>真知保护</title>
+<title>BB宝</title>
 
 <script src="jquery-1.9.1.min.js"></script>
 <script charset="utf-8" src="kindeditor/kindeditor-min.js" type="text/javascript"></script>
@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="styles/webim.css" />
 <link rel="stylesheet" type="text/css" href="styles/webimpage.css" />
 </head>
-<body>
+<body onselectstart="return false;">
 	<div class="wChat"
 		style="position: absolute;  width: 690px; height: 490px; z-index: 9717;">
 		<div class="wRound_lt"></div>
@@ -19,19 +19,19 @@
 		<div class="wRound_rb"></div>
 		<div class="wResize"></div>
 		<div class="wContent">
-			<div class="wChatTitle" style="color: rgb(0, 0, 0);">
+			<div class="wChatTitle" style="color: rgb(0, 0, 0);" onmousedown="kate.window.drag()">
 				<div class="wIcon">
 					<img src="images/im/icon.png">
 				</div>
-				<div class="wText" style="cursor: move;">wwffff</div>
-				<div class="wControl" style="display:none">
+				<div class="wText" >wwffff</div>
+				<div class="wControl" >
 					<div class="wControlMin" onmouseover="this.scrollTop='13'"
 						onmouseout="this.scrollTop='0'">
 						<img src="images/im/chatcontrolmin.png" title="最小化">
 					</div>
 					<div class="wControlClose" onmouseover="this.scrollTop='15'"
 						onmouseout="this.scrollTop='0'">
-						<img src="images/im/chatcontrolclose.png" title="关闭">
+						<img src="images/im/chatcontrolclose.png" title="关闭" onclick="kate.window.close()">
 					</div>
 				</div>
 			</div>
@@ -264,6 +264,8 @@
 	})
 	
 	jQuery("#wChatResize").mousedown(function(e){
+		
+		return ;
 		
 		
 		jQuery("#wChatResizeBar")

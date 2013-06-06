@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>真知保护</title>
+<title>BB宝</title>
 
 <script src="jquery-1.9.1.min.js"></script>
 
@@ -10,16 +10,16 @@
 <link rel="stylesheet" type="text/css" href="styles/webim.css" />
 <link rel="stylesheet" type="text/css" href="styles/webimpage.css" />
 </head>
-<body>
+<body onselectstart="return false;">
 	<div id="winOther7" class="wOther"
 		style="position: absolute;  width: 210px; height: 450px; z-index: 9704;">
 		<div class="wContent">
 			<div id="winOther7Title" class="wOtherTitle"
-				style="color: rgb(0, 0, 0);">
+				style="color: rgb(0, 0, 0);" onmousedown="kate.window.drag()">
 				<div id="winOtherIcon7" class="wIcon">
 					<img src="images/im/icon.png">
 				</div>
-				<div id="winOtherText7" class="wText" style="cursor: move;">注册新帐号</div>
+				<div id="winOtherText7" class="wText" >注册新帐号</div>
 				<div id="winOtherControl7" class="wControl">
 					<div class="wControlMin" onmouseover="this.scrollTop='13'"
 						onmouseout="this.scrollTop='0'">
@@ -31,7 +31,7 @@
 						onmouseout="this.scrollTop='0'">
 						<img
 							src="images/im/othercontrolclose.png"
-							title="关闭">
+							title="关闭" onclick="kate.window.close()">
 					</div>
 				</div>
 			</div>

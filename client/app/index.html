@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 
-<title>真知保护</title>
+<title>BB宝</title>
 
 <script src="jquery-1.9.1.min.js"></script>
 <script src="jquery.cookie.js"></script>
@@ -12,7 +12,7 @@
 <link rel="stylesheet" type="text/css" href="styles/webim.css" />
 <link rel="stylesheet" type="text/css" href="styles/webimpage.css" />
 </head>
-<body>
+<body onselectstart="return false;">
 	<div id="windowContainerBorder" class="wContainerBorder"
 		style="top: 0px; left: 0px;">
 		<div id="windowContainer" class="wContainer">
@@ -21,32 +21,31 @@
 				<div id="windowBorder" class="wWindowBorder"></div>
 				<div id="windowCover" class="wWindowCover"></div>
 				<div id="winOther6" class="wOther"
-					style="position: absolute; width: 210px; height: 450px; z-index: 9702;">
+					style="position: absolute; width: 210px; height: 450px; z-index: -50;">
 					<div class="wRound_lt"></div>
 					<div class="wRound_rt"></div>
 					<div class="wRound_lb"></div>
 					<div class="wRound_rb"></div>
 					<div class="wContent">
 						<div id="winOther6Title" class="wOtherTitle"
-							style="color: rgb(0, 0, 0);">
-							<div id="winOtherIcon6" class="wIcon">
-								<img
-									src="images/im/icon.png">
+							style="color: rgb(0, 0, 0);" onmousedown="kate.window.drag()">
+							<div id="winOtherIcon6" class="wIcon" >
+								<img src="images/im/icon.png" >
 							</div>
-							<div id="winOtherText6" class="wText" style="cursor: move;">WebIM
-								1.0</div>
-							<div id="winOtherControl6" class="wControl" style="display:none">
+							<div id="winOtherText6" class="wText" >BB宝</div>
+							
+							<div id="winOtherControl6" class="wControl" >
 								<div class="wControlMin" onmouseover="this.scrollTop='13'"
 									onmouseout="this.scrollTop='0'">
 									<img
 										src="images/im/othercontrolmin.png"
-										title="最小化">
+										title="最小化" >
 								</div>
 								<div class="wControlClose" onmouseover="this.scrollTop='15'"
 									onmouseout="this.scrollTop='0'">
 									<img
 										src="images/im/othercontrolclose.png"
-										title="关闭">
+										title="关闭" onclick="kate.window.close()">
 								</div>
 							</div>
 						</div>
@@ -253,7 +252,6 @@
 			findPassWindow.resize(359,289) ;
 			findPassWindow.show();
 		});
-		
 		
 		
 		function onKateLoaded()

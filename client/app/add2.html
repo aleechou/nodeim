@@ -1,45 +1,105 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<title>真知保护</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>BB宝</title>
 
 <script src="jquery-1.9.1.min.js"></script>
-<link rel="stylesheet" type="text/css"  href="styles/webim.css"/>
-<link rel="stylesheet" type="text/css"  href="styles/webimpage.css"/>
+<link rel="stylesheet" type="text/css" href="styles/webim.css" />
+<link rel="stylesheet" type="text/css" href="styles/webimpage.css" />
 </head>
-<body >
-    <div  class="wOther" style="position: absolute; width: 350px; height: 285px; z-index: 9750;"><div class="wContent"><div  class="wOtherTitle" style="color: rgb(0, 0, 0);"><div  class="wIcon"><img src="http://webos.knowledge.com.cn/webim/images/im/tooladdfriend.png"></div><div  class="wText" style="cursor: move;">添加联系人</div><div  class="wControl" style="display:none"><div class="wControlMin" onmouseover="this.scrollTop='13'" onmouseout="this.scrollTop='0'"><img src="http://webos.knowledge.com.cn/webim/images/im/othercontrolmin.png" title="最小化"></div><div class="wControlClose" onmouseover="this.scrollTop='15'" onmouseout="this.scrollTop='0'"><img src="http://webos.knowledge.com.cn/webim/images/im/othercontrolclose.png" title="关闭"></div></div></div><div  class="wWindowContent" style="background-color: transparent; height: 260px;"><div class="addfr_bg" >
+<body onselectstart="return false;">
+	<div class="wOther"
+		style="position: absolute; width: 350px; height: 285px; z-index: 9750;">
+		<div class="wContent">
+			<div class="wOtherTitle" style="color: rgb(0, 0, 0);" onmousedown="kate.window.drag()">
+				<div class="wIcon">
+					<img
+						src="http://webos.knowledge.com.cn/webim/images/im/tooladdfriend.png">
+				</div>
+				<div class="wText" >添加联系人</div>
+				<div class="wControl" >
+					<div class="wControlMin" onmouseover="this.scrollTop='13'"
+						onmouseout="this.scrollTop='0'">
+						<img
+							src="http://webos.knowledge.com.cn/webim/images/im/othercontrolmin.png"
+							title="最小化">
+					</div>
+					<div class="wControlClose" onmouseover="this.scrollTop='15'"
+						onmouseout="this.scrollTop='0'">
+						<img
+							src="http://webos.knowledge.com.cn/webim/images/im/othercontrolclose.png"
+							title="关闭" onclick="kate.window.close()">
+					</div>
+				</div>
+			</div>
+			<div class="wWindowContent"
+				style="background-color: transparent; height: 260px;">
+				<div class="addfr_bg">
 
-<div style="overflow-y:auto;height:245px">
-<table align="center" width="96%" border="0" cellpadding="0" cellspacing="1" style="background-color:#F2B705" id="userList">
-	<tbody>
-</tbody></table>
-</div>
+					<div style="overflow-y: auto; height: 245px">
+						<table align="center" width="96%" border="0" cellpadding="0"
+							cellspacing="1" style="background-color: #F2B705" id="userList">
+							<tbody>
+							</tbody>
+						</table>
+					</div>
 
 
-<div class="fr_found" style="padding-right:6px;position:absolute;bottom:4px; left:5px;display:none">
-	<a style="color:#ffc" href="addfriend.php">重新查找</a>
-</div>
-<div style="padding:5px 5px 0 0;position:absolute;bottom:2px; right:5px;display:none">
-			<span class="gray_first">首页</span>
-		<span class="gray_pre">上页</span>
-			
-	<div style="float:left; margin:0 2px;">到
-	<select onchange="showLoading();location.href='?face=-1&amp;Username=&amp;status=-1&amp;gender=-1&amp;t=2&amp;p='+this.value">
-	<option value="1" selected="selected">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option>	</select>
-	页&nbsp;
-	共1/26页</div>
-	
-			<a class="mes_next" onclick="showLoading();" href="?p=2&amp;face=-1&amp;Username=&amp;status=-1&amp;gender=-1&amp;t=2">下页</a>
-		<a class="mes_last" onclick="showLoading();" href="?p=26&amp;face=-1&amp;Username=&amp;status=-1&amp;gender=-1&amp;t=2">末页</a>
+					<div class="fr_found"
+						style="padding-right: 6px; position: absolute; bottom: 4px; left: 5px; display: none">
+						<a style="color: #ffc" href="addfriend.php">重新查找</a>
+					</div>
+					<div
+						style="padding: 5px 5px 0 0; position: absolute; bottom: 2px; right: 5px; display: none">
+						<span class="gray_first">首页</span> <span class="gray_pre">上页</span>
+
+						<div style="float: left; margin: 0 2px;">
+							到 <select
+								onchange="showLoading();location.href='?face=-1&amp;Username=&amp;status=-1&amp;gender=-1&amp;t=2&amp;p='+this.value">
+								<option value="1" selected="selected">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+								<option value="13">13</option>
+								<option value="14">14</option>
+								<option value="15">15</option>
+								<option value="16">16</option>
+								<option value="17">17</option>
+								<option value="18">18</option>
+								<option value="19">19</option>
+								<option value="20">20</option>
+								<option value="21">21</option>
+								<option value="22">22</option>
+								<option value="23">23</option>
+								<option value="24">24</option>
+								<option value="25">25</option>
+								<option value="26">26</option>
+							</select> 页&nbsp; 共1/26页
+						</div>
+
+						<a class="mes_next" onclick="showLoading();"
+							href="?p=2&amp;face=-1&amp;Username=&amp;status=-1&amp;gender=-1&amp;t=2">下页</a>
+						<a class="mes_last" onclick="showLoading();"
+							href="?p=26&amp;face=-1&amp;Username=&amp;status=-1&amp;gender=-1&amp;t=2">末页</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="wLoading" style="display: none;">加载中...</div>
 	</div>
-</div></div></div><div  class="wLoading" style="display: none;">加载中...</div></div>
-      <div  class="wLoading" style="display: none;">加载中...</div>
-    </div>
-    
-    <script>
-    
+	<div class="wLoading" style="display: none;">加载中...</div>
+	</div>
+
+	<script>
     function init_searchUser(data){
     	
     	jQuery(data).each(function(i){
@@ -69,6 +129,6 @@
     	var aUser = kate.parentWindow.call("nodeim.getUser",[]) ;
     	selectGroupWindow.call("initSelect",[aUser.groups])
     }
-    </script>
+	</script>
 </body>
 </html>

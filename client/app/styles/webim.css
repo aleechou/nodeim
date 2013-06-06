@@ -92,6 +92,7 @@ body {
 	word-break: break-all;
 	height: 14px;
 	-moz-user-select: none;
+	color:#fff;
 }
 
 .wControl {

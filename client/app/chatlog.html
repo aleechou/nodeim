@@ -2,22 +2,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>真知保护</title>
+<title>BB宝</title>
 
 <script src="jquery-1.9.1.min.js"></script>
 <link rel="stylesheet" type="text/css" href="styles/webim.css" />
 <link rel="stylesheet" type="text/css" href="styles/webimpage.css" />
 </head>
-<body>
+<body onselectstart="return false;">
 	<div class="wOther"
 		style="position: absolute; width: 550px; height: 450px;">
 		<div class="wContent">
-			<div class="wOtherTitle" style="color: rgb(0, 0, 0);">
+			<div class="wOtherTitle" style="color: rgb(0, 0, 0);" onmousedown="kate.window.drag()">
 				<div class="wIcon">
 					<img
 						src="http://webos.knowledge.com.cn/webim/images/im/toolmsghistory_s.png">
 				</div>
-				<div class="wText" style="cursor: move;">聊天记录</div>
+				<div class="wText">聊天记录</div>
 				<div class="wControl">
 					<div class="wControlMin" onmouseover="this.scrollTop='13'"
 						onmouseout="this.scrollTop='0'">
@@ -29,7 +29,7 @@
 						onmouseout="this.scrollTop='0'">
 						<img
 							src="http://webos.knowledge.com.cn/webim/images/im/othercontrolclose.png"
-							title="关闭">
+							title="关闭" onclick="kate.window.close()">
 					</div>
 				</div>
 			</div>
