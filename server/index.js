@@ -10,6 +10,7 @@ module.exports = function(app){
 	var commands = [
 		'signup' ,
 		'signin' ,
+		'retrieve' ,
 	] ;
 	var usercommands = [
 		'signout' ,
