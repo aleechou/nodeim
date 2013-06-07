@@ -1,5 +1,10 @@
 (function(window){
 
+	// 默认的全局键盘事件
+	window.onKateGlobalKeyEvent = function(keys){
+		console.log(keys) ;
+	}
+
 	var kate = window.kate = {
 		
 		window: new KateHtmlWindow(kateapi.wndId)
@@ -31,6 +36,10 @@
 	KateHtmlWindow.prototype.hide = function()
 	{
 		return kateapi.hide(this.wndId) ;
+	}
+	KateHtmlWindow.prototype.close = function()
+	{
+		return kateapi.close(this.wndId) ;
 	}
 	KateHtmlWindow.prototype.resize = function(w,h)
 	{
@@ -74,6 +83,27 @@
 			return value ;
 		}
 	}
+	KateHtmlWindow.prototype.posX = function()
+	{
+		return kateapi.wndPosX(this.wndId) ;
+	}
+	KateHtmlWindow.prototype.posY = function()
+	{
+		return kateapi.wndPosY(this.wndId) ;
+	}
+	KateHtmlWindow.prototype.move = function(x,y)
+	{
+		return kateapi.move(this.wndId,x,y) ;
+	}
+	KateHtmlWindow.prototype.drag = function(y)
+	{
+		return kateapi.drag(this.wndId) ;
+	}
+	KateHtmlWindow.prototype.regGlobalKeyEvent = function(keys)
+	{
+		return kateapi.regGlobalKeyEvent(this.wndId,keys) ;
+	}
+	
 
 
 

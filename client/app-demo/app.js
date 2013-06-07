@@ -1,9 +1,14 @@
 // kate shell 加载完成事件
 function onKateLoaded()
 {
+	// 不显示窗口边框 (必须在 window.show() 之前调用)
+	kate.window.setFlags( 0x00000800 ) ;	
+	
 	// 显示窗口 (默认是不显示窗口的)
 	kate.window.show() ;
+	
 
+	
 	var secondWindow ;
 
 	// 按钮事件
@@ -29,6 +34,17 @@ function onKateLoaded()
 
 		alert( secondWindow.call("getValue",[1,2,3]) ) ;
 	}) ;
+	
+	// 屏幕截图快捷键
+	window.onKateGlobalKeyEvent = function(keys){
+		console.log("emit global keys: ",keys) ;
+		if(keys.toLowerCase()=='ctrl+alt+a')
+		{
+			kate.shotScreen() ;
+		}
+	}
+	// 注册快捷键
+	kate.window.regGlobalKeyEvent("CTRL+ALT+A") ;
 }
 
 fromChildWindow = function(value)
