@@ -3,6 +3,7 @@
 var nodeim = {};
 nodeim.socket = null;
 nodeim.chatWindowArr = [];
+nodeim.roomWindowArr = [];
 nodeim.server = "http://zj001.wonei.com:8765";
 
 /**
@@ -20,7 +21,7 @@ nodeim.connect = function (){
 			{
 				case 'request-subscription' :
 					
-//					alert("<p>"+data.from.username+"(id:"+data.from.id+") 请求加你为好友："+data.message+"</p>")
+//					alert("<p>"+data.from.username+"(id:"+data.from.id+") 请求加你为好友："+data.message)
 					if(window.confirm("<>"+data.from.username+"(id:"+data.from.id+") 请求加你为好友："+data.message+"<>")){
 		                 //alert("确定");
 						nodeim.replyFriend({to:data.from.id  ,refuse:0},function(){
@@ -44,27 +45,50 @@ nodeim.connect = function (){
 					break ;
 
 				default :
-					
+
 					var _isWin = false;
-					for(var i=0;i<nodeim.chatWindowArr.length;i++){
-						if( nodeim.chatWindowArr[i].id == data.from.id){
-							nodeim.chatWindowArr[i].window.call("onMessage",[data]);
-							nodeim.chatWindowArr[i].window.show()
-							_isWin = true;
+					if( data.room ){
+						
+						for(var i=0;i<nodeim.roomWindowArr.length;i++){
+							if( nodeim.roomWindowArr[i].id == data.room){
+								nodeim.roomWindowArr[i].window.call("onMessage",[data]);
+								nodeim.roomWindowArr[i].window.show()
+								_isWin = true;
+							}
+						}
+						
+						if(_isWin == false){
+							openRoomWindow(data.room,data.name,function(obj){
+								obj.call("onMessage",[data]);
+							});
+							
+						}
+					}else{
+						
+						for(var i=0;i<nodeim.chatWindowArr.length;i++){
+							if( nodeim.chatWindowArr[i].id == data.from.id){
+								nodeim.chatWindowArr[i].window.call("onMessage",[data]);
+								nodeim.chatWindowArr[i].window.show()
+								_isWin = true;
+							}
+						}
+						
+						if(_isWin == false){
+							openChatWindow(data.from.id,data.from.username,data.from.facePath,function(obj){
+								obj.call("onMessage",[data]);
+							});
+							
 						}
 					}
 					
-					if(_isWin == false){
-						openChatWindow(data.from.id,data.from.username,function(obj){
-							obj.call("onMessage",[data]);
-						});
-						
-					}
+					
+					
+					
 					break ;
 			}
 		});
 		nodeim.socket.on('connect',function(){
-			$("#messageoutput").append("<p style='color:red'>已经连接到服务器</p>") ;
+			$("#messageoutput").append("已经连接到服务器</p>") ;
 		}) ;
 		nodeim.socket.on('presence',function(doc){
 			console.log('presence:',doc) ;
@@ -90,10 +114,43 @@ nodeim.connect = function (){
 			//wMainUserItem
 		}) ;
 		nodeim.socket.on('room.join',function(doc){
-			console.log('room.join:',doc) ;
+			
+			var _isHasRoom = false;
+			jQuery("#roomsList").find(".wMainUserItemRooms").each(function(){
+				
+				if( jQuery(this).attr("roomid") == doc.room.id){
+					_isHasRoom = true;
+				}
+			})
+			if( _isHasRoom == false){
+				nodeim.createRoomHtml( doc.room);
+				nodeim.sumRooms();
+			}
+			
+			
+			//////////////////////////////////////////////////
+
+			for(var i=0;i<nodeim.roomWindowArr.length;i++){
+				if( nodeim.roomWindowArr[i].id == doc.room.id){
+					
+					var nowRoomWindow = nodeim.roomWindowArr[i].window;
+					nowRoomWindow.call("createUserHtml",[doc.user]);
+				}
+			}
+			
+			
 		}) ;
 		nodeim.socket.on('room.leave',function(doc){
 			console.log('room.leave:',doc) ;
+			
+
+			for(var i=0;i<nodeim.roomWindowArr.length;i++){
+				if( nodeim.roomWindowArr[i].id == doc.room.id){
+					
+					var nowRoomWindow = nodeim.roomWindowArr[i].window;
+					nowRoomWindow.call("removeUserHtml",[doc.user]);
+				}
+			}
 		}) ;
 		
 		nodeim.socket.on('upload',function(doc){
@@ -106,7 +163,7 @@ nodeim.connect = function (){
 	}
 }
 
-nodeim.login = function(u,p){
+nodeim.login = function(u,p,sStatus){
 	
 	nodeim.connect();
 	var data = {
@@ -121,6 +178,7 @@ nodeim.login = function(u,p){
 			console.log(rspn)
 			
 			nodeim.localUser = rspn.doc;
+			nodeim.localRooms = rspn.rooms;
 
 			jQuery("#title_Username").text(rspn.doc.username);
 			kate.window.show() ;
@@ -131,6 +189,8 @@ nodeim.login = function(u,p){
 				jQuery("#facePic").attr("src" , nodeim.localUser.facePath);
 			}
 			
+			nodeim.status( sStatus);
+			jQuery("#statusDiv").text( sStatus);
 			
 			//group
 			if( nodeim.localUser.groups ){
@@ -138,10 +198,32 @@ nodeim.login = function(u,p){
 				for(var i=0;i<nodeim.localUser.groups.length;i++){
 					nodeim.createGroup(nodeim.localUser.groups[i].name)
 				}
-			}			
-
+			}
+			
+			//rooms
+			if( nodeim.localRooms ){
+				
+				for(var i=0;i<nodeim.localRooms.length;i++){
+					
+					nodeim.createRoomHtml(nodeim.localRooms[i])
+				}
+			}
+			nodeim.sumRooms();
+			
 			nodeim.startDroppable();		    
 			nodeim.friends();
+			
+		} else {
+			alert(rspn.message);
+		};
+	});
+}
+nodeim.logout = function(u,p){
+	
+	nodeim.connect();
+	nodeim.socket.command('signout',{},function(rspn){
+		if (rspn.code == '200') {
+			
 			
 		} else {
 			alert(rspn.message);
@@ -172,7 +254,90 @@ nodeim.message = function(data){
 		}
 		else
 		{
-			alert("<p style='color:red'>服务器返回："+rspn.message+"</p>");
+			alert("服务器返回："+rspn.message);
+		}
+	}) ;
+}
+
+nodeim.createRoom = function(data){
+	
+	nodeim.connect();
+	
+	nodeim.socket.command("room.create",data,function(rspn){
+		if(rspn.room!==undefined)
+		{
+			
+			console.log("room.create", rspn)
+			nodeim.createRoomHtml(rspn.room._roomdoc);
+			
+			roomsWindow.hide();
+		}
+		else
+		{
+			alert("服务器返回："+rspn.message);
+		}
+	}) ;
+}
+nodeim.joinRoom = function(data){
+	
+	nodeim.connect();
+	
+	nodeim.socket.command("room.join",data,function(rspn){
+		if(rspn.code=='200')
+		{
+			console.log("roomjoin",rspn)
+			find1Window.hide();
+			
+		}
+		else
+		{
+			alert("服务器返回："+rspn.message);
+		}
+	}) ;
+}
+nodeim.leaveRoom = function(id){
+	
+	nodeim.connect();
+	
+	nodeim.socket.command("room.leave",{id:id},function(rspn){
+		if(rspn.code=='200')
+		{
+			nodeim.removeRoomHtml(id);
+			nodeim.sumRooms();
+		}
+		else
+		{
+			alert("服务器返回："+rspn.message);
+		}
+	}) ;
+}
+nodeim.listRoom = function(id,func){
+	
+	nodeim.connect();
+	
+	nodeim.socket.command("room.list",{id:id},function(rspn){
+		if(rspn.code=='200')
+		{
+			func(rspn)
+		}
+		else
+		{
+			alert("服务器返回："+rspn.message);
+		}
+	}) ;
+}
+nodeim.messageRoom = function(data){
+	
+	nodeim.connect();
+	
+	nodeim.socket.command("room.message",data,function(rspn){
+		if(rspn.code=='200')
+		{
+			
+		}
+		else
+		{
+			alert("服务器返回："+rspn.message);
 		}
 	}) ;
 }
@@ -185,11 +350,15 @@ nodeim.signup = function(data){
 	nodeim.socket.command("signup",data,function(rspn){
 		if(rspn.code=='200')
 		{
-			alert("<p style='color:red'>注册成功</p>");
+			alert("注册成功");
+			
+
+			kate.parentWindow.call("signup_callBack",[]) ;
+			
 		}
 		else
 		{
-			alert("<p style='color:red'>服务器返回："+rspn.message+"</p>");
+			alert("服务器返回："+rspn.message);
 		}
 	}) ;
 }
@@ -202,12 +371,31 @@ nodeim.searchUser = function(data){
 	nodeim.socket.command("find",data,function(rspn){
 		if(rspn.code=='200')
 		{
+			find1Window.close();
 			find2Window.show();
 			find2Window.call("init_searchUser",[rspn.users]);
 		}
 		else
 		{
-			alert("<p style='color:red'>服务器返回："+rspn.message+"</p>");
+			alert("服务器返回："+rspn.message);
+		}
+	}) ;
+}
+
+
+nodeim.findPass = function(data){
+
+	nodeim.connect();
+	
+	nodeim.socket.command("find",data,function(rspn){
+		if(rspn.code=='200')
+		{
+
+			kate.parentWindow.call("findPass_callBack",[rspn.doc]) ;			
+		}
+		else
+		{
+			alert("服务器返回："+rspn.message);
 		}
 	}) ;
 }
@@ -226,7 +414,7 @@ nodeim.addFirend = function(id){
 		}
 		else
 		{
-			alert("<p style='color:red'>服务器返回："+rspn.message+"</p>");
+			alert("服务器返回："+rspn.message);
 		}
 	}) ;
 }
@@ -242,7 +430,7 @@ nodeim.replyFriend = function(data,callback){
 		}
 		else
 		{
-			alert("<p style='color:red'>服务器返回："+rspn.message+"</p>");
+			alert("服务器返回："+rspn.message);
 		}
 	}) ;
 }
@@ -277,7 +465,7 @@ nodeim.profile = function(data,action){
 		}
 		else
 		{
-			alert("<p style='color:red'>服务器返回："+rspn.message+"</p>");
+			alert("服务器返回："+rspn.message);
 		}
 	}) ;
 }
@@ -322,7 +510,7 @@ nodeim.deleteGroup = function( name){
 		}
 		else
 		{
-			alert("<p style='color:red'>服务器返回："+rspn.message+"</p>");
+			alert("服务器返回："+rspn.message);
 		}
 	}) ;
 	
@@ -352,7 +540,7 @@ nodeim.friends = function(){
 		}
 		else
 		{
-			alert("<p style='color:red'>服务器返回："+rspn.message+"</p>");
+			alert("服务器返回："+rspn.message);
 		}
 	}) ;
 }
@@ -373,7 +561,7 @@ nodeim.createUser = function(data){
 	}
 	
 	out += '<div class="wMainUserItem" uid="'+data.id+'"' ;
-	out += 'ondblclick="openChatWindow('+data.id+',\''+data.username+'\')" onclick="setBjcolor(this)"';
+	out += 'ondblclick="openChatWindow('+data.id+',\''+data.username+'\',\''+data.facePath+'\')" onclick="setBjcolor(this)"';
 	out += 'style="width:100%">';
 	out += '<div class="wMainListButton"';
 	out += '	onmouseover="this.className=\'wMainListButton wMainListButtonHover\'"';
@@ -413,9 +601,50 @@ nodeim.createUser = function(data){
 		}
 		
 	}
-
-	
 }
+nodeim.createRoomHtml = function(data){
+	
+	var out = "";
+	
+	out += '<div class="wMainUserItemRooms" roomid="'+data.id+'"' ;
+	out += 'ondblclick="openRoomWindow('+data.id+',\''+data.name+'\')" onclick="setBjcolor(this)"';
+	out += 'style="width:100%">';
+	out += '<div class="wMainListButton"';
+	out += '	onmouseover="this.className=\'wMainListButton wMainListButtonHover\'"';
+	out += '	onmouseout="this.className=\'wMainListButton\'">';
+	out += '	<img src="images/toolmanage.gif"  roomid="'+data.id+'"';
+	out += '		style="height: 19px; width: 19px" >';
+	out += '</div>';
+	out += '<div class="wMainUserItemText" roomid="'+data.id+'">';
+	out += '	'+data.name+'&nbsp;&nbsp;<span style="color: #777"></span>';
+	out += '</div>';
+	out += '</div>';
+	
+	var _is = false;
+	jQuery("#roomsList > .wMainUserItemRooms").each(function(i){
+		if( jQuery(this).attr("roomid") == data.id){
+			_is = true;
+		}
+	})
+	if(_is){
+		return;
+	}
+	
+	
+	jQuery("#roomsList").append(out);
+}
+
+nodeim.removeRoomHtml = function(id){
+
+	jQuery("#roomsList > .wMainUserItemRooms").each(function(i){
+		if( jQuery(this).attr("roomid") == id){
+			jQuery(this).remove();
+		}
+	})
+}
+
+
+
 nodeim.log = function( id, page, room){
 	nodeim.connect();
 
@@ -432,7 +661,7 @@ nodeim.log = function( id, page, room){
 		}
 		else
 		{
-			alert("<p style='color:red'>服务器返回："+rspn.message+"</p>");
+			alert("服务器返回："+rspn.message);
 		}
 	}) ;
 }
@@ -443,11 +672,14 @@ nodeim.status = function( sStatus, func){
 	nodeim.socket.command("presence",{presence:sStatus},function(rspn){
 		if(rspn.code=='200')
 		{
-			func();
+			if( typeof(func) == "function"){
+				func();
+			}
+			
 		}
 		else
 		{
-			alert("<p style='color:red'>服务器返回："+rspn.message+"</p>");
+			alert("服务器返回："+rspn.message);
 		}
 	}) ;
 }
@@ -491,7 +723,7 @@ nodeim.group = function( uid ,groupname){
 		}
 		else
 		{
-			alert("<p style='color:red'>服务器返回："+rspn.message+"</p>");
+			alert("服务器返回："+rspn.message);
 		}
 	}) ;
 	
@@ -516,7 +748,7 @@ nodeim.removeUser = function(id){
 		}
 		else
 		{
-			alert("<p style='color:red'>服务器返回："+rspn.message+"</p>");
+			alert("服务器返回："+rspn.message);
 		}
 	}) ;
 	
@@ -570,9 +802,28 @@ nodeim.sumFriend = function(){
 		jQuery(this).find("span[class=\"groupNum\"]").html( num);
 		
 	})
-	
 }
 
+nodeim.sumRooms = function(){
+	
+		
+		var num = 0;
+		jQuery("#roomsList").find(".wMainUserItemRooms").each(function(){
+
+			num++;
+		})
+		
+		if(num == 0){
+			var out = "";
+			out += '<div class="wMainUserItemText noFriend"';
+			out += 	'style="padding-left: 25px; width: 100%; color: #aca899">此组中没有聊天室</div>';
+			jQuery("#roomsList").html(out);
+		}else{
+			jQuery("#roomsList").find(".noFriend").remove()
+		}
+		jQuery("#roomsNum").html( num);
+		
+}
 nodeim.reOrder = function(){
 
 	jQuery(".wMainUserItem").each(function(i){

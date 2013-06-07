@@ -15,20 +15,20 @@
 			<div class="wOtherTitle" style="color: rgb(0, 0, 0);" onmousedown="kate.window.drag()">
 				<div class="wIcon">
 					<img
-						src="http://webos.knowledge.com.cn/webim/images/im/tooladdfriend.png">
+						src="images/im/tooladdfriend.png">
 				</div>
 				<div class="wText" >添加联系人</div>
 				<div class="wControl" >
 					<div class="wControlMin" onmouseover="this.scrollTop='13'"
 						onmouseout="this.scrollTop='0'">
 						<img
-							src="http://webos.knowledge.com.cn/webim/images/im/othercontrolmin.png"
+							src="images/im/othercontrolmin.png"
 							title="最小化">
 					</div>
 					<div class="wControlClose" onmouseover="this.scrollTop='15'"
 						onmouseout="this.scrollTop='0'">
 						<img
-							src="http://webos.knowledge.com.cn/webim/images/im/othercontrolclose.png"
+							src="images/im/othercontrolclose.png"
 							title="关闭" onclick="kate.window.close()">
 					</div>
 				</div>
@@ -41,6 +41,9 @@
 						<table align="center" width="96%" border="0" cellpadding="0"
 							cellspacing="1" style="background-color: #F2B705" id="userList">
 							<tbody>
+							
+							
+							
 							</tbody>
 						</table>
 					</div>
@@ -102,6 +105,14 @@
 	<script>
     function init_searchUser(data){
     	
+    	
+    	jQuery("#userList > tbody").html("")
+    	
+    	if( data.length == 0){
+    		
+	    	jQuery("#userList > tbody").html('<tr><td style="height:240px;background-color:#fff;width:25px;text-align:center">狠抱歉，没搜索到任何结果。</td></tr>')
+    	}
+    	
     	jQuery(data).each(function(i){
     		
     		jQuery("#userList > tbody").append('<tr><td style="height:26px;background-color:#fff;width:25px;text-align:center"><img title="脱机" src="images/im/m3.png"></td><td style="background-color:#fff;text-indent:3px"><a title="" href="javascript:void(0)">'+data[i].username+'</a></td><td style="background-color:#fff;width:80px;text-align:center"><a style=" color:#09F" title="admin" href="#" onClick="addFriend('+data[i].id+')">加为好友</a></td></tr>')
@@ -125,6 +136,7 @@
     function saveGroup(group){
 
     	kate.parentWindow.call("nodeim.addFirend",[_id]) ;
+    	//kate.window.close();
     }
     function callback(){
     	

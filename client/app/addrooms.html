@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>BB宝</title>
+
+<script src="jquery-1.9.1.js"></script>
+
+<link rel="stylesheet" type="text/css" href="styles/webim.css" />
+<link rel="stylesheet" type="text/css" href="styles/webimpage.css" />
+</head>
+<body onselectstart="return false;">
+	<div class="wOther"
+		style="position: absolute; width: 210px; height: 120px; z-index: 9744;">
+		<div class="wContent">
+			<div class="wOtherTitle" style="color: rgb(0, 0, 0);" onmousedown="kate.window.drag()">
+				<div class="wIcon">
+					<img
+						src="images/im/warning.png">
+				</div>
+				<div class="wText">创建聊天室</div>
+			</div>
+			<div class="wWindowContent"
+				style="background-color: transparent; height: 95px;">
+				<div class="wOtherMain" style="height: 95px;">
+					<div class="confirmpage">
+						<div style="height: 25px; padding: 16px 15px 0; line-height: 150%">
+							<input type="text" class="wMainSearchUserBG" id="content" style="width: 175px">
+						</div>
+						<div style="height: 25px; padding-top: 15px; text-align: center">
+							<input class="button1" value="确定" type="button"
+								onclick="saveRooms()">&nbsp;&nbsp;
+								<input class="button1" value="取消" type="button"
+								onclick="kate.window.close()">
+									<div></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="wLoading" style="display: none;">加载中...</div>
+	</div>
+	<div class="wLoading" style="display: none;">加载中...</div>
+	</div>
+	
+	
+	<script>
+	
+	function saveRooms(){
+		kate.parentWindow.call("nodeim.createRoom",[{name:jQuery("#content").val()}]) ;
+	}
+	
+	</script>
+</body>
+</html>

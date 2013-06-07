@@ -45,7 +45,7 @@
 					</div>
 					<div class="wControlClose" onmouseover="this.scrollTop='15'"
 						onmouseout="this.scrollTop='0'">
-						<img src="images/im/maincontrolclose.png" title="关闭" onclick="kate.window.close();kate.parentWindow.close()">
+						<img src="images/im/maincontrolclose.png" title="关闭" onclick="kate.window.close();kate.parentWindow.close();nodeim.logout()">
 					</div>
 				</div>
 			</div>
@@ -55,7 +55,7 @@
 					<div class="wMainUserInfo">
 						<div class="wMainUserFaceBG">
 							<img
-								src="http://webos.knowledge.com.cn/webim/userface/default.gif"
+								src="images/default.gif"
 								style="width: 51px; height: 51px; cursor: pointer"
 								id="facePic" >
 						</div>
@@ -101,13 +101,12 @@
 									onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
 									onmouseout="this.className='sysMenuItemWithIcon'"
 									style="background-image: url(images/im/m3.png)"
-									onclick="selectMenuUserName('隐身')">隐身</div>
-								<div onselectstart="return false;" class="sysMenuItemDisabled"></div>
+									onclick="selectMenuUserName('我很忙')">我很忙</div>
 								<div onselectstart="return false;" class="sysMenuItemWithIcon"
 									onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
 									onmouseout="this.className='sysMenuItemWithIcon'"
-									style="background-image: url(images/im/m4.png)"
-									onclick="selectMenuUserName('注销')">注销</div>
+									style="background-image: url(images/im/m3.png)"
+									onclick="selectMenuUserName('隐身')">隐身</div>
 							</div>
 							</div>
 							<div style="width: 100%; float: left">
@@ -117,56 +116,62 @@
 					</div>
 				</div>
 				<div class="wMainSearchUserPannel">
-					<div style="float: left; padding: 3px 8px 0px 6px; width: 180px;">
+					<div style="float: left; padding: 3px 8px 0px 6px; width: 155px;">
 						<input title="通过输入姓名或邮箱来查找联系人"
-							style="padding-right: 15px; width: 165px;"
-							class="wMainSearchUserBG" type="text">
+							style="padding-right: 15px; width: 145px;"
+							class="wMainSearchUserBG" type="text" id="searchText">
 					</div>
 					<div style="padding-top: 4px">
+						<div class="wMainContentButton"
+							onmouseover="this.className='wMainContentButton wMainContentButtonHover'"
+							onmouseout="this.className='wMainContentButton'" onclick="openusersWindowKey()">
+							<img src="images/searchicon-hover.png"
+								style="height: 16px; width: 16px" title="搜索联系人">
+						</div>
 						<div class="wMainContentButton"
 							onmouseover="this.className='wMainContentButton wMainContentButtonHover'"
 							onmouseout="this.className='wMainContentButton'" onclick="openusersWindow()">
 							<img src="images/im/tooladdfriend.png"
 								style="height: 16px; width: 16px" title="添加联系人">
 						</div>
+						<div class="wMainContentButton"
+							onmouseover="this.className='wMainContentButton wMainContentButtonHover'"
+							onmouseout="this.className='wMainContentButton'" onclick="openRoomsWindow()">
+							<img src="images/toolmanage.gif"
+								style="height: 16px; width: 16px" title="创建聊天室">
+						</div>
 					</div>
 				</div>
 				<div class="wMainMain" onselectstart="return false"
-					style="height: 374px;" id="groupList">
+					style="height: 374px;" >
 					
-					
-					<div class="wMainUserHeaderEx" id="defaultGroup" groupName="默认分组" onclick="toggleFriend(this)">默认分组 ( <span id="defaultGroupNum" class="groupNum">0</span> )</div>
-					<div class="wMainUserContainer" style="min-height: 26px" id="defaultGroupList">
-						<div class="wMainUserItemText noFriend" style="padding-left: 25px; width: 100%; color: #aca899">此组中没有联系人</div>
-<!-- 							<div class="wMainUserItem" style="width:100%" > -->
-<!-- 							<div class="wMainListButton"' > -->
-<!-- 							<img src="images/im/m3.png" title="查看此人的联系人卡片" -->
-<!-- 							style="height: 19px; width: 19px" -->
-<!-- 							onclick=""> -->
-<!-- 							</div> -->
-<!-- 							<div class="wMainUserItemText">ddd&nbsp;&nbsp;<span style="color: #777"></span> -->
-<!-- 							</div> -->
-<!-- 							</div> -->
+					<div id="groupList">
+						<div class="wMainUserHeaderEx" id="defaultGroup" groupName="默认分组" onclick="toggleFriend(this)">默认分组 ( <span id="defaultGroupNum" class="groupNum">0</span> )</div>
+						<div class="wMainUserContainer" style="min-height: 26px" id="defaultGroupList">
+							<div class="wMainUserItemText noFriend" style="padding-left: 25px; width: 100%; color: #aca899">此组中没有联系人</div>
+	<!-- 							<div class="wMainUserItem" style="width:100%" > -->
+	<!-- 							<div class="wMainListButton"' > -->
+	<!-- 							<img src="images/im/m3.png" title="查看此人的联系人卡片" -->
+	<!-- 							style="height: 19px; width: 19px" -->
+	<!-- 							onclick=""> -->
+	<!-- 							</div> -->
+	<!-- 							<div class="wMainUserItemText">ddd&nbsp;&nbsp;<span style="color: #777"></span> -->
+	<!-- 							</div> -->
+	<!-- 							</div> -->
+						</div>
 					</div>
-<!-- 					<div class="wMainUserHeaderEx" g>联机 ( <span id="onlineListNum">0</span> )</div> -->
-<!-- 					<div class="wMainUserContainer" style="min-height: 26px" id="onlineList"> -->
-<!-- 						<div class="wMainUserItemText" style="padding-left: 25px; width: 100%; color: #aca899">此组中没有联系人</div> -->
-						
-<!-- 					</div> -->
-<!-- 					<div class="wMainUserHeaderEx" g>脱机 ( <span id="unlineListNum">0</span> )</div> -->
-<!-- 					<div class="wMainUserContainer" style="min-height: 26px" id="unlineList"> -->
-<!-- 						<div class="wMainUserItemText" style="padding-left: 25px; width: 100%; color: #aca899">此组中没有联系人</div> -->
-						
-<!-- 					</div> -->
+					<div class="wMainUserHeaderRoomsEx" id="rooms" groupName="聊天室列表" onclick="toggleFriendRooms(this)">聊天室列表 ( <span id="roomsNum" class="roomsNum">0</span> )</div>
+					<div class="wMainUserContainer" style="min-height: 26px" id="roomsList">
+					</div>
 				</div>
 				<div class="wMainSearchWebPannel">
 					<div class="wMainToolBar">
-						<div class="wMainToolButton"
-							onmouseover="this.className='wMainToolButton wMainToolButtonHover'"
-							onmouseout="this.className='wMainToolButton'">
-							<img src="images/im/toolshowfocus.png"
-								style="height: 25px; width: 25px" title="打开今日焦点">
-						</div>
+<!-- 						<div class="wMainToolButton" -->
+<!-- 							onmouseover="this.className='wMainToolButton wMainToolButtonHover'" -->
+<!-- 							onmouseout="this.className='wMainToolButton'"> -->
+<!-- 							<img src="images/im/toolshowfocus.png" -->
+<!-- 								style="height: 25px; width: 25px" title="打开今日焦点"> -->
+<!-- 						</div> -->
 						<div class="wMainToolButton"
 							onmouseover="this.className='wMainToolButton wMainToolButtonHover'"
 							onmouseout="this.className='wMainToolButton'" onclick="openEditWindow()">
@@ -175,9 +180,9 @@
 						</div>
 						<div class="wMainToolButton"
 							onmouseover="this.className='wMainToolButton wMainToolButtonHover'"
-							onmouseout="this.className='wMainToolButton'">
+							onmouseout="this.className='wMainToolButton'" onclick="shotScreen()">
 							<img src="images/im/tooloption.png"
-								style="height: 24px; width: 25px" title="选项">
+								style="height: 24px; width: 25px" title="截屏">
 						</div>
 						<div class="wMainToolButton"
 							onmouseover="this.className='wMainToolButton wMainToolButtonHover'"
@@ -208,10 +213,20 @@
 
 	<script>
 	
-	
 	//jQuery("body").append('<br/><br/><br/><br/><br/><br/><iframe id="ii" src="chat.htm" width="100%" height="500px" frameborder="0"></iframe>');
 	
-	function openChatWindow(id,username,callback){
+	function shotScreen(){
+		alert("确认后开始截屏")
+		
+		setTimeout(function(){
+			kate.shotScreen()
+		},200);
+		
+		
+		
+	}
+	
+	function openChatWindow(id,username,facePath,callback){
 		
 		for(var i=0;i<nodeim.chatWindowArr.length;i++){
 			if( nodeim.chatWindowArr[i].id == id){
@@ -223,14 +238,39 @@
 		var chatObj = {};
 		chatObj.id = id;
 		chatObj.username = username;
+		chatObj.facePath = facePath;
 		chatObj.window = kate.createWindow(kate.appFolder+'/chat.html') ;
-		chatObj.window.resize(695,495) ;
+		chatObj.window.resize(554,495) ;
 		chatObj.window.setFlags( 0x00000800 ) ;
 		chatObj.window.show();
 		chatObj.wndId = chatObj.window.wndId;
 		chatObj.callback = callback;
 		
 		nodeim.chatWindowArr.push(chatObj);
+		
+		return chatObj.window;
+	}
+	
+	function openRoomWindow(id,name,callback){
+		
+		for(var i=0;i<nodeim.roomWindowArr.length;i++){
+			if( nodeim.roomWindowArr[i].id == id){
+				nodeim.roomWindowArr[i].window.show();
+				return true;
+			}
+		}
+		
+		var chatObj = {};
+		chatObj.id = id;
+		chatObj.name = name;
+		chatObj.window = kate.createWindow(kate.appFolder+'/chatroom.html') ;
+		chatObj.window.resize(695,495) ;
+		chatObj.window.setFlags( 0x00000800 ) ;
+		chatObj.window.show();
+		chatObj.wndId = chatObj.window.wndId;
+		chatObj.callback = callback;
+		
+		nodeim.roomWindowArr.push(chatObj);
 		
 		return chatObj.window;
 	}
@@ -250,32 +290,112 @@
 			}
 		}
 	}
+	function openRoomWindow_CallBack( wndId ){
+		
+		
+		for(var i=0;i<nodeim.roomWindowArr.length;i++){
+			if( nodeim.roomWindowArr[i].wndId == wndId){
+				
+				var nowRoomWindow = nodeim.roomWindowArr[i].window;
+				nowRoomWindow.call("initRoom",[nodeim.roomWindowArr[i]]);
+				nowRoomWindow.call("initLocalUser",[nodeim.localUser]);
+				
+				nodeim.listRoom(nodeim.roomWindowArr[i].id,function(rs){
+					
+					nowRoomWindow.call("initUserList",[rs]);
+				});
+				
+				
+				if(typeof nodeim.roomWindowArr[i].callback == 'function')
+				{
+					nodeim.roomWindowArr[i].callback(nodeim.roomWindowArr[i].window);
+				}
+			}
+		}
+	}
 	var find1Window = null;
 	var find2Window = null;
 	function openusersWindow(){
-		find1Window = kate.createWindow(kate.appFolder+'/add1.html') ;
-		find1Window.resize(359,289) ;
-		find1Window.setFlags( 0x00000800 ) ;
-		find1Window.show();
 		
 		find2Window = kate.createWindow(kate.appFolder+'/add2.html') ;
 		find2Window.resize(370,300) ;
 		find2Window.setFlags( 0x00000800 ) ;
 		find2Window.hide();
+		
+
+		find1Window = kate.createWindow(kate.appFolder+'/add1.html') ;
+		find1Window.resize(359,289) ;
+		find1Window.setFlags( 0x00000800 ) ;
+		
+		find1Window.show();
+	}
+	function openusersWindowKey(){
+		
+		if( jQuery("#searchText").val() == ""){
+			alert("请输入要搜索好友的名字")
+			return;
+		}
+
+		find1Window = kate.createWindow(kate.appFolder+'/add1.html') ;
+		find1Window.resize(359,289) ;
+		find1Window.setFlags( 0x00000800 ) ;
+		
+		find2Window = kate.createWindow(kate.appFolder+'/add2.html') ;
+		find2Window.resize(370,300) ;
+		find2Window.setFlags( 0x00000800 ) ;
+		find2Window.hide();
+		
+		nodeim.searchUser({
+			//id : parseInt(jQuery("#searchText").val())
+			username : jQuery("#searchText").val()
+		});
+			
 	}
 
 
 	var editWindow = null;
 	function openEditWindow(){
 		editWindow = kate.createWindow(kate.appFolder+'/edit.html') ;
-		editWindow.resize(338,426) ;
+		editWindow.resize(338,526) ;
 		editWindow.setFlags( 0x00000800 ) ;
 		editWindow.show();
+	}
+
+	var roomsWindow = null;
+	function openRoomsWindow(){
+		roomsWindow = kate.createWindow(kate.appFolder+'/addrooms.html') ;
+		roomsWindow.resize(214,124) ;
+		roomsWindow.setFlags( 0x00000800 ) ;
+		roomsWindow.show();
 	}
 	
 	
 	function menuUserNameToggle(){
-		jQuery("#menuUserName").toggle();
+		
+		if( jQuery("#menuUserName").css("display")=="none"){
+			
+			jQuery("body").mousedown(function(e){
+
+				
+				var DivLeft = parseInt(jQuery("#menuUserName").css("left"));
+				var DivTop = parseInt(jQuery("#menuUserName").css("top"));
+				var DivHeight = parseInt(jQuery("#menuUserName").css("height"));
+				var DivWidth = parseInt(jQuery("#menuUserName").css("width"));
+
+				if( e.clientX < DivLeft || e.clientX > (DivLeft+DivWidth) || e.clientY < DivTop || e.clientY > (DivTop+DivWidth)){
+					jQuery("#menuUserName").hide();
+					jQuery("body").unbind("mousedown");
+				}
+			});
+			
+			jQuery("#menuUserName").show();
+		}else{
+			jQuery("#menuUserName").hide();
+
+			
+		}
+		
+		
 	}
 	function selectMenuUserName(sStatus){
 		menuUserNameToggle();
@@ -283,9 +403,9 @@
 			jQuery("#statusDiv").text( sStatus)
 			
 			if( sStatus != "在线"){
-				jQuery("#facePic").attr("class","c2")
+				
 			}else{
-				jQuery("#facePic").attr("class","")
+				
 			}
 		});
 	}
@@ -303,9 +423,21 @@
 			jQuery(obj).attr("class" , "wMainUserHeaderEx ui-droppable");
 		}
 	}
+	function toggleFriendRooms(obj){
+	
+		if( jQuery(obj).attr("class") == "wMainUserHeaderRoomsEx"){
+			
+			jQuery(obj).next().hide();
+			jQuery(obj).attr("class" , "wMainUserHeader");
+		}else{
+
+			jQuery(obj).next().show();
+			jQuery(obj).attr("class" , "wMainUserHeaderRoomsEx");
+		}
+	}
 	function setBjcolor(obj){
 		
-		jQuery(".wMainUserItem").each(function(){
+		jQuery(".wMainUserItem,.wMainUserItemRooms").each(function(){
 			jQuery(this).css("background-color","");
 		})
 		jQuery(obj).css("background-color","rgb(255, 239, 176)");
@@ -404,6 +536,20 @@
 	        },
 	        items: {
 	            "delete": {name: "删除好友", icon: "delete"}
+	        }
+	    });
+	    $.contextMenu({
+	        selector: '.wMainUserItemRooms', 
+	        callback: function(key, options) {
+
+	        	if( key == "delete"){
+	        		
+	        		nodeim.leaveRoom( jQuery(this).attr("roomid"));
+		        	
+	        	}
+	        },
+	        items: {
+	            "delete": {name: "退出聊天室", icon: "delete"}
 	        }
 	    });
 	    $.contextMenu({

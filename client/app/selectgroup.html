@@ -24,7 +24,7 @@
 				<div class="wOtherMain" style="height: 95px;">
 					<div class="confirmpage">
 						<div style="height: 25px; padding: 16px 15px 0; line-height: 150%">
-							<select id="list"></select>
+							<select id="list"><option value="默认分组">默认分组</option></select>
 						</div>
 						<div style="height: 25px; padding-top: 15px; text-align: center">
 							<input class="button1" value="确定" type="button"
@@ -44,6 +44,7 @@
 	<script>
 		function saveGroup() {
 			kate.parentWindow.call("saveGroup", [jQuery("#list").val() ]);
+			kate.window.close();
 		}
 		
 		function initSelect(o){

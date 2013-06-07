@@ -1,0 +1,339 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>BB宝</title>
+
+<script src="jquery-1.9.1.min.js"></script>
+<script charset="utf-8" src="kindeditor/kindeditor-min.js" type="text/javascript"></script>
+
+<link rel="stylesheet" type="text/css" href="styles/webim.css" />
+<link rel="stylesheet" type="text/css" href="styles/webimpage.css" />
+</head>
+<body onselectstart="return false;">
+	<div class="wChat"
+		style="position: absolute;  width: 690px; height: 490px; z-index: 9717;">
+		<div class="wRound_lt"></div>
+		<div class="wRound_rt"></div>
+		<div class="wRound_lb"></div>
+		<div class="wRound_rb"></div>
+		<div class="wResize"></div>
+		<div class="wContent">
+			<div class="wChatTitle" style="color: rgb(0, 0, 0);" onmousedown="kate.window.drag()">
+				<div class="wIcon">
+					<img src="images/im/icon.png">
+				</div>
+				<div class="wText" >wwffff</div>
+				<div class="wControl" >
+					<div class="wControlMin" onmouseover="this.scrollTop='13'"
+						onmouseout="this.scrollTop='0'">
+						<img src="images/im/chatcontrolmin.png" title="最小化">
+					</div>
+					<div class="wControlClose" onmouseover="this.scrollTop='15'"
+						onmouseout="this.scrollTop='0'">
+						<img src="images/im/chatcontrolclose.png" title="关闭" onclick="kate.window.hide()">
+					</div>
+				</div>
+			</div>
+			<div class="wWindowContent"
+				style="background-color: transparent; height: 465px;">
+				<div class="wChatTool">
+					<div class="wChatSignHolder" style="width: 530px;">
+						<div class="wChatSign">&lt;&gt;</div>
+					</div>
+					<div class="wChatToolBar">
+					  <div class="wChatToolBarButton"
+							onmouseover="this.className='wChatToolBarButton wChatToolBarButtonHover'"
+							onmouseout="this.className='wChatToolBarButton'" onclick="openLogWindow()">
+							<img src="images/im/chatbuttonhistory.png"
+								style="height: 30px; width: 29px" title="查看聊天历史记录">
+						</div>
+						<!--视频按钮  -->
+                    </div>
+				</div>
+				<div style="background: #ffc; clear: both;width:100%;margin:0 auto; overflow:auto">
+
+
+					<div  style="height:395px; width: 150px;float:right">
+						<div class="wChatUserFace" style="right: 10px; ">
+							<img src="userface/default.gif"
+								style="width: 114px; height: 114px; display: block">
+						</div>
+						<div class="wChatUserFace" style="bottom: 10px;right: 10px ">
+							<img src="userface/default.gif"
+								style="width: 114px; height: 114px">
+						</div>
+					</div>
+					
+					
+					
+					<div style="width: 200px; float: left">
+						<div class="wMainUserContainer" style="height: 52px;" id="roomUserList">
+						</div>
+					</div>
+					
+					
+					
+					
+					<div class="wChatMain" style="height: 395px;  margin-left:200px;margin-right:150px">
+						<div style="border: 1px solid #f2b705; background-color: #fff" >
+							<div
+								style="height: 246px; overflow-x: hidden; overflow-y: auto; word-break: break-all; text-align: left;" id="messageoutput">
+								
+							</div>
+						</div>
+						<div class="wChatResize" id="wChatResize"></div>
+						<div
+							style="background-color: #fff; overflow: hidden">
+							<textarea
+								style="height: 78px; border: 0px; width: 323px; font-size: 12px; overflow: auto; resize: none;" id="message"></textarea>
+						</div>
+						<div style="float: right; padding-top: 2px">
+							<div style="width: 88px">
+								<div
+									style="float: left; overflow: hidden; height: 21px; width: 64px"
+									onmouseup="this.scrollTop='21'"
+									onmousedown="this.scrollTop='42'"
+									onmouseover="this.scrollTop='21'"
+									onmouseout="this.scrollTop='0'">
+									<img src="images/im/buttonsendmsg.png" title="发送您的消息" id="btnSendMessage">
+									
+								</div>
+								<div
+									style="float: left; overflow: hidden; height: 21px; width: 16px"
+									onmouseup="this.scrollTop='21'"
+									onmousedown="this.scrollTop='42'"
+									onmouseover="this.scrollTop='21'"
+									onmouseout="this.scrollTop='0'">
+									<img src="images/im/buttonsendtype.png" title="快速回复" onclick="toggleMenuMsgSend()">
+								</div>
+								
+								<div id="menuMsgSend" class="sysMenu"
+									style="width: 175px; height: 127px; top: 463px; left: 1107px; display: none;">
+									<div onselectstart="return false;" class="sysMenuItemWithIcon"
+										onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
+										onmouseout="this.className='sysMenuItemWithIcon'"
+										onclick="Elem.Value('wChatInputId10052Type1','哦');">哦</div>
+									<div onselectstart="return false;" class="sysMenuItemWithIcon"
+										onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
+										onmouseout="this.className='sysMenuItemWithIcon'"
+										onclick="Elem.Value('wChatInputId10052Type1','好吧');">好吧</div>
+									<div onselectstart="return false;" class="sysMenuItemWithIcon"
+										onmouseover="this.className='sysMenuItemWithIcon sysMenuItemHover'"
+										onmouseout="this.className='sysMenuItemWithIcon'"
+										onclick="Elem.Value('wChatInputId10052Type1','我得下了，拜拜!');">我得下了，拜拜!</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="wChatSideBar" style="height: 395px;">
+						<img style="display: none" src="images/im/chatsidebutton.png"
+							title="隐藏参与者的显示图片"> <!--隐藏头像按钮-->
+					</div>
+					<div id="wChatResizeBar" class="wChatResizeBar" style="float:right;width:332px;margin-left:200px;margin-right:150px;left:4px"></div>
+					<div style="clear: both"></div>
+				</div>
+			</div>
+		</div>
+		<div class="wLoading" style="display: none;">加载中...</div>
+	</div>
+	<div class="wLoading" style="display: none;">加载中...</div>
+	</div>
+
+	<script>
+	$("#btnSendMessage").click(function(){
+		
+		var data = {
+			room: roomObj.id
+			, message: editor.html()
+		}
+		
+		kate.parentWindow.call("nodeim.messageRoom",[data]) ;
+		
+		editor.html("")
+	}) ;
+	
+	function toggleBjColor(obj){
+		
+		jQuery(".wMainUserItem").each(function(){
+			jQuery(this).css("background-color","");
+		})
+		jQuery(obj).css("background-color","rgb(255, 239, 176)");
+	}
+	
+	var roomObj = {};
+	var userLocalObj = {};
+	function initRoom(data){
+		roomObj.id = data.id;
+		roomObj.name = data.name;
+		console.log(data)
+		jQuery(".wText").text(data.name + "("+data.id+")");
+	}
+	function initLocalUser(data){
+		userLocalObj = data;
+	}
+	
+	function createUserHtml(data){
+		
+		
+		var _is = false;
+		jQuery("#roomUserList").find(".wMainUserItem").each(function(){
+			
+			if( jQuery(this).attr("uid") == data.id){
+				_is = true;
+			}
+		});
+		
+		if( _is){
+			return ;
+		}
+		
+		var html = "";
+		html += '<div class="wMainUserItem" uid="'+data.id+'"';
+		html += 'onmousedown=""';
+		html += 'onmouseup=""';
+		html += 'oncontextmenu="function(){return !!0}"';
+		html += 'onclick="toggleBjColor(this)" >';
+		html += '<div class="wMainListButton"';
+		html += '	onmouseover="this.className=\'wMainListButton wMainListButtonHover\'"';
+		html += '	onmouseout="this.className=\'wMainListButton\'">';
+		html += '	<img src="images/im/m33.png" style="height: 19px; width: 19px">';
+		html += '</div>';
+		html += '<div class="wMainUserItemText">';
+		html += '	'+data.username+'&nbsp;&nbsp;<span style="color: #777"></span>';
+		html += '</div>';
+		html += '</div>';
+		
+		jQuery("#roomUserList").append(html);
+		
+	}
+	function removeUserHtml(data){
+
+			
+			jQuery("#roomUserList").find(".wMainUserItem").each(function(){
+				
+				if( jQuery(this).attr("uid") == data.id){
+					jQuery(this).remove();
+				}
+				
+			});
+			
+			jQuery("#messageoutput").append("<div class=\"wChatMsgTitle\">"+data.username+"离开了聊天室</div>");
+	}
+	function initUserList(data){
+		for(var i=0;i<data.offlines.length;i++){
+			
+			createUserHtml( data.offlines[i]);
+		}
+		for(var i=0;i<data.onlines.length;i++){
+			createUserHtml( data.onlines[i]);
+		}
+	}
+	
+	function onMessage(data){
+		
+		var time = kate.parentWindow.call("nodeim.getLocalTime",[data.time]) ;
+		var out = '<div class="wChatMsgTitle">'+data.from.username+'(id:'+data.from.id+') 说 ('+time+')：</div>' ;
+		if(data.room!==undefined)
+		{
+			//out+= "[聊天室id:"+data.room+"]" ;
+		}
+		out+= '<div class="wChatMsgContent">'+data.message+'</div>' ;
+
+		//var div = $("#messageoutput")[0].contentWindow.document.getElementById("messageoutput") ;
+		jQuery("#messageoutput").append(out);
+	}
+	
+	
+	function toggleFice(){
+		jQuery("#divFaceList").toggle();
+	}
+	jQuery(".wChatFaceItem").children("img").click(function(){
+		toggleFice();
+		$("#message").append( jQuery(this).attr("f")) ;
+	})
+	
+	jQuery("#wChatResize").mousedown(function(e){
+		
+		return ;
+		
+		
+		jQuery("#wChatResizeBar")
+		jQuery("#wChatResizeBar").css( "top", 85 + parseInt( jQuery("#messageoutput").height()))
+		jQuery("#wChatResizeBar").show();
+		var _oldClientY = e.clientY;
+		var _cb = e.clientY - parseInt(jQuery("#wChatResizeBar").css("top"));
+
+		document.onmousemove = function(e)
+		{
+			jQuery("#wChatResizeBar").css( "top", e.clientY - _cb)
+		};
+		document.onmouseup = function(e)
+		{
+			if( _oldClientY != e.clientY){
+
+				jQuery("#messageoutput").css( "height", parseInt( jQuery("#wChatResizeBar").css("top"))-90);
+				//jQuery("#message").css( "height", parseInt( jQuery(".wChatMain").height()) - parseInt( jQuery("#messageoutput").height())-71);
+				jQuery(".wChatFaceContainer").css( "top", e.clientY - _cb - 218);
+			}
+			
+			document.onmousemove = document.onmouseup = null;
+			jQuery("#wChatResizeBar").hide();
+		};
+	})
+	
+	function toggleMenuMsgSend(){
+		
+		jQuery("#menuMsgSend").css( "top" , parseInt(jQuery(".wChat").height()) - 15);
+		jQuery("#menuMsgSend").css( "left" , parseInt(jQuery(".wChat").width()) - 168);
+		
+		jQuery("#menuMsgSend").toggle();
+	}
+	
+
+	function onKateLoaded()
+	{
+		kate.parentWindow.call("openRoomWindow_CallBack",[kate.wndId]) ;
+	}
+	
+	
+	
+
+	var logWindow = null;
+	function openLogWindow(){
+		logWindow = kate.createWindow(kate.appFolder+'/chatlog.html') ;
+		logWindow.resize(554,454) ;
+		logWindow.setFlags( 0x00000800 ) ;
+		logWindow.show();
+	}
+	function openLogWindowCallBack (){
+		openLog(1);
+	}
+	function openLog(page){
+
+		kate.parentWindow.call("nodeim.log",[ roomObj.id,page]) ;
+	}
+	function openLogCallBack(data){
+
+		console.log("log",data)
+		logWindow.call("callBack",[ data]);
+	}
+	
+	var editor;
+	KindEditor.ready(function(K) {
+		editor = K.create('#message', {
+			allowFileManager : true,
+			resizeType : 1,
+			width : '330',
+			minWidth : '330',
+			height:70,
+			minHeight : '70',
+			allowPreviewEmoticons : false,
+			allowImageUpload : false,
+			items : [
+				'emoticons','|','fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline' ]
+		});
+	});
+	</script>
+</body>
+</html>

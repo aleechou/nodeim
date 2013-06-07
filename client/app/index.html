@@ -180,7 +180,31 @@
 	<script>
 		
 		function showMenuLoginStatus(){
-			jQuery("#menuLoginStatus").toggle();
+
+			if( jQuery("#menuLoginStatus").css("display")=="none"){
+				
+				jQuery("body").mousedown(function(e){
+
+					
+					var DivLeft = parseInt(jQuery("#menuLoginStatus").css("left"));
+					var DivTop = parseInt(jQuery("#menuLoginStatus").css("top"));
+					var DivHeight = parseInt(jQuery("#menuLoginStatus").css("height"));
+					var DivWidth = parseInt(jQuery("#menuLoginStatus").css("width"));
+
+					if( e.clientX < DivLeft || e.clientX > (DivLeft+DivWidth) || e.clientY < DivTop || e.clientY > (DivTop+DivWidth)){
+						jQuery("#menuLoginStatus").hide();
+						jQuery("body").unbind("mousedown");
+					}
+				});
+				
+				jQuery("#menuLoginStatus").show();
+			}else{
+				jQuery("#menuLoginStatus").hide();
+
+				
+			}
+			
+			
 		}
 		
 		function selectMenuLoginStatus(sStatus){
@@ -194,6 +218,24 @@
 		function signup(data){
 			mainWindow.call("nodeim.signup",[data]);
 		}
+		function signup_callBack(){
+			regWindow.close();
+		}
+		
+		function findPass(data){
+
+			mainWindow.call("nodeim.findPass",[data]);
+		}
+
+		function findPass_callBack(data){
+
+			console.log("ps",data)
+			findPassWindow.call( "initUserId" ,[data])
+		}
+		
+		
+		
+		
 		
 		jQuery("input[type=checkbox]").next().click(function(){
 			
@@ -209,7 +251,7 @@
 		
 		var mainWindow = null;
 		$("#btnLogin").click(function() {
-			mainWindow.call("nodeim.login",[$("#loginTextBoxU").val(),$("#loginTextBoxP").val()]);
+			mainWindow.call("nodeim.login",[$("#loginTextBoxU").val(),$("#loginTextBoxP").val(),jQuery("#divStatus").text()]);
 			
 			if(jQuery("#isSaveUser").attr("class") == "cCheckBox"){
 

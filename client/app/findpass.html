@@ -16,20 +16,20 @@
 			<div class="wOtherTitle" style="color: rgb(0, 0, 0);" onmousedown="kate.window.drag()">
 				<div class="wIcon">
 					<img
-						src="http://webos.knowledge.com.cn/webim/images/im/tooladdfriend.png">
+						src="images/im/tooladdfriend.png">
 				</div>
 				<div class="wText" >找回密码</div>
 				<div class="wControl" >
 					<div class="wControlMin" onmouseover="this.scrollTop='13'"
 						onmouseout="this.scrollTop='0'">
 						<img
-							src="http://webos.knowledge.com.cn/webim/images/im/othercontrolmin.png"
+							src="images/im/othercontrolmin.png"
 							title="最小化">
 					</div>
 					<div class="wControlClose" onmouseover="this.scrollTop='15'"
 						onmouseout="this.scrollTop='0'">
 						<img
-							src="http://webos.knowledge.com.cn/webim/images/im/othercontrolclose.png"
+							src="images/im/othercontrolclose.png"
 							title="关闭" onclick="kate.window.close()">
 					</div>
 				</div>
@@ -39,21 +39,26 @@
 				<form action="addfriend.php" method="get" name="form1"
 					class="friend_bg">
 					<table width="330" border="0" align="center" cellpadding="0"
-						cellspacing="0">
+						cellspacing="0" id="form1">
 						<tbody>
 							<tr>
 								<td height="15" colspan="3"></td>
 							</tr>
 							<tr>
-								<td width="66" height="25" align="right">邮箱地址：</td>
-								<td width="6" align="left">&nbsp;</td>
-								<td width="160" align="left"><input name="tbOldPass"
-									type="password" class="input1" maxlength="50" /></td>
-							</tr>
+							  <td width="66" height="25" align="right">&nbsp;</td>
+							  <td width="6" align="left">&nbsp;</td>
+							  <td width="160" align="left">&nbsp;</td>
+						  </tr>
+							<tr>
+                              <td height="25" align="right">输入BBb宝号码：</td>
+							  <td align="left">&nbsp;</td>
+							  <td align="left"><input id="uid"
+									type="text" class="input1" maxlength="50" /></td>
+						  </tr>
 							<tr>
 								<td height="22" align="right"></td>
 								<td align="left">&nbsp;</td>
-								<td align="left"><span class="orange">不修改请保持为空</span></td>
+								<td align="left">&nbsp;</td>
 							</tr>
 
 
@@ -61,12 +66,73 @@
 								<td height="35" align="center"></td>
 								<td align="center">&nbsp;</td>
 								<td height="35" align="left"><input class="button1"
-									type="button" name="btnSubmit" value="确定" onclick="chkAll()" />
+									type="button" name="btnSubmit" value="确定" onclick="setUserId()" />
 									&nbsp;&nbsp; <input class="button1" type="button"
-									name="btnCancel" onclick="winClose(event);" value="取消" /></td>
+									name="btnCancel" onclick="kate.window.close()" value="取消" /></td>
 							</tr>
 						</tbody>
 					</table>
+				    <table width="330" border="0" align="center" cellpadding="0"
+						cellspacing="0" id="form3" style="display:none">
+                      <tbody>
+                        <tr>
+                          <td height="15" colspan="3"></td>
+                        </tr>
+                        <tr>
+                          <td width="66" height="25" align="right">&nbsp;</td>
+                          <td width="6" align="left">&nbsp;</td>
+                          <td width="160" align="left">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td height="25" align="right">您的密码为：</td>
+                          <td align="left">&nbsp;</td>
+                          <td align="left"><span id="password"></span></td>
+                        </tr>
+                        <tr>
+                          <td height="22" align="right"></td>
+                          <td align="left">&nbsp;</td>
+                          <td align="left">&nbsp;</td>
+                        </tr>
+                      </tbody>
+                    </table>
+				    <table width="330" border="0" align="center" cellpadding="0"
+						cellspacing="0" id="form2" style="display:none">
+                      <tbody>
+                        <tr>
+                          <td height="15" colspan="3"></td>
+                        </tr>
+                        <tr>
+                          <td width="66" height="25" align="right">密码提示问题：</td>
+                          <td width="6" align="left">&nbsp;</td>
+                          <td width="160" align="left"><span id="wentiDiv"></span></td>
+                        </tr>
+                        <tr>
+                          <td height="25" align="right">&nbsp;</td>
+                          <td align="left">&nbsp;</td>
+                          <td align="left">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td height="25" align="right">回答：</td>
+                          <td align="left">&nbsp;</td>
+                          <td align="left"><input name="tbOldPass2"
+									type="text" class="input1" maxlength="50" /></td>
+                        </tr>
+                        <tr>
+                          <td height="22" align="right"></td>
+                          <td align="left">&nbsp;</td>
+                          <td align="left">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td height="35" align="center"></td>
+                          <td align="center">&nbsp;</td>
+                          <td height="35" align="left"><input class="button1"
+									type="button" name="btnSubmit2" value="确定" onclick="chkAll()" />
+                            &nbsp;&nbsp;
+                            <input class="button1" type="button"
+									name="btnCancel2" onclick="kate.window.close()" value="取消" /></td>
+                        </tr>
+                      </tbody>
+                    </table>
 				</form>
 			</div>
 		</div>
@@ -75,34 +141,31 @@
 	<div class="wLoading" style="display: none;">加载中...</div>
 	</div>
 	<script>
-		$("#btnSearch1").change(function() {
+		function setUserId(){
+			kate.parentWindow.call("findPass",[{id:parseInt(jQuery("#uid").val())}]) ;
+		}
+		var oUser = null;
+		function initUserId(data){
+			oUser = data;
+			
+			jQuery("#wentiDiv").text( data.wenti);
+			jQuery("#form1").hide();
+			jQuery("#form2").show();
+			jQuery("#form3").hide();
+			
+		}
+		
+		function inputDaNan(){
+			
+			if( jQuery("#danan").val() == oUser.daan){
+				jQuery("#password").text( oUser.password);
 
-			jQuery("#btnSearch1").attr("checked", "checked");
-			jQuery("#btnSearch1").attr("checked", "");
-			jQuery("#searchDiv1").show();
-			jQuery("#searchDiv2").hide();
-
-		});
-		$("#btnSearch2").click(function() {
-
-			jQuery("#btnSearch1").attr("checked", "");
-			jQuery("#btnSearch1").attr("checked", "checked");
-			jQuery("#searchDiv1").hide();
-			jQuery("#searchDiv2").show();
-
-		});
-
-		function search() {
-
-			if (jQuery("#btnSearch1").attr("checked") == "checked") {
-
-				kate.parentWindow.call("nodeim.searchUser", [ {
-					username : jQuery("#tbUsername").val()
-				} ]);
-			} else {
-				kate.parentWindow.call("nodeim.searchUser", [ {} ]);
+				jQuery("#form1").hide();
+				jQuery("#form2").hide();
+				jQuery("#form3").show();
+			}else{
+				alert("提示问题不正确")
 			}
-
 		}
 	</script>
 

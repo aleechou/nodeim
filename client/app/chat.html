@@ -12,7 +12,7 @@
 </head>
 <body onselectstart="return false;">
 	<div class="wChat"
-		style="position: absolute;  width: 690px; height: 490px; z-index: 9717;">
+		style="position: absolute;  width: 550px; height: 490px; z-index: 9717;">
 		<div class="wRound_lt"></div>
 		<div class="wRound_rt"></div>
 		<div class="wRound_lb"></div>
@@ -42,56 +42,32 @@
 						<div class="wChatSign">&lt;&gt;</div>
 					</div>
 					<div class="wChatToolBar">
-						<div class="wChatToolBarButton"
-							onmouseover="this.className='wChatToolBarButton wChatToolBarButtonHover'"
-							onmouseout="this.className='wChatToolBarButton'" b="2">
-							<img src="images/im/chatbuttonblock.png"
-								style="height: 30px; width: 29px" title="阻止此联系人">
-						</div>
-						<div class="wChatToolBarButton"
+					  <div class="wChatToolBarButton"
 							onmouseover="this.className='wChatToolBarButton wChatToolBarButtonHover'"
 							onmouseout="this.className='wChatToolBarButton'" onclick="openLogWindow()">
 							<img src="images/im/chatbuttonhistory.png"
 								style="height: 30px; width: 29px" title="查看聊天历史记录">
-						</div>
-						<div class="wChatToolBarButton"
-							onmouseover="this.className='wChatToolBarButton wChatToolBarButtonHover'"
-							onmouseout="this.className='wChatToolBarButton'">
-							<img src="images/im/videochat.png"
-								style="height: 30px; width: 26px" title="发送视频会话">
-						</div>
+					  </div>
 						<!--视频按钮  -->
-						<div class="wChatToolBarButton"
-							onmouseover="this.className='wChatToolBarButton wChatToolBarButtonHover'"
-							onmouseout="this.className='wChatToolBarButton'">
-							<img src="images/im/viocechat.png"
-								style="height: 30px; width: 32spx" title="发送语音会话">
-						</div>
-						<div class="wChatToolBarButton"
-							onmouseover="this.className='wChatToolBarButton wChatToolBarButtonHover'"
-							onmouseout="this.className='wChatToolBarButton'">
-							<img src="images/im/videostop-gray.png"
-								style="height: 30px; width: 29px" title="挂断">
-						</div>
-					</div>
+				  </div>
 				</div>
 				<div style="background: #ffc; clear: both;width:100%;margin:0 auto; overflow:auto">
 
 
 					<div  style="height:395px; width: 150px;float:right">
 						<div class="wChatUserFace" style="right: 10px; ">
-							<img src="userface/default.gif"
+							<img src="userface/default.gif" id="facePic1"
 								style="width: 114px; height: 114px; display: block">
 						</div>
 						<div class="wChatUserFace" style="bottom: 10px;right: 10px ">
-							<img src="userface/default.gif"
+							<img src="userface/default.gif" id="facePic2"
 								style="width: 114px; height: 114px">
 						</div>
 					</div>
 					
 					
 					
-					<div style="width: 200px; float: left">
+					<div style="width: 0px; float: left">
 						<div class="wMainUserContainer" style="height: 52px;display:none">
 							<div class="wMainUserItem" u
 								onmousedown=""
@@ -133,7 +109,7 @@
 					
 					
 					
-					<div class="wChatMain" style="height: 395px;  margin-left:200px;margin-right:150px">
+					<div class="wChatMain" style="height: 395px;  margin-left:0px;margin-right:150px">
 						<div style="border: 1px solid #f2b705; background-color: #fff" >
 							<div
 								style="height: 246px; overflow-x: hidden; overflow-y: auto; word-break: break-all; text-align: left;" id="messageoutput">
@@ -234,10 +210,18 @@
 		userObj.id = data.id;
 		userObj.username = data.username;
 		console.log(data)
-		jQuery(".wText").text(data.username);
+		jQuery(".wText").text(data.username + "("+userObj.id+")");
+
+		if( data.facePath != "undefined"){
+			jQuery("#facePic1").attr("src" , data.facePath)
+		}
 	}
 	function initLocalUser(data){
 		userLocalObj = data;
+		
+		if( userLocalObj.facePath){
+			jQuery("#facePic2").attr("src" , userLocalObj.facePath)
+		}
 	}
 	
 	function onMessage(data){
@@ -246,7 +230,7 @@
 		var out = '<div class="wChatMsgTitle">'+data.from.username+'(id:'+data.from.id+') 说 ('+time+')：</div>' ;
 		if(data.room!==undefined)
 		{
-			out+= "[聊天室id:"+data.room+"]" ;
+			//out+= "[聊天室id:"+data.room+"]" ;
 		}
 		out+= '<div class="wChatMsgContent">'+data.message+'</div>' ;
 
@@ -334,8 +318,8 @@
 		editor = K.create('#message', {
 			allowFileManager : true,
 			resizeType : 1,
-			width : '330',
-			minWidth : '330',
+			width : '390',
+			minWidth : '390',
 			height:70,
 			minHeight : '70',
 			allowPreviewEmoticons : false,

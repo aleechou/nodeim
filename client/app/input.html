@@ -14,7 +14,7 @@
 			<div class="wOtherTitle" style="color: rgb(0, 0, 0);" onmousedown="kate.window.drag()">
 				<div class="wIcon">
 					<img
-						src="http://webos.knowledge.com.cn/webim/images/im/warning.png">
+						src="images/im/warning.png">
 				</div>
 				<div class="wText">请输入昵称</div>
 			</div>
@@ -29,7 +29,7 @@
 							<input class="button1" value="确定" type="button"
 								onclick="Elem.Hid('windowCover');WinManage.GetWindow(4,3).win.Close(wmF('divMsgId4Type3'))">&nbsp;&nbsp;
 								<input class="button1" value="取消" type="button"
-								onclick="Elem.Hid('windowCover');WinManage.GetWindow(4,3).win.Close('')">
+								onclick="kate.window.close()">
 									<div></div>
 						</div>
 					</div>
