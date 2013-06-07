@@ -150,7 +150,7 @@ function Room(doc,server)
 	this.join = function(userDoc)
 	{
 		// new user
-		if( !this.users[userDoc.id] );
+		if( !this.users[userDoc.id] )
 		{
 			// 加入聊天室
 			server.db.colle("rooms-users").insert(
