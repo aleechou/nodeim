@@ -167,6 +167,12 @@ function Room(doc,server)
 			) ;
 
 			this.users[userDoc.id] = userDoc ;
+
+			var newbie = true ;
+		}
+		else
+		{
+			var newbie = false ;
 		}
 
 		// 通知
@@ -177,6 +183,7 @@ function Room(doc,server)
 				client.emit("room.join",{
 					room:self._roomdoc
 					, user:userDoc
+					, newbie: newbie
 				}) ;
 			}) ;
 		}
