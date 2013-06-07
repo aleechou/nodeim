@@ -103,6 +103,18 @@
 	{
 		return kateapi.regGlobalKeyEvent(this.wndId,keys) ;
 	}
+	KateHtmlWindow.prototype.minimize = function()
+	{
+		return kateapi.minimize(this.wndId) ;
+	}
+	KateHtmlWindow.prototype.maximize = function()
+	{
+		return kateapi.maximize(this.wndId) ;
+	}
+	KateHtmlWindow.prototype.normal = function()
+	{
+		return kateapi.normal(this.wndId) ;
+	}
 	
 
 
