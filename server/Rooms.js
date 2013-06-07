@@ -238,7 +238,7 @@ function Room(doc,server)
 			// 在线用户接受
 			if(server.onlines[userId])
 			{
-				func(server.onlines[userId],this.users[userId]) ;
+				func.call(this,server.onlines[userId],this.users[userId]) ;
 			}
 		}
 	}
