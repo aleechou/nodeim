@@ -39,7 +39,7 @@
 									onmouseout="this.scrollTop='0'">
 									<img
 										src="images/im/othercontrolmin.png"
-										title="最小化" >
+										title="最小化" onclick="kate.window.minimize()">
 								</div>
 								<div class="wControlClose" onmouseover="this.scrollTop='15'"
 									onmouseout="this.scrollTop='0'">
@@ -262,33 +262,38 @@
 		var mainWindow = null;
 		$("#btnLogin").click(function() {
 			mainWindow.call("nodeim.login",[$("#loginTextBoxU").val(),$("#loginTextBoxP").val(),jQuery("#divStatus").text()]);
-			
+
 			if(jQuery("#isSaveUser").attr("class") == "cCheckBox"){
 
-				$.cookie('saveUser',"" , {expires: 365});
-				$.cookie('isSaveUser',false , {expires: 365});
+				window.localStorage.saveUser = "";
+				window.localStorage.isSaveUser = "false";
+				
 			}else{
-				$.cookie('saveUser',$("#loginTextBoxU").val() , {expires: 365});
-				$.cookie('isSaveUser',true , {expires: 365});
+				window.localStorage.saveUser = $("#loginTextBoxU").val()
+				window.localStorage.isSaveUser = "true";
 			}
 			if(jQuery("#isSavePass").attr("class") == "cCheckBox"){
 
-				$.cookie('savePass',"" , {expires: 365});
-				$.cookie('isSavePass',false , {expires: 365});
+				window.localStorage.savePass = "";
+				window.localStorage.isSavePass = "false";
 			}else{
-				$.cookie('savePass',$("#loginTextBoxP").val() , {expires: 365});
-				$.cookie('isSavePass',true , {expires: 365});
+				window.localStorage.savePass = $("#loginTextBoxP").val();
+				window.localStorage.isSavePass = "true";
 			}
 		});
 		
+		if( window.localStorage.isSaveUser == "true"){
 
-		if( $.cookie('isSaveUser')){
-			$("#loginTextBoxU").val( $.cookie('saveUser'))
-			jQuery("#isSaveUser").attr("class","cCheckBoxChecked")
+			$("#loginTextBoxU").val( window.localStorage.saveUser)
+			jQuery("#isSaveUser").attr("class","cCheckBox cCheckBoxChecked")
+		}else{
+			jQuery("#isSaveUser").attr("class","cCheckBox")
 		}
-		if( $.cookie('isSavePass')){
-			$("#loginTextBoxP").val( $.cookie('savePass'))
-			jQuery("#isSavePass").attr("class","cCheckBoxChecked")
+		if( window.localStorage.isSavePass == "true"){
+			$("#loginTextBoxP").val( window.localStorage.savePass)
+			jQuery("#isSavePass").attr("class","cCheckBox cCheckBoxChecked")
+		}else{
+			jQuery("#isSavePass").attr("class","cCheckBox")
 		}
 		
 		var regWindow = null;

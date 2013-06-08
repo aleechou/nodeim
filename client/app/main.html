@@ -41,7 +41,7 @@
 				<div class="wControl" >
 					<div class="wControlMin" onmouseover="this.scrollTop='13'"
 						onmouseout="this.scrollTop='0'">
-						<img src="images/im/maincontrolmin.png" title="最小化">
+						<img src="images/im/maincontrolmin.png" title="最小化" onclick="kate.window.minimize()">
 					</div>
 					<div class="wControlClose" onmouseover="this.scrollTop='15'"
 						onmouseout="this.scrollTop='0'">
@@ -576,6 +576,21 @@
 
 	 
 	});
+	
+	
+	function onKateLoaded(){
+
+		// 屏幕截图快捷键
+		window.onKateGlobalKeyEvent = function(keys){
+			console.log("emit global keys: ",keys) ;
+			if(keys.toLowerCase()=='ctrl+alt+a')
+			{
+				kate.shotScreen() ;
+			}
+		}
+		// 注册快捷键
+		kate.window.regGlobalKeyEvent("CTRL+ALT+A") ;
+	}
 	</script>
 </body>
 </html>
