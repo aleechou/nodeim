@@ -170,8 +170,8 @@
 
 			user.nick = jQuery("#tbNick").val();
 			user.sign = jQuery("#tbSign").val();
-			user.wenti = jQuery("#tbwt").val();
-			user.daan = jQuery("#tbhd").val();
+			user.question = jQuery("#tbwt").val();
+			user.answer = jQuery("#tbhd").val();
 
 			if (jQuery("#tbRepass").val() != "") {
 
@@ -197,8 +197,8 @@
 
 			jQuery("#tbNick").val(user.nick);
 			jQuery("#tbSign").val(user.sign);
-			jQuery("#tbwt").val(user.wenti);
-			jQuery("#tbhd").val(user.daan);
+			jQuery("#tbwt").val(user.question);
+			jQuery("#tbhd").val(user.answer);
 
 			$('input:radio[name=rdGender]')[Number(user.sex) - 1].checked = true;
 

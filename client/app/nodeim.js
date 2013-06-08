@@ -383,15 +383,14 @@ nodeim.searchUser = function(data){
 }
 
 
-nodeim.findPass = function(data){
+nodeim.retrieve = function(data,callback){
 
 	nodeim.connect();
 	
-	nodeim.socket.command("find",data,function(rspn){
+	nodeim.socket.command("retrieve",data,function(rspn){
 		if(rspn.code=='200')
 		{
-
-			kate.parentWindow.call("findPass_callBack",[rspn.doc]) ;			
+			kate.parentWindow.call(callback,[rspn]) ;			
 		}
 		else
 		{

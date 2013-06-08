@@ -50,7 +50,7 @@
 							  <td width="160" align="left">&nbsp;</td>
 						  </tr>
 							<tr>
-                              <td height="25" align="right">输入BBb宝号码：</td>
+                              <td height="25" align="right">输入用户名：</td>
 							  <td align="left">&nbsp;</td>
 							  <td align="left"><input id="uid"
 									type="text" class="input1" maxlength="50" /></td>
@@ -66,35 +66,13 @@
 								<td height="35" align="center"></td>
 								<td align="center">&nbsp;</td>
 								<td height="35" align="left"><input class="button1"
-									type="button" name="btnSubmit" value="确定" onclick="setUserId()" />
+									type="button" name="btnSubmit" value="确定" onclick="step1()" />
 									&nbsp;&nbsp; <input class="button1" type="button"
 									name="btnCancel" onclick="kate.window.close()" value="取消" /></td>
 							</tr>
 						</tbody>
 					</table>
-				    <table width="330" border="0" align="center" cellpadding="0"
-						cellspacing="0" id="form3" style="display:none">
-                      <tbody>
-                        <tr>
-                          <td height="15" colspan="3"></td>
-                        </tr>
-                        <tr>
-                          <td width="66" height="25" align="right">&nbsp;</td>
-                          <td width="6" align="left">&nbsp;</td>
-                          <td width="160" align="left">&nbsp;</td>
-                        </tr>
-                        <tr>
-                          <td height="25" align="right">您的密码为：</td>
-                          <td align="left">&nbsp;</td>
-                          <td align="left"><span id="password"></span></td>
-                        </tr>
-                        <tr>
-                          <td height="22" align="right"></td>
-                          <td align="left">&nbsp;</td>
-                          <td align="left">&nbsp;</td>
-                        </tr>
-                      </tbody>
-                    </table>
+				    
 				    <table width="330" border="0" align="center" cellpadding="0"
 						cellspacing="0" id="form2" style="display:none">
                       <tbody>
@@ -107,32 +85,35 @@
                           <td width="160" align="left"><span id="wentiDiv"></span></td>
                         </tr>
                         <tr>
-                          <td height="25" align="right">&nbsp;</td>
-                          <td align="left">&nbsp;</td>
-                          <td align="left">&nbsp;</td>
-                        </tr>
-                        <tr>
                           <td height="25" align="right">回答：</td>
                           <td align="left">&nbsp;</td>
-                          <td align="left"><input name="tbOldPass2"
+                          <td align="left"><input id="answer"
 									type="text" class="input1" maxlength="50" /></td>
                         </tr>
                         <tr>
-                          <td height="22" align="right"></td>
+                          <td height="25" align="right">新密码：</td>
                           <td align="left">&nbsp;</td>
+                          <td align="left"><input name="newpassword"
+									type="text" class="input1" id="newpassword" maxlength="50" /></td>
+                        </tr>
+                        <tr>
+                          <td height="25" align="right">确认新密码：</td>
                           <td align="left">&nbsp;</td>
+                          <td align="left"><input name="renewpassword"
+									type="text" class="input1" id="renewpassword" maxlength="50" /></td>
                         </tr>
                         <tr>
                           <td height="35" align="center"></td>
                           <td align="center">&nbsp;</td>
                           <td height="35" align="left"><input class="button1"
-									type="button" name="btnSubmit2" value="确定" onclick="chkAll()" />
+									type="button" name="btnSubmit2" value="确定" onclick="step2()" />
                             &nbsp;&nbsp;
                             <input class="button1" type="button"
 									name="btnCancel2" onclick="kate.window.close()" value="取消" /></td>
                         </tr>
                       </tbody>
                     </table>
+				    <input name="username" type="hidden" id="username" />
 				</form>
 			</div>
 		</div>
@@ -141,31 +122,32 @@
 	<div class="wLoading" style="display: none;">加载中...</div>
 	</div>
 	<script>
-		function setUserId(){
-			kate.parentWindow.call("findPass",[{id:parseInt(jQuery("#uid").val())}]) ;
+		function step1(){
+			kate.parentWindow.call("findPassStep1",[{username:jQuery("#uid").val()}]) ;
+			jQuery("#username").val( jQuery("#uid").val())
 		}
 		var oUser = null;
-		function initUserId(data){
+		function step1_callback(data){
 			oUser = data;
 			
-			jQuery("#wentiDiv").text( data.wenti);
+			jQuery("#wentiDiv").text( data.question);
 			jQuery("#form1").hide();
 			jQuery("#form2").show();
-			jQuery("#form3").hide();
 			
 		}
 		
-		function inputDaNan(){
+		function step2(){
 			
-			if( jQuery("#danan").val() == oUser.daan){
-				jQuery("#password").text( oUser.password);
-
-				jQuery("#form1").hide();
-				jQuery("#form2").hide();
-				jQuery("#form3").show();
-			}else{
-				alert("提示问题不正确")
+			if( jQuery("#newpassword").val() == ""){
+				alert("新密码不能为空")
+				return;
 			}
+			if( jQuery("#newpassword").val() != jQuery("#renewpassword").val()){
+				alert("确认密码不一致")
+				return;
+			}
+			
+			kate.parentWindow.call("findPassStep2",[{username:jQuery("#username").val(),answer:jQuery("#answer").val(),newpassword:jQuery("#newpassword").val()}]) ;
 		}
 	</script>
 

@@ -222,15 +222,25 @@
 			regWindow.close();
 		}
 		
-		function findPass(data){
+		function findPassStep1(data){
 
-			mainWindow.call("nodeim.findPass",[data]);
+			mainWindow.call("nodeim.retrieve",[data,"findPassStep1_callBack"]);
+		}
+		function findPassStep2(data){
+
+			mainWindow.call("nodeim.retrieve",[data,"findPassStep2_callBack"]);
 		}
 
-		function findPass_callBack(data){
+		function findPassStep1_callBack(data){
 
-			console.log("ps",data)
-			findPassWindow.call( "initUserId" ,[data])
+			findPassWindow.call( "step1_callback" ,[data])
+		}
+		function findPassStep2_callBack(data){
+
+			if( data.code == 200){
+				alert("密码修改成功");
+				findPassWindow.close();
+			}
 		}
 		
 		
