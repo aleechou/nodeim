@@ -22,7 +22,7 @@ nodeim.connect = function (){
 				case 'request-subscription' :
 					
 //					alert("<p>"+data.from.username+"(id:"+data.from.id+") 请求加你为好友："+data.message)
-					if(window.confirm("<>"+data.from.username+"(id:"+data.from.id+") 请求加你为好友："+data.message+"<>")){
+					if(window.confirm(""+data.from.username+"(id:"+data.from.id+") 请求加你为好友："+data.message+"")){
 		                 //alert("确定");
 						nodeim.replyFriend({to:data.from.id  ,refuse:0},function(){
 							nodeim.friends();
@@ -35,13 +35,14 @@ nodeim.connect = function (){
 		             } 
 					break ;
 				case 'refuse' :
-					alert("<>"+data.from.username+"(id:"+data.from.id+") 拒绝了你的好友请求："+data.message+"<>") ;
+					alert(""+data.from.username+"(id:"+data.from.id+") 拒绝了你的好友请求："+data.message+"") ;
 					break ;
 				case 'agree' :
-					alert("<>"+data.from.username+"(id:"+data.from.id+") 同意了你的好友请求："+data.message+"<>") ;
+					alert(""+data.from.username+"(id:"+data.from.id+") 同意了你的好友请求："+data.message+"") ;
 					
 					nodeim.createUser(data.from);
 			    	nodeim.startDraggable();
+			    	nodeim.sumFriend()
 					break ;
 
 				default :

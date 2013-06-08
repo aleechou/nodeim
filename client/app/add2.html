@@ -115,7 +115,7 @@
     	
     	jQuery(data).each(function(i){
     		
-    		jQuery("#userList > tbody").append('<tr><td style="height:26px;background-color:#fff;width:25px;text-align:center"><img title="脱机" src="images/im/m3.png"></td><td style="background-color:#fff;text-indent:3px"><a title="" href="javascript:void(0)">'+data[i].username+'</a></td><td style="background-color:#fff;width:80px;text-align:center"><a style=" color:#09F" title="admin" href="#" onClick="addFriend('+data[i].id+')">加为好友</a></td></tr>')
+    		jQuery("#userList > tbody").append('<tr><td style="height:26px;background-color:#fff;width:25px;text-align:center"><img title="脱机" src="images/im/m3.png"></td><td style="background-color:#fff;text-indent:3px"><a title="" href="javascript:void(0)">'+data[i].username+' (id:'+ data[i].id +')</a></td><td style="background-color:#fff;width:80px;text-align:center"><a style=" color:#09F" title="admin" href="#" onClick="addFriend('+data[i].id+')">加为好友</a></td></tr>')
     	})
     }
 

@@ -280,6 +280,7 @@
 				window.localStorage.savePass = $("#loginTextBoxP").val();
 				window.localStorage.isSavePass = "true";
 			}
+			window.localStorage.loginStatus = jQuery("#divStatus").text();
 		});
 		
 		if( window.localStorage.isSaveUser == "true"){
@@ -294,6 +295,9 @@
 			jQuery("#isSavePass").attr("class","cCheckBox cCheckBoxChecked")
 		}else{
 			jQuery("#isSavePass").attr("class","cCheckBox")
+		}
+		if( window.localStorage.loginStatus){
+			jQuery("#divStatus").text( window.localStorage.loginStatus)
 		}
 		
 		var regWindow = null;
