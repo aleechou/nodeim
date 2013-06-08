@@ -150,7 +150,7 @@ function Room(doc,server)
 	this.join = function(userDoc)
 	{
 		// new user
-		if( !this.users[userDoc.id] );
+		if( !this.users[userDoc.id] )
 		{
 			// 加入聊天室
 			server.db.colle("rooms-users").insert(
@@ -167,6 +167,12 @@ function Room(doc,server)
 			) ;
 
 			this.users[userDoc.id] = userDoc ;
+
+			var newbie = true ;
+		}
+		else
+		{
+			var newbie = false ;
 		}
 
 		// 通知
@@ -177,6 +183,7 @@ function Room(doc,server)
 				client.emit("room.join",{
 					room:self._roomdoc
 					, user:userDoc
+					, newbie: newbie
 				}) ;
 			}) ;
 		}
@@ -238,7 +245,7 @@ function Room(doc,server)
 			// 在线用户接受
 			if(server.onlines[userId])
 			{
-				func(server.onlines[userId],this.users[userId]) ;
+				func.call(this,server.onlines[userId],this.users[userId]) ;
 			}
 		}
 	}

@@ -1,0 +1,9 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\nodeim]
+"URL Protocol"="C:\\project\\nodeim\\client\\bin.win32\\kate.exe"
+
+[HKEY_CLASSES_ROOT\nodeim\shell]
+[HKEY_CLASSES_ROOT\nodeim\shell\open]
+[HKEY_CLASSES_ROOT\nodeim\shell\open\command]
+@="\"C:\\project\\nodeim\\client\\bin.win32\\kate.exe\" --args \"%1\""
