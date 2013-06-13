@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 
-<title>真知保护</title>
+<title>BB宝</title>
 
 <script src="jquery-1.9.1.min.js"></script>
 <script src="jquery.cookie.js"></script>
@@ -12,7 +12,7 @@
 <link rel="stylesheet" type="text/css" href="styles/webim.css" />
 <link rel="stylesheet" type="text/css" href="styles/webimpage.css" />
 </head>
-<body>
+<body onselectstart="return false;">
 	<div id="windowContainerBorder" class="wContainerBorder"
 		style="top: 0px; left: 0px;">
 		<div id="windowContainer" class="wContainer">
@@ -21,32 +21,31 @@
 				<div id="windowBorder" class="wWindowBorder"></div>
 				<div id="windowCover" class="wWindowCover"></div>
 				<div id="winOther6" class="wOther"
-					style="position: absolute; width: 210px; height: 450px; z-index: 9702;">
+					style="position: absolute; width: 210px; height: 450px; z-index: -50;">
 					<div class="wRound_lt"></div>
 					<div class="wRound_rt"></div>
 					<div class="wRound_lb"></div>
 					<div class="wRound_rb"></div>
 					<div class="wContent">
 						<div id="winOther6Title" class="wOtherTitle"
-							style="color: rgb(0, 0, 0);">
-							<div id="winOtherIcon6" class="wIcon">
-								<img
-									src="images/im/icon.png">
+							style="color: rgb(0, 0, 0);" onmousedown="kate.window.drag()">
+							<div id="winOtherIcon6" class="wIcon" >
+								<img src="images/im/icon.png" >
 							</div>
-							<div id="winOtherText6" class="wText" style="cursor: move;">WebIM
-								1.0</div>
-							<div id="winOtherControl6" class="wControl" style="display:none">
+							<div id="winOtherText6" class="wText" >BB宝</div>
+							
+							<div id="winOtherControl6" class="wControl" >
 								<div class="wControlMin" onmouseover="this.scrollTop='13'"
 									onmouseout="this.scrollTop='0'">
 									<img
 										src="images/im/othercontrolmin.png"
-										title="最小化">
+										title="最小化" onclick="kate.window.minimize()">
 								</div>
 								<div class="wControlClose" onmouseover="this.scrollTop='15'"
 									onmouseout="this.scrollTop='0'">
 									<img
 										src="images/im/othercontrolclose.png"
-										title="关闭">
+										title="关闭" onclick="kate.window.close()">
 								</div>
 							</div>
 						</div>
@@ -181,7 +180,31 @@
 	<script>
 		
 		function showMenuLoginStatus(){
-			jQuery("#menuLoginStatus").toggle();
+
+			if( jQuery("#menuLoginStatus").css("display")=="none"){
+				
+				jQuery("body").mousedown(function(e){
+
+					
+					var DivLeft = parseInt(jQuery("#menuLoginStatus").css("left"));
+					var DivTop = parseInt(jQuery("#menuLoginStatus").css("top"));
+					var DivHeight = parseInt(jQuery("#menuLoginStatus").css("height"));
+					var DivWidth = parseInt(jQuery("#menuLoginStatus").css("width"));
+
+					if( e.clientX < DivLeft || e.clientX > (DivLeft+DivWidth) || e.clientY < DivTop || e.clientY > (DivTop+DivWidth)){
+						jQuery("#menuLoginStatus").hide();
+						jQuery("body").unbind("mousedown");
+					}
+				});
+				
+				jQuery("#menuLoginStatus").show();
+			}else{
+				jQuery("#menuLoginStatus").hide();
+
+				
+			}
+			
+			
 		}
 		
 		function selectMenuLoginStatus(sStatus){
@@ -195,6 +218,34 @@
 		function signup(data){
 			mainWindow.call("nodeim.signup",[data]);
 		}
+		function signup_callBack(){
+			regWindow.close();
+		}
+		
+		function findPassStep1(data){
+
+			mainWindow.call("nodeim.retrieve",[data,"findPassStep1_callBack"]);
+		}
+		function findPassStep2(data){
+
+			mainWindow.call("nodeim.retrieve",[data,"findPassStep2_callBack"]);
+		}
+
+		function findPassStep1_callBack(data){
+
+			findPassWindow.call( "step1_callback" ,[data])
+		}
+		function findPassStep2_callBack(data){
+
+			if( data.code == 200){
+				alert("密码修改成功");
+				findPassWindow.close();
+			}
+		}
+		
+		
+		
+		
 		
 		jQuery("input[type=checkbox]").next().click(function(){
 			
@@ -210,40 +261,50 @@
 		
 		var mainWindow = null;
 		$("#btnLogin").click(function() {
-			mainWindow.call("nodeim.login",[$("#loginTextBoxU").val(),$("#loginTextBoxP").val()]);
-			
+			mainWindow.call("nodeim.login",[$("#loginTextBoxU").val(),$("#loginTextBoxP").val(),jQuery("#divStatus").text()]);
+
 			if(jQuery("#isSaveUser").attr("class") == "cCheckBox"){
 
-				$.cookie('saveUser',"" , {expires: 365});
-				$.cookie('isSaveUser',false , {expires: 365});
+				window.localStorage.saveUser = "";
+				window.localStorage.isSaveUser = "false";
+				
 			}else{
-				$.cookie('saveUser',$("#loginTextBoxU").val() , {expires: 365});
-				$.cookie('isSaveUser',true , {expires: 365});
+				window.localStorage.saveUser = $("#loginTextBoxU").val()
+				window.localStorage.isSaveUser = "true";
 			}
 			if(jQuery("#isSavePass").attr("class") == "cCheckBox"){
 
-				$.cookie('savePass',"" , {expires: 365});
-				$.cookie('isSavePass',false , {expires: 365});
+				window.localStorage.savePass = "";
+				window.localStorage.isSavePass = "false";
 			}else{
-				$.cookie('savePass',$("#loginTextBoxP").val() , {expires: 365});
-				$.cookie('isSavePass',true , {expires: 365});
+				window.localStorage.savePass = $("#loginTextBoxP").val();
+				window.localStorage.isSavePass = "true";
 			}
+			window.localStorage.loginStatus = jQuery("#divStatus").text();
 		});
 		
+		if( window.localStorage.isSaveUser == "true"){
 
-		if( $.cookie('isSaveUser')){
-			$("#loginTextBoxU").val( $.cookie('saveUser'))
-			jQuery("#isSaveUser").attr("class","cCheckBoxChecked")
+			$("#loginTextBoxU").val( window.localStorage.saveUser)
+			jQuery("#isSaveUser").attr("class","cCheckBox cCheckBoxChecked")
+		}else{
+			jQuery("#isSaveUser").attr("class","cCheckBox")
 		}
-		if( $.cookie('isSavePass')){
-			$("#loginTextBoxP").val( $.cookie('savePass'))
-			jQuery("#isSavePass").attr("class","cCheckBoxChecked")
+		if( window.localStorage.isSavePass == "true"){
+			$("#loginTextBoxP").val( window.localStorage.savePass)
+			jQuery("#isSavePass").attr("class","cCheckBox cCheckBoxChecked")
+		}else{
+			jQuery("#isSavePass").attr("class","cCheckBox")
+		}
+		if( window.localStorage.loginStatus){
+			jQuery("#divStatus").text( window.localStorage.loginStatus)
 		}
 		
 		var regWindow = null;
 		$("#reg").click(function() {
 			regWindow = kate.createWindow(kate.appFolder+'/reg.html') ;
 			regWindow.resize(213,453) ;
+			regWindow.setFlags( 0x00000800 ) ;
 			regWindow.show();
 		});
 
@@ -251,17 +312,19 @@
 		$("#findPass").click(function() {
 			findPassWindow = kate.createWindow(kate.appFolder+'/findpass.html') ;
 			findPassWindow.resize(359,289) ;
+			findPassWindow.setFlags( 0x00000800 ) ;
 			findPassWindow.show();
 		});
 		
 		
-		
 		function onKateLoaded()
 		{
+			kate.window.setFlags( 0x00000800 ) ;
 			kate.window.show() ;
 			kate.window.resize(213,453) ;
 			mainWindow = kate.createWindow(kate.appFolder+'/main.html') ;
 			mainWindow.resize(264,554) ;
+			mainWindow.setFlags( 0x00000800 ) ;
 			mainWindow.hide();
 		}
 		

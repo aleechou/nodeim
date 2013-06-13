@@ -82,12 +82,17 @@ body {
 	top: 3px;
 }
 
+.groupSelect {
+	background-color: #FFEF80;
+
+}
 .wText {
 	padding: 4px 80px 0 25px;
 	overflow: hidden;
 	word-break: break-all;
 	height: 14px;
 	-moz-user-select: none;
+	color:#fff;
 }
 
 .wControl {
@@ -508,6 +513,20 @@ body {
 	background: url(../images/im/arrow.gif) no-repeat 3px -21px;
 }
 
+
+.wMainUserHeaderRoomsEx {
+	width: 100%;
+	text-indent: 25px;
+	line-height: 26px;
+	height: 26px;
+	background: url(../images/im/arrow.gif) no-repeat 3px 1px;
+}
+
+.wMainUserHeaderRoomsExHover {
+	background: url(../images/im/arrow.gif) no-repeat 3px -21px;
+}
+
+
 .wMainUserContainer {
 	width: 100%;
 }
@@ -518,6 +537,11 @@ body {
 	width: 180px;
 }
 
+.wMainUserItemRooms {
+	height: 26px;
+	padding-left: 13px;
+	width: 180px;
+}
 .wMainUserItemText {
 	line-height: 26px;
 	float: left;
