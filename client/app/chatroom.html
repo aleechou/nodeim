@@ -12,7 +12,7 @@
 </head>
 <body onselectstart="return false;">
 	<div class="wChat"
-		style="position: absolute;  width: 550px; height: 490px; z-index: 9717;">
+		style="position: absolute;  width: 690px; height: 490px; z-index: 9717;">
 		<div class="wRound_lt"></div>
 		<div class="wRound_rt"></div>
 		<div class="wRound_lb"></div>
@@ -47,69 +47,35 @@
 							onmouseout="this.className='wChatToolBarButton'" onclick="openLogWindow()">
 							<img src="images/im/chatbuttonhistory.png"
 								style="height: 30px; width: 29px" title="查看聊天历史记录">
-					  </div>
+						</div>
 						<!--视频按钮  -->
-				  </div>
+                    </div>
 				</div>
 				<div style="background: #ffc; clear: both;width:100%;margin:0 auto; overflow:auto">
 
 
 					<div  style="height:395px; width: 150px;float:right">
 						<div class="wChatUserFace" style="right: 10px; ">
-							<img src="userface/default.gif" id="facePic1"
+							<img src="userface/default.gif"
 								style="width: 114px; height: 114px; display: block">
 						</div>
 						<div class="wChatUserFace" style="bottom: 10px;right: 10px ">
-							<img src="userface/default.gif" id="facePic2"
+							<img src="userface/default.gif"
 								style="width: 114px; height: 114px">
 						</div>
 					</div>
 					
 					
 					
-					<div style="width: 0px; float: left">
-						<div class="wMainUserContainer" style="height: 52px;display:none">
-							<div class="wMainUserItem" u
-								onmousedown=""
-								onmouseup=""
-								oncontextmenu="function(){return !!0}"
-								ondblclick=""
-								style="background-color: rgb(255, 239, 176);">
-								<div class="wMainListButton"
-									onmouseover="this.className='wMainListButton wMainListButtonHover'"
-									onmouseout="this.className='wMainListButton'">
-									<img src="images/im/m3.png" title="查看此人的联系人卡片"
-										style="height: 19px; width: 19px"
-										onclick="">
-								</div>
-								<div class="wMainUserItemText">
-									aarongao&nbsp;&nbsp;<span style="color: #777"></span>
-								</div>
-							</div>
-							<div class="wMainUserItem" u
-								onmousedown=""
-								onmouseup=""
-								oncontextmenu="function(){return !!0}"
-								ondblclick=""
-								style="">
-								<div class="wMainListButton"
-									onmouseover="this.className='wMainListButton wMainListButtonHover'"
-									onmouseout="this.className='wMainListButton'">
-									<img src="images/im/m3.png" title="查看此人的联系人卡片"
-										style="height: 19px; width: 19px"
-										onclick="">
-								</div>
-								<div class="wMainUserItemText">
-									ww&nbsp;&nbsp;<span style="color: #777"></span>
-								</div>
-							</div>
+					<div style="width: 200px; float: left">
+						<div class="wMainUserContainer" style="height: 52px;" id="roomUserList">
 						</div>
 					</div>
 					
 					
 					
 					
-					<div class="wChatMain" style="height: 395px;  margin-left:0px;margin-right:150px">
+					<div class="wChatMain" style="height: 395px;  margin-left:200px;margin-right:150px">
 						<div style="border: 1px solid #f2b705; background-color: #fff" >
 							<div
 								style="height: 246px; overflow-x: hidden; overflow-y: auto; word-break: break-all; text-align: left;" id="messageoutput">
@@ -177,50 +143,90 @@
 	<script>
 	$("#btnSendMessage").click(function(){
 		
-		
 		var data = {
-			to: userObj.id
+			room: roomObj.id
 			, message: editor.html()
 		}
 		
-		var _data = {};
-		var _from = {};
-		_from.username = userLocalObj.username;
-		_from.id = userLocalObj.id;
-		_data.from = _from;
-		_data.message = editor.html();
-		_data.time = Date.parse(new Date());
-		onMessage(_data);
-		kate.parentWindow.call("nodeim.message",[data]) ;
+		kate.parentWindow.call("nodeim.messageRoom",[data]) ;
 		
 		editor.html("")
 	}) ;
 	
-	jQuery(".wMainUserItem").click(function(){
+	function toggleBjColor(obj){
 		
 		jQuery(".wMainUserItem").each(function(){
 			jQuery(this).css("background-color","");
 		})
-		jQuery(this).css("background-color","rgb(255, 239, 176)");
-	})
+		jQuery(obj).css("background-color","rgb(255, 239, 176)");
+	}
 	
-	var userObj = {};
+	var roomObj = {};
 	var userLocalObj = {};
-	function initUser(data){
-		userObj.id = data.id;
-		userObj.username = data.username;
+	function initRoom(data){
+		roomObj.id = data.id;
+		roomObj.name = data.name;
 		console.log(data)
-		jQuery(".wText").text(data.username + "("+userObj.id+")");
-
-		if( data.facePath != "undefined"){
-			jQuery("#facePic1").attr("src" , data.facePath)
-		}
+		jQuery(".wText").text(data.name + "("+data.id+")");
 	}
 	function initLocalUser(data){
 		userLocalObj = data;
+	}
+	
+	function createUserHtml(data){
 		
-		if( userLocalObj.facePath){
-			jQuery("#facePic2").attr("src" , userLocalObj.facePath)
+		
+		var _is = false;
+		jQuery("#roomUserList").find(".wMainUserItem").each(function(){
+			
+			if( jQuery(this).attr("uid") == data.id){
+				_is = true;
+			}
+		});
+		
+		if( _is){
+			return ;
+		}
+		
+		var html = "";
+		html += '<div class="wMainUserItem" uid="'+data.id+'"';
+		html += 'onmousedown=""';
+		html += 'onmouseup=""';
+		html += 'oncontextmenu="function(){return !!0}"';
+		html += 'onclick="toggleBjColor(this)" >';
+		html += '<div class="wMainListButton"';
+		html += '	onmouseover="this.className=\'wMainListButton wMainListButtonHover\'"';
+		html += '	onmouseout="this.className=\'wMainListButton\'">';
+		html += '	<img src="images/im/m33.png" style="height: 19px; width: 19px">';
+		html += '</div>';
+		html += '<div class="wMainUserItemText">';
+		html += '	'+data.username+'&nbsp;&nbsp;<span style="color: #777"></span>';
+		html += '</div>';
+		html += '</div>';
+		
+		jQuery("#roomUserList").append(html);
+		
+	}
+	function removeUserHtml(data){
+
+			
+			jQuery("#roomUserList").find(".wMainUserItem").each(function(){
+				
+				if( jQuery(this).attr("uid") == data.id){
+					jQuery(this).remove();
+				}
+				
+			});
+			
+			jQuery("#messageoutput").append("<div class=\"wChatMsgTitle\">"+data.username+"离开了聊天室</div>");
+	}
+	function initUserList(data){
+		for(var i=0;i<data.offlines.length;i++){
+			
+			createUserHtml( data.offlines[i]);
+		}
+		for(var i=0;i<data.onlines.length;i++){
+			createUserHtml( data.onlines[i]);
 		}
 	}
 	
@@ -287,7 +293,7 @@
 
 	function onKateLoaded()
 	{
-		kate.parentWindow.call("openChatWindow_CallBack",[kate.wndId]) ;
+		kate.parentWindow.call("openRoomWindow_CallBack",[kate.wndId]) ;
 	}
 	
 	
@@ -305,7 +311,7 @@
 	}
 	function openLog(page){
 
-		kate.parentWindow.call("nodeim.log",[ userObj.id,page]) ;
+		kate.parentWindow.call("nodeim.log",[ roomObj.id,page]) ;
 	}
 	function openLogCallBack(data){
 
@@ -318,8 +324,8 @@
 		editor = K.create('#message', {
 			allowFileManager : true,
 			resizeType : 1,
-			width : '390',
-			minWidth : '390',
+			width : '330',
+			minWidth : '330',
 			height:70,
 			minHeight : '70',
 			allowPreviewEmoticons : false,
