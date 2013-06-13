@@ -115,10 +115,10 @@
 	{
 		return kateapi.normal(this.wndId) ;
 	}
-	
-
-
-
+	KateHtmlWindow.prototype.startLocalServer = function(name)
+	{
+		return kateapi.startLocalServer(this.wndId,name) ;
+	}
 
 	// onload 事件
 	if(typeof window.onKateLoaded=='function')

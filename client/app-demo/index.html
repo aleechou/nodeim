@@ -20,6 +20,59 @@
     
     <body>
 	
+	<p>
+		<h3>进程间通讯 demo</h3>
+		<div>
+			[As Server]
+			名称：<input id="ipcStartServerName" value="somename" />
+			<button id="startIPCServer">监听</button>
+		</div>
+		
+		<div>
+			[As Client]
+			名称：<input id="ipcSendToServerName" value="somename" />
+			内容：<input id="ipcSendToContents" value="hi~~~" />
+			<button id="sendToIPCServer">发送</button>
+		</div>
+		
+		<script >
+		
+		// 做为 server 端监听
+		$("#startIPCServer").click(function(){
+			var serverName = $('#ipcStartServerName').val() ;
+			if( kate.window.startLocalServer(serverName) )
+			{
+				alert("开始监听") ;
+			}
+			else
+			{
+				alert("监听失败，可能有其他进程监听相同的名称") ;
+			}
+		}) ;
+		
+		// 接收事件
+		function onKateLocalServerReceive(name,contents)
+		{
+			alert("ipc server "+name+" 接收到数据："+contents) ;
+		}
+		
+		// 做为 client 发送
+		$("#sendToIPCServer").click(function(){
+			var serverName = $('#ipcSendToServerName').val() ;
+			var contents = $('#ipcSendToContents').val() ;
+			if( kate.sendToLocalServer(serverName,contents) )
+			{
+				alert("已发送") ;
+			}
+			else
+			{
+				alert("发送失败，可能没有监听的server进程") ;
+			}
+		}) ;
+		</script >
+	</p>
+	<hr/>
+	
 		<div id="title" style="height:30px;background-color:#aaaaaa;user-select: none;-webkit-user-select: none;" onmousedown="kate.window.drag()">我是标题栏(用我移动窗口)</div>
 		<button onclick="kate.window.close()">关闭窗口</button>
 	
