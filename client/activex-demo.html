@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="zh-cn">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+	<div>
+		手工注册 activex ，用 Administrator 打开命令行，执行：regsvr32 c:\ooo\xxx\activex.ocx
+	</div>
+	<div>
+		手工卸载执行：regsvr32 /u c:\ooo\xxx\activex.ocx
+	</div>
+
+
+	<OBJECT ID="Sipstack1" CLASSID="CLSID:DC8D3D65-84F4-46ED-B380-C687CCC97F34" ></OBJECT>
+
+	<script>
+	if(typeof document.getElementById("Sipstack1").AboutBox=="function")
+		alert("已安装") ;
+	else
+		alert("未安装") ;
+	</script>
+
+</body>
+</html>
